@@ -3,9 +3,9 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 
-def homePageView(request):
+def home(request):
     return HttpResponse('<h2>Hello, World!</h2>')
 
 
-def aboutView(request):
+def about(request):
     return HttpResponse('Projekt grupowy z Inżynierii Oprogramowania.')
