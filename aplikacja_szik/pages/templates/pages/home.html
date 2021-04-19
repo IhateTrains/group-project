@@ -207,8 +207,11 @@
 
               <!--Card image-->
               <div class="view overlay">
-                <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12.jpg" class="card-img-top"
-                  alt="">
+                {% if item.image %}
+                <img src="{{ item.image.url }}" class="card-img-top" alt="">
+                {% else %}
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/0a/No-image-available.png" class="card-img-top" alt="">
+                {% endif %}
                 <a href="{{ item.get_absolute_url }}">
                   <div class="mask rgba-white-slight"></div>
                 </a>
@@ -218,11 +221,11 @@
               <div class="card-body text-center">
                 <!--Category & Title-->
                 <a href="" class="grey-text">
-                  <h5>{{ item.get_category_display}}</h5>
+                  <h5>{{ item.get_category_display }}</h5>
                 </a>
                 <h5>
                   <strong>
-                    <a href="{{ item.get_absolute_url }}" class="dark-grey-text">{{ item.item_name }}
+                    <a href="{{ item.get_absolute_url }}" class="dark-grey-text">{{ item.name }}
                       <span class="badge badge-pill {% if item.get_label_display == 'New' %} danger-color {% else %} primary-color {% endif %}">{{ item.get_label_display }}</span>
                     </a>
                   </strong>
