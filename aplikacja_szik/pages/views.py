@@ -1,10 +1,13 @@
 # pages/views.py
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.views.generic import ListView
+from .models import (Product, Order, OrderLine)
 
 
-def home(request):
-    return render(request, 'pages/home.html', {'title': 'Home'})
+class HomeView(ListView):
+    model = Product
+    template_name = "pages/home.html"
 
 
 def about(request):
