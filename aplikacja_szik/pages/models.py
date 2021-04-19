@@ -10,6 +10,7 @@ class Product(models.Model):
     price = models.FloatField()
     discountPrice = models.FloatField(null=True)
     description = models.TextField()
+    image = models.ImageField(null=True)
 
     def __str__(self):
         return self.name
