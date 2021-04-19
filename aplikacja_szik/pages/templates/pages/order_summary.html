@@ -22,7 +22,7 @@
         {% for order_item in object.products.all %}
         <tr>
             <th scope="row">{{ forloop.counter }}</th>
-            <td>{{ order_item.product.product_name }}</td>
+            <td>{{ order_item.product.name }}</td>
             <td>
             {% if order_item.product.discountPrice %}
                 <del>${{ order_item.product.price}}</del>
@@ -71,7 +71,7 @@
         </tr>
          <tr>
             <td colspan="5">
-                <!--   <a href="{% url 'pages:checkout' %}" class="btn btn-warning float-right ml-2">Checkout</a>  -->
+                <a href="{% url 'pages:checkout' %}" class="btn btn-warning float-right ml-2">Checkout</a>
                 <a href="/" class="btn btn-primary float-right">Continue Shopping</a>
             </td>
         </tr>

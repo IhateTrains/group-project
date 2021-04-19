@@ -83,7 +83,7 @@ def remove_from_cart(request, pk):
                 ordered=False
             )[0]
             order_item.delete()
-            messages.info(request, "Item \"" + order_item.product.product_name + "\" remove from your cart")
+            messages.info(request, "Item \"" + order_item.product.name + "\" remove from your cart")
             return redirect("pages:order-summary")
         else:
             messages.info(request, "This Item not in your cart")
