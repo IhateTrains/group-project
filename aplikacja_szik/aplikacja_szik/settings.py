@@ -29,16 +29,19 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+SITE_ID = 1
+
+
 # Application definition
 
 INSTALLED_APPS = [
     'pages.apps.PagesConfig',
-    'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
 
     'django.contrib.admin',
+    'django.contrib.sites',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
