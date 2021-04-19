@@ -82,7 +82,7 @@
 
             {% if user.is_authenticated %}
             <li class="nav-item">
-                <a class="nav-link waves-effect">
+                <a href="{% url 'pages:order-summary' %}" class="nav-link waves-effect">
                 {% if request.user|cart_item_count != 0 %}
                   <span class="badge red z-depth-1 mr-1"> {{ request.user|cart_item_count }} </span>
                 {% endif %}

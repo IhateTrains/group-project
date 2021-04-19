@@ -1,6 +1,8 @@
 # pages/views.py
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
@@ -16,6 +18,19 @@ class HomeView(ListView):
 class ProductView(DetailView):
     model = Product
     template_name = "pages/product.html"
+
+
+class OrderSummaryView(LoginRequiredMixin, View):
+    def get(self, *args, **kwargs):
+        try:
+            order = Order.objects.get(customer=self.request.user, ordered=False)
+            context = {
+                'object': order
+            }
+            return render(self.request, 'pages/order_summary.html', context)
+        except ObjectDoesNotExist:
+            messages.error(self.request, "You do not have an order")
+            return redirect("/")
 
 
 def about(request):

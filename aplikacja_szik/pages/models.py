@@ -8,6 +8,7 @@ from django.shortcuts import reverse
 class Product(models.Model):
     name = models.CharField(max_length=50)
     price = models.FloatField()
+    discountPrice = models.FloatField(null=True)
     description = models.TextField()
 
     def __str__(self):
