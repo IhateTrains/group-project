@@ -8,9 +8,9 @@ from django.shortcuts import reverse
 class Product(models.Model):
     name = models.CharField(max_length=50)
     price = models.FloatField()
-    discountPrice = models.FloatField(null=True)
+    discountPrice = models.FloatField(blank=True)
     description = models.TextField()
-    image = models.ImageField(null=True)
+    image = models.ImageField(blank=True)
 
     def __str__(self):
         return self.name
@@ -33,7 +33,7 @@ class Product(models.Model):
 
 
 class OrderLine(models.Model):
-    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
     ordered = models.BooleanField(default=False)

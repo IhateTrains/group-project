@@ -232,11 +232,14 @@
                 </h5>
 
                 <h4 class="font-weight-bold blue-text">
-                  <strong>$
-                  {% if item.discount_price %}
-                  {{ item.discount_price }}
+                  <strong>
+                  {% if item.discountPrice %}
+                    <span class="mr-1">
+                    <del>${{ item.price }}</del>
+                    </span>
+                    <span>${{ item.discountPrice }}</span>
                   {% else %}
-                  {{ item.price }}
+                   <span>${{ item.price }}</span>
                   {% endif %}
                   </strong>
                 </h4>
