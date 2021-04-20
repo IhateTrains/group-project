@@ -25,10 +25,10 @@
             <td>{{ order_item.product.name }}</td>
             <td>
             {% if order_item.product.discountPrice %}
-                <del>${{ order_item.product.price}}</del>
-                ${{ order_item.product.discountPrice }}
+                <del>{{ order_item.product.price }} zł</del>
+                {{ order_item.product.discountPrice }}  zł
             {% else %}
-                ${{ order_item.product.price}}
+                {{ order_item.product.price }}  zł
             {% endif %}
 
             </td>

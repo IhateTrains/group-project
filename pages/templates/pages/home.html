@@ -235,11 +235,11 @@
                   <strong>
                   {% if item.discountPrice %}
                     <span class="mr-1">
-                    <del>${{ item.price }}</del>
+                    <del>{{ item.price }} zł</del>
                     </span>
-                    <span>${{ item.discountPrice }}</span>
+                    <span>{{ item.discountPrice }} zł</span>
                   {% else %}
-                   <span>${{ item.price }}</span>
+                   <span>{{ item.price }} zł</span>
                   {% endif %}
                   </strong>
                 </h4>
