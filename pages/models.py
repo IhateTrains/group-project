@@ -1,9 +1,14 @@
 from django.conf import settings
 from django.db import models
 from django.shortcuts import reverse
+from address.models import AddressField
 
 
 # Create your models here.
+
+class SzikPoint(models.Model):
+    address = AddressField()
+
 
 class Category(models.Model):
     name = models.CharField(max_length=50)
