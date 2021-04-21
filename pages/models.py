@@ -1,13 +1,14 @@
 from django.conf import settings
 from django.db import models
 from django.shortcuts import reverse
-from address.models import AddressField
 
 
 # Create your models here.
 
 class SzikPoint(models.Model):
-    address = AddressField()
+    city = models.ImageField(max_length=30)
+    streetAddress = models.ImageField(max_length=50)
+    postalCode = models.ImageField(max_length=20)
     telephone = models.CharField(max_length=9)
     photo = models.ImageField(blank=True, null=True)
 
