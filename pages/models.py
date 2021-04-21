@@ -8,6 +8,8 @@ from address.models import AddressField
 
 class SzikPoint(models.Model):
     address = AddressField()
+    telephone = models.CharField(max_length=9)
+    photo = models.ImageField(blank=True, null=True)
 
 
 class Category(models.Model):
