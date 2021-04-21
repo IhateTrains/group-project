@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'address',
 
     'django.contrib.admin',
     'django.contrib.sites',
