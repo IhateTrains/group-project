@@ -63,7 +63,7 @@ class OrderLine(models.Model):
 
 class Order(models.Model):
     customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # userID
-    paymentMethod = models.CharField(max_length=60)
+    paymentMethod = models.CharField(max_length=60, default="card")
     products = models.ManyToManyField(OrderLine)
     orderDate = models.DateTimeField()
     ordered = models.BooleanField(default=False)
