@@ -70,7 +70,7 @@ class Order(models.Model):
 
 
 class UserProfile(models.Model):
-    userID = models.OneToOneField(settings.AUTH_USER_MODEL)
+    userID = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     telephone = models.CharField(max_length=9)
     city = models.ImageField(max_length=30)
     streetAddress = models.ImageField(max_length=50)
