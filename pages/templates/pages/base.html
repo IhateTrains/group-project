@@ -95,11 +95,11 @@
                 Hi {{ user.username }}!
                 </a>
             </li>
-             </li class="nav-item">
+            <li class="nav-item">
                 <a class="nav-link waves-effect" href="{% url 'logout' %}">Log out</a>
             </li>
             {% else %}
-             </li class="nav-item">
+            <li class="nav-item">
                 <a class="nav-link waves-effect" href="{% url 'login' %}">Log in</a>
             </li>
             {% endif %}
