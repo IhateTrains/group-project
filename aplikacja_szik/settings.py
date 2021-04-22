@@ -87,6 +87,9 @@ WSGI_APPLICATION = 'aplikacja_szik.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
