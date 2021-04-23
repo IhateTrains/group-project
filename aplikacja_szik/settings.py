@@ -137,8 +137,9 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend'
 )
 
-# Where to redirect the user upon a successful login
+# Where to redirect the user upon a successful login and logout
 LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 
 # media files
