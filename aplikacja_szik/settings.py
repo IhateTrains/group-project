@@ -67,7 +67,7 @@ ROOT_URLCONF = 'aplikacja_szik.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [str(BASE_DIR.joinpath('templates'))],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -88,7 +88,6 @@ WSGI_APPLICATION = 'aplikacja_szik.wsgi.application'
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-
 
 
 # Password validation
@@ -137,6 +136,10 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend'
 )
+
+# Where to redirect the user upon a successful login
+LOGIN_REDIRECT_URL = '/'
+
 
 # media files
 MEDIA_ROOT = ''
