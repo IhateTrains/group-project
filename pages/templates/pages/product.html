@@ -11,9 +11,11 @@
 
         <!--Grid column-->
         <div class="col-md-6 mb-4">
-
-          <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12.jpg" class="img-fluid" alt="">
-
+          {% if object.image %}
+          <img src="{{ object.image.url }}" class="img-fluid" alt="">
+          {% else %}
+          <img src="https://upload.wikimedia.org/wikipedia/commons/0/0a/No-image-available.png" class="img-fluid" alt="">
+          {% endif %}
         </div>
         <!--Grid column-->
 
