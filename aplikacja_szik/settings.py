@@ -147,15 +147,23 @@ MEDIA_ROOT = ''
 MEDIA_URL = "media/"
 
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+
 # Activate Django-Heroku.
 django_heroku.settings(locals())
 
-if len(DATABASES) == 0:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
-else:
-    print("Database config found")
+# if 'DATABASES' in locals():
+#     print("Database found")
+# else:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': BASE_DIR / 'db.sqlite3',
+#         }
+#     }
+
