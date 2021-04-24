@@ -12,9 +12,15 @@ class SzikPoint(models.Model):
     telephone = models.CharField(max_length=9)
     photo = models.ImageField(blank=True, null=True)
 
+    def __str__(self):
+        return f"{self.streetAddress}, {self.postalCode} {self.city}"
+
 
 class Category(models.Model):
     name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
 
 
 class Product(models.Model):
@@ -76,11 +82,20 @@ class UserProfile(models.Model):
     streetAddress = models.CharField(max_length=50)
     postalCode = models.CharField(max_length=20)
 
+    def __str__(self):
+        return self.userID
+
 
 class UserType(models.Model):
     name = models.CharField(max_length=20, null=False)
+
+    def __str__(self):
+        return self.name
 
 
 class VinNumber(models.Model):
     userID = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     vin = models.CharField(max_length=17)
+
+    def __str__(self):
+        return self.vin
