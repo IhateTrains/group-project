@@ -5,12 +5,19 @@ from django.shortcuts import reverse
 
 # Create your models here.
 
+
+class SzikPointPhoto(models.Model):
+    bytes = models.TextField()
+    filename = models.CharField(max_length=255)
+    mimetype = models.CharField(max_length=50)
+
+
 class SzikPoint(models.Model):
     city = models.CharField(max_length=30)
     streetAddress = models.CharField(max_length=50)
     postalCode = models.CharField(max_length=20)
     telephone = models.CharField(max_length=9)
-    photo = models.ImageField(blank=True, null=True)
+    photo = models.ImageField(upload_to='pages.SzikPointPhoto/bytes/filename/mimetype', blank=True, null=True)
 
     def __str__(self):
         return f"{self.streetAddress}, {self.postalCode} {self.city}"
@@ -23,13 +30,19 @@ class Category(models.Model):
         return self.name
 
 
+class ProductImage(models.Model):
+    bytes = models.TextField()
+    filename = models.CharField(max_length=255)
+    mimetype = models.CharField(max_length=50)
+
+
 class Product(models.Model):
     categoryID = models.ForeignKey(Category, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     price = models.DecimalField(max_digits=6, decimal_places=2)
     discountPrice = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     description = models.TextField()
-    image = models.ImageField(blank=True, null=True)
+    image = models.ImageField(upload_to='pages.ProductImage/bytes/filename/mimetype', blank=True, null=True)
 
     def __str__(self):
         return self.name

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'db_file_storage',
 
     'django.contrib.admin',
     'django.contrib.sites',
@@ -153,6 +154,11 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
+# stores images in database instead of filesystem
+DEFAULT_FILE_STORAGE = 'db_file_storage.storage.DatabaseFileStorage'
+
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
