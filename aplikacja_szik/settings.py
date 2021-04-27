@@ -174,4 +174,3 @@ django_heroku.settings(locals())
 #             'NAME': BASE_DIR / 'db.sqlite3',
 #         }
 #     }
-
