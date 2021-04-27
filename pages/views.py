@@ -56,7 +56,6 @@ def add_to_cart(request, pk):
         if order.products.filter(product__pk=item.pk).exists():
             order_item.quantity += 1
             order_item.save()
-            messages.info(request, "Zwiększono ilość produktu w koszyku")
             return redirect("pages:order-summary")
         else:
             order.products.add(order_item)
@@ -109,7 +108,6 @@ def reduce_quantity_item(request, pk):
                 order_item.save()
             else:
                 order_item.delete()
-            messages.info(request, "Zaktualizowano ilość produktu")
             return redirect("pages:order-summary")
         else:
             messages.info(request, "Produktu nie ma w koszyku")
