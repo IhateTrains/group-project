@@ -6,16 +6,16 @@
     <div class= "container">
         <div class="table-responsive text-nowrap">
     <h3>
-        <strong>Your Cart</strong>
+        <strong>Koszyk</strong>
     </h3>
     <table class="table">
         <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Item Name</th>
-            <th scope="col">Price</th>
-            <th scope="col">Quantity</th>
-            <th scope="col">Total Item Price</th>
+            <th scope="col">Nazwa</th>
+            <th scope="col">Cena za sztukę</th>
+            <th scope="col">Ilość</th>
+            <th scope="col">Całkowita cena</th>
         </tr>
         </thead>
         <tbody>
@@ -40,7 +40,7 @@
             <td>
             {% if order_item.product.discountPrice %}
                 ${{ order_item.get_discount_item_price }} 
-                <span class="badge badge-success" >Saved ${{ order_item.get_amount_saved }}</span>
+                <span class="badge badge-success" >Oszczędzasz {{ order_item.get_amount_saved }} zł</span>
             {% else %}
                 ${{ order_item.get_total_item_price}}
             {% endif %}
@@ -53,12 +53,12 @@
 
         {% empty %}
         <tr>
-            <td colspan="5">Your cart is empty</td>
+            <td colspan="5">Twój koszyk jest pusty</td>
         </tr>
 
          <tr>
             <td colspan="5">
-                <a href="/" class="btn btn-primary float-right">Continue Shopping</a>
+                <a href="/" class="btn btn-primary float-right">Kontynuuj zakupy</a>
             </td>
         </tr>
 
@@ -72,7 +72,7 @@
          <tr>
             <td colspan="5">
                 <a href="{% url 'pages:checkout' %}" class="btn btn-warning float-right ml-2">Checkout</a>
-                <a href="/" class="btn btn-primary float-right">Continue Shopping</a>
+                <a href="/" class="btn btn-primary float-right">Kontynuuj zakupy</a>
             </td>
         </tr>
         
