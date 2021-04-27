@@ -11,7 +11,6 @@
     <table class="table">
         <thead>
         <tr>
-            <th scope="col">#</th>
             <th scope="col">Nazwa</th>
             <th scope="col">Cena za sztukę</th>
             <th scope="col">Ilość</th>
@@ -21,8 +20,7 @@
         <tbody>
         {% for order_item in object.products.all %}
         <tr>
-            <th scope="row">{{ forloop.counter }}</th>
-            <td>{{ order_item.product.name }}</td>
+            <th scope="row">{{ order_item.product.name }}</th>
             <td>
             {% if order_item.product.discountPrice %}
                 <del>{{ order_item.product.price }} zł</del>
@@ -66,7 +64,7 @@
 
         {% if object.get_total_price %}
         <tr>
-            <td colspan="4"><b>Łączna cena zamówienia</b></td>
+            <td colspan="3"><b>Łączna cena zamówienia</b></td>
             <td>{{ object.get_total_price }} zł</td>
         </tr>
          <tr>

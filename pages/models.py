@@ -62,6 +62,9 @@ class Product(models.Model):
             "pk": self.pk
         })
 
+    def get_category_display(self):
+        return self.categoryID.name
+
 
 class ProductQuantity(models.Model):
     productID = models.ForeignKey(Product, on_delete=models.CASCADE)
