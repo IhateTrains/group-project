@@ -1,4 +1,6 @@
 # pages/views.py
+
+# Django
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -7,7 +9,9 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.views.generic import ListView, DetailView, View
+# project
 from .models import Product, Order, OrderLine
+from .forms import CheckoutForm
 
 
 class HomeView(ListView):
@@ -114,3 +118,52 @@ def reduce_quantity_item(request, pk):
     else:
         messages.info(request, "You do not have an Order")
         return redirect("pages:order-summary")
+
+
+class CheckoutView(View):
+    def get(self, *args, **kwargs):
+        form = CheckoutForm()
+        order = Order.objects.get(user=self.request.user, ordered=False)
+        context = {
+            'form': form,
+            'order': order
+        }
+        return render(self.request, 'checkout.html', context)
+
+    def post(self, *args, **kwargs):
+        form = CheckoutForm(self.request.POST or None)
+
+        try:
+            order = Order.objects.get(user=self.request.user, ordered=False)
+            if form.is_valid():
+                street_address = form.cleaned_data.get('street_address')
+                apartment_address = form.cleaned_data.get('apartment_address')
+                country = form.cleaned_data.get('country')
+                zip = form.cleaned_data.get('zip')
+                # TODO: add functionaly for these fields
+                # same_billing_address = form.cleaned_data.get('same_billing_address')
+                # save_info = form.cleaned_data.get('save_info')
+                payment_option = form.cleaned_data.get('payment_option')
+
+                checkout_address = CheckoutAddress(
+                    user=self.request.user,
+                    street_address=street_address,
+                    apartment_address=apartment_address,
+                    country=country,
+                    zip=zip
+                )
+                checkout_address.save()
+                order.checkout_address = checkout_address
+                order.save()
+
+                if payment_option == 'S':
+                    return redirect('core:payment', payment_option='stripe')
+                elif payment_option == 'P':
+                    return redirect('core:payment', payment_option='paypal')
+                else:
+                    messages.warning(self.request, "Invalid Payment option")
+                    return redirect('core:checkout')
+
+        except ObjectDoesNotExist:
+            messages.error(self.request, "You do not have an order")
+            return redirect("core:order-summary")
