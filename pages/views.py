@@ -1,4 +1,6 @@
 # pages/views.py
+
+# Django
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -7,6 +9,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.views.generic import ListView, DetailView, View
+# project
 from .models import Product, Order, OrderLine
 
 
@@ -53,17 +56,17 @@ def add_to_cart(request, pk):
         if order.products.filter(product__pk=item.pk).exists():
             order_item.quantity += 1
             order_item.save()
-            messages.info(request, "Added quantity to Product")
+            messages.info(request, "Zwiększono ilość produktu w koszyku")
             return redirect("pages:order-summary")
         else:
             order.products.add(order_item)
-            messages.info(request, "Product added to your cart")
+            messages.info(request, "Dodano do koszyka")
             return redirect("pages:order-summary")
     else:
         ordered_date = timezone.now()
         order = Order.objects.create(customer=request.user, orderDate=ordered_date)
         order.products.add(order_item)
-        messages.info(request, "Product added to your cart")
+        messages.info(request, "Dodano do koszyka")
         return redirect("pages:order-summary")
 
 
@@ -83,10 +86,10 @@ def remove_from_cart(request, pk):
                 ordered=False
             )[0]
             order_item.delete()
-            messages.info(request, "Item \"" + order_item.product.name + "\" remove from your cart")
+            messages.info(request, "Usunięto \"" + order_item.product.name + "\" z koszyka")
             return redirect("pages:order-summary")
         else:
-            messages.info(request, "This Item not in your cart")
+            messages.info(request, "Produktu nie ma w koszyku")
             return redirect("pages:product", pk=pk)
     else:
         messages.info(request, "You do not have an Order")
@@ -106,11 +109,12 @@ def reduce_quantity_item(request, pk):
                 order_item.save()
             else:
                 order_item.delete()
-            messages.info(request, "Product quantity was updated")
+            messages.info(request, "Zaktualizowano ilość produktu")
             return redirect("pages:order-summary")
         else:
-            messages.info(request, "This Product not in your cart")
+            messages.info(request, "Produktu nie ma w koszyku")
             return redirect("pages:order-summary")
     else:
         messages.info(request, "You do not have an Order")
         return redirect("pages:order-summary")
+

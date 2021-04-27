@@ -50,7 +50,6 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse("pages:product", kwargs={
             "pk": self.pk
-
         })
 
     def get_add_to_cart_url(self):
@@ -79,6 +78,20 @@ class OrderLine(models.Model):
     def __str__(self):
         return f"{self.quantity} x {self.product.name}"
 
+    def get_total_item_price(self):
+        return self.quantity * self.product.price
+
+    def get_discount_item_price(self):
+        return self.quantity * self.product.discountPrice
+
+    def get_amount_saved(self):
+        return self.get_total_item_price() - self.get_discount_item_price()
+
+    def get_final_price(self):
+        if self.product.discountPrice:
+            return self.get_discount_item_price()
+        return self.get_total_item_price()
+
 
 class Order(models.Model):
     customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # userID
@@ -86,6 +99,12 @@ class Order(models.Model):
     products = models.ManyToManyField(OrderLine)
     orderDate = models.DateTimeField()
     ordered = models.BooleanField(default=False)
+
+    def get_total_price(self):
+        total = 0
+        for order_item in self.products.all():
+            total += order_item.get_final_price()
+        return total
 
 
 class UserProfile(models.Model):

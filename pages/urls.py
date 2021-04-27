@@ -20,4 +20,5 @@ urlpatterns = [
     path('remove-from-cart/<pk>/', remove_from_cart, name='remove-from-cart'),
     path('reduce-quantity-item/<pk>/', reduce_quantity_item, name='reduce-quantity-item'),
     path('order-summary/', OrderSummaryView.as_view(), name='order-summary'),
+    path('checkout/', HomeView.as_view(), name='checkout'),  # TODO: add CheckOutView
 ]
