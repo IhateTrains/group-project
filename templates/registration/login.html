@@ -1,6 +1,139 @@
+<style>
+
+.lgn-container {
+    margin: 30px auto;
+    float: none;
+}
+
+* {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    font-family: arial
+}
+
+body {
+    background: red
+}
+
+h1 {
+    color: #ccc;
+    text-align: center;
+    font-family: 'Vibur', cursive;
+    font-size: 50px
+}
+
+.login-form {
+    width: 350px;
+    padding: 40px 30px;
+    background: #eee;
+    margin: auto;
+    border: 1px solid #fff;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 10%
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 15px
+}
+
+.form-control {
+    width: 100%;
+    height: 50px;
+    border: none;
+    padding: 5px 7px 5px 15px;
+    background: #fff;
+    color: #666;
+    border: 2px solid #ddd
+}
+
+.form-group .mdi {
+    position: absolute;
+    right: 15px;
+    top: 17px;
+    color: #999
+}
+
+.mdi {
+    top: 13px !important;
+    color: #0AC986 !important
+}
+
+.form-control:focus {
+    color: #fff !important;
+    background-color: #fff;
+    border-color: #fff !important;
+    outline: none;
+    box-shadow: none
+}
+
+.log-status.wrong-entry .form-control,
+.wrong-entry .form-control+.mdi {
+    border-color: #ed1c24;
+    color: #ed1c24
+}
+
+.log-btn {
+    background: #0AC986;
+    dispaly: inline-block;
+    width: 100%;
+    font-size: 16px;
+    height: 50px;
+    color: #fff;
+    text-decoration: none;
+    border: none
+}
+
+.link {
+    text-decoration: none;
+    color: #C6C6C6;
+    float: right;
+    font-size: 12px;
+    margin-bottom: 15px
+}
+
+.alert {
+    display: none;
+    font-size: 12px;
+    color: #f00;
+    float: left
+}
+
+a {
+    text-decoration: none !important
+}
+
+</style>
+
 <h2>Login</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Login</button>
-</form>
+
+
+
+<div id="content-container" class="container p-none">
+    <div class="lgn-container col-lg-8">
+        <form id="login-form" method="post">
+            {% csrf_token %}
+            <table class="table">
+                <tr>
+                    <td><label for="id_username">Username</label></td>
+                    <td><input id="id_username" name="username" type="text" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td><label for="id_password">Password</label></td>
+                    <td><input id="id_password" name="password" type="password" class="form-control"></td>
+                </tr>
+            </table>
+            {% if form.errors %}
+                <p class=" label label-danger">
+                    Niepoprawny login lub hasło. Spróbuj ponownie.
+                </p>
+            {% endif %}
+
+            <input type="submit" value="Login" class="btn btn-primary pull-right" />
+            <input type="hidden" name="next" value="{{ next }}" />
+        </form>
+    </div>
+</div>
