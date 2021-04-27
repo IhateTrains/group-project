@@ -112,3 +112,14 @@ class VinNumber(models.Model):
 
     def __str__(self):
         return self.vin
+
+
+class InvoiceFile(models.Model):
+    bytes = models.TextField()
+    filename = models.CharField(max_length=255)
+    mimetype = models.CharField(max_length=50)
+
+
+class Invoice(models.Model):
+    orderID = models.ForeignKey(Order, on_delete=models.CASCADE)
+    pdfFile = models.FileField(upload_to='pages.InvoiceFile/bytes/filename/mimetype', blank=True, null=True)

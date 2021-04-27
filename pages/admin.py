@@ -1,7 +1,7 @@
 # Django
 from django.contrib import admin
 # project
-from .forms import ProductAdminForm, SzikPointAdminForm
+from .forms import ProductAdminForm, SzikPointAdminForm, InvoiceAdminForm
 from . import models
 
 # Register your models here.
@@ -22,3 +22,8 @@ class ProductAdmin(admin.ModelAdmin):
 @admin.register(models.SzikPoint)
 class SzikPointAdmin(admin.ModelAdmin):
     form = SzikPointAdminForm
+
+
+@admin.register(models.Invoice)
+class InvoiceAdmin(admin.ModelAdmin):
+    form = InvoiceAdminForm
