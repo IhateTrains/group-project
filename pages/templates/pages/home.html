@@ -151,7 +151,7 @@
       <nav class="navbar navbar-expand-lg navbar-dark mdb-color lighten-3 mt-3 mb-5">
 
         <!-- Navbar brand -->
-        <span class="navbar-brand">Categories:</span>
+        <span class="navbar-brand">Kategorie:</span>
 
         <!-- Collapse button -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
@@ -168,6 +168,9 @@
               <a class="nav-link" href="#">All
                 <span class="sr-only">(current)</span>
               </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'pages:sales' %}">Promocje</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Części</a>
@@ -234,12 +237,9 @@
                 <h4 class="font-weight-bold blue-text">
                   <strong>
                   {% if item.discountPrice %}
-                    <span class="mr-1">
-                    <del>{{ item.price }} zł</del>
-                    </span>
-                    <span>{{ item.discountPrice }} zł</span>
+                    <span class="mr-1"> <del>{{ item.price }} zł</del> </span> <span>{{ item.discountPrice }} zł</span>
                   {% else %}
-                   <span>{{ item.price }} zł</span>
+                    <span>{{ item.price }} zł</span>
                   {% endif %}
                   </strong>
                 </h4>

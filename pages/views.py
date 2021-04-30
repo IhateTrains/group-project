@@ -18,6 +18,11 @@ class HomeView(ListView):
     template_name = "pages/home.html"
 
 
+class SalesView(ListView):
+    model = Product
+    template_name = "pages/sales.html"
+
+
 class ProductView(DetailView):
     model = Product
     template_name = "pages/product.html"
