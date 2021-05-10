@@ -40,6 +40,7 @@ class InvoiceAdminForm(forms.ModelForm):
             'cover': DBAdminClearableFileInput,
         }
 
+
 class CreateUserForm(UserCreationForm):
     username = forms.CharField(label='Login', required=True, min_length=8, widget=forms.TextInput(attrs={'placeholder': 'Login'}))
     email = forms.EmailField(label='E-mail', required=True, widget=forms.TextInput(attrs={'placeholder': 'Email'}))
