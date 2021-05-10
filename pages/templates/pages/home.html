@@ -2,6 +2,7 @@
 
 {% block content %}
 
+{% load cart_template_tags %}
 
 <!--Carousel Wrapper-->
   <div id="carousel-example-1z" class="carousel slide carousel-fade mx-auto" data-ride="carousel">
@@ -113,6 +114,20 @@
     <!--/.Controls-->
 
   </div>
+
+<!-- Floating cart -->
+{% if user.is_authenticated %}
+<div id="floating-cart" class="card waves-effect d-lg-none">
+  <a href="{% url 'pages:order-summary' %}" class="card-body">
+    <p class="card-text">
+      {% if request.user|cart_item_count != 0 %}
+        <span class="badge red z-depth-1 mr-1"> {{ request.user|cart_item_count }} </span>
+      {% endif %}
+      <i class="fas fa-shopping-cart"></i>
+    </p>
+  </a>
+</div>
+{% endif %}
 
 <main>
     <div class="container">
