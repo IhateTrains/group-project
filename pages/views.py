@@ -9,8 +9,12 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.views.generic import ListView, DetailView, View
+from django.contrib.auth.forms import UserCreationForm
 # project
 from .models import Product, Order, OrderLine
+from .forms import CreateUserForm
+
+
 
 
 class HomeView(ListView):
@@ -121,3 +125,12 @@ def reduce_quantity_item(request, pk):
         messages.info(request, "You do not have an Order")
         return redirect("pages:order-summary")
 
+def registerView(request):
+    form = CreateUserForm()
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+    context = {'form': form}
+    return render(request, 'register.html', context)

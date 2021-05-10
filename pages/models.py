@@ -1,7 +1,8 @@
 from django.conf import settings
 from django.db import models
 from django.shortcuts import reverse
-
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Create your models here.
 
@@ -74,7 +75,7 @@ class ProductQuantity(models.Model):
 
 class OrderLine(models.Model):
     customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # userID
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name ='product_OrderLine', on_delete=models.CASCADE)   #related_name=...
     quantity = models.IntegerField(default=1)
     ordered = models.BooleanField(default=False)  # orderStatus
 
@@ -110,22 +111,30 @@ class Order(models.Model):
         return total
 
 
+class UserType(models.Model):
+    name = models.CharField(max_length=20, null=False)
+
+    def __str__(self):
+        return self.name
+
+
 class UserProfile(models.Model):
     userID = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    userType = models.ForeignKey(UserType, null=True,  on_delete=models.CASCADE)
     telephone = models.CharField(max_length=9)
     city = models.CharField(max_length=30)
     streetAddress = models.CharField(max_length=50)
     postalCode = models.CharField(max_length=20)
 
     def __str__(self):
-        return self.userID
+        return str(self.userID)
 
 
-class UserType(models.Model):
-    name = models.CharField(max_length=20, null=False)
-
-    def __str__(self):
-        return self.name
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def update_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(userID=instance)
+    instance.userprofile.save()
 
 
 class VinNumber(models.Model):
