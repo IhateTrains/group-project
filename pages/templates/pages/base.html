@@ -21,39 +21,46 @@
   <link href="{% static 'css/style.min.css' %}" rel="stylesheet">
   <style type="text/css">
     html,
-    body,
-    header,
+    body {
+      height: 100vh;
+    }
+
     .carousel {
-      height: 60vh;
+      width: 70%;
+      height: 30vh;
     }
 
     @media (max-width: 740px) {
-
-      html,
-      body,
-      header,
       .carousel {
-        height: 100vh;
+        height: 45vh;
+        width: 90%;
       }
     }
 
     @media (min-width: 800px) and (max-width: 850px) {
-
-      html,
-      body,
-      header,
       .carousel {
-        height: 100vh;
+        height: 45vh;
+        width: 90%;
       }
     }
 
+    #floating-cart {
+      width: 75px;
+      position: fixed;
+      margin-left: 0;
+      top: 3px;
+      right: 3px;
+      z-index: 99999;
+      white-space: nowrap;
+      text-align: center;
+    }
   </style>
 </head>
 
 <body>
 
   <!-- Navbar -->
-  <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
+  <nav id="navbar" class="navbar navbar-expand-lg navbar-light white scrolling-navbar mb-4">
     <div class="container">
 
       <!-- Brand -->
@@ -62,7 +69,7 @@
       </a>
 
       <!-- Collapse -->
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      <button id="nb-toggle" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -72,15 +79,29 @@
 
         <!-- Left -->
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
+
+          <li class="nav-item active mx-2">
+            <a class="nav-link" href="#">Oferta</a>
+          </li>
+
+          <li class="nav-item mx-2">
+            <a class="nav-link" href="#">Promocje</a>
+          </li>
+
+          <li class="nav-item mx-2">
+            <a class="nav-link" href="#">Nasze placówki</a>
+          </li>
+
+          <li class="nav-item mx-2">
+            <a class="nav-link" href="#">Kontakt</a>
           </li>
         </ul>
 
         <!-- Right -->
         <ul class="navbar-nav nav-flex-icons">
-
+            <!-- Cart -->
             {% if user.is_authenticated %}
-            <li class="nav-item">
+            <li class="nav-item mx-1">
                 <a href="{% url 'pages:order-summary' %}" class="nav-link waves-effect">
                 {% if request.user|cart_item_count != 0 %}
                   <span class="badge red z-depth-1 mr-1"> {{ request.user|cart_item_count }} </span>
@@ -89,27 +110,40 @@
                 <span class="clearfix d-none d-sm-inline-block"> Koszyk </span>
                 </a>
             </li>
-            <li class="nav-item">
-                 <a class="nav-link waves-effect">
-                {{ user.username }}
+
+            <!-- User account -->
+            <li class="nav-item dropdown mx-1">
+                <a class="nav-link waves-effect" data-toggle="dropdown">
+                  <i class="fas fa-user"></i> {{ user.username }}
+                  <i class="fas fa-angle-down"></i>
                 </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link waves-effect" href="{% url 'logout' %}">Wyloguj</a>
-            </li>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item pl-4" href="#">Moje konto</a></li>
+                  <li><a class="dropdown-item pl-4" href="#">Zamówienia</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="nav-link dropdown-item pl-4" href="{% url 'logout' %}">
+                    <i class="fas fa-power-off"></i> Wyloguj się
+                  </a></li>
+                </ul>
+              </li>
             {% else %}
+
+            <!-- Login -->
             <li class="nav-item">
                 <a class="nav-link waves-effect" href="{% url 'login' %}">Zaloguj</a>
             </li>
             {% endif %}
+
         </ul>
 
       </div>
 
     </div>
   </nav>
-  <!-- Navbar -->
-  <div class="mt-5 pt-4">
+
+  <!-- Page content -->
+  <div class="container-fluid" style="min-height: calc(100vh - 160px);">
+
     {% if messages %}
       {% for message in messages %}
         <div class="alert alert-{{message.tags}}" role="alert">
@@ -117,14 +151,16 @@
         </div>
       {% endfor %}
     {% endif %}
-    </div>
+  
 
     {% block content %}
     {% endblock content %}
 
+  </div>
+  <!-- Page content end -->
+
     {% include 'pages/footer.html' %}
-
-
+  
     {% include 'pages/scripts.html' %}
 
     {% block extra_scripts %}
