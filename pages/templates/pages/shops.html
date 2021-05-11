@@ -22,7 +22,7 @@
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
   {% for shop in object_list %}
-  L.marker([{{shop.mapLatitude}}, {{shop.mapLatitude}}]).addTo(map)
+  L.marker([{{shop.mapLatitude}}, {{shop.mapLongitude}}]).addTo(map)
       .bindPopup('{{shop}}<br>Numer telefonu: {{shop.telephone}}')
       .openPopup();
   {% endfor %}
