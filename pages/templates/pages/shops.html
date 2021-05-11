@@ -7,7 +7,7 @@
 <main>
 
     <div id="outer">
-      <div id="mapid" style="display: inline-block; width: 100%; height: 600px; margin: 0 auto;"></div>
+      <div id="mapid" style="margin: auto; width: 70%; height: 500px;"></div>
 
     </div>
 
@@ -16,7 +16,7 @@
   <!--Main layout-->
 
 <script>
-  var map = L.map('mapid').setView([50.038955, 22.017469], 9);
+  let map = L.map('mapid').setView([50.03, 22.01], 9);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
