@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 # third party
 from db_file_storage.form_widgets import DBAdminClearableFileInput
 # project
-from .models import Product, SzikPoint, Invoice
+from .models import Product, SzikPoint, Invoice, UserProfile, UserType
 
 
 class ProductAdminForm(forms.ModelForm):
@@ -46,6 +46,14 @@ class CreateUserForm(UserCreationForm):
     email = forms.EmailField(label='E-mail', required=True, widget=forms.TextInput(attrs={'placeholder': 'Email'}))
     password1 = forms.CharField(label='Haslo', required=True, widget=forms.PasswordInput(attrs={'placeholder': 'Hasło'}))
     password2 = forms.CharField(label='Powtórz hasło', required=True, widget=forms.PasswordInput(attrs={'placeholder': 'Powtórz hasło'}))
+
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
+
+
+class CreateProfileForm(forms.ModelForm):
+
+    class Meta:
+        model = UserProfile
+        fields = ['userType']
