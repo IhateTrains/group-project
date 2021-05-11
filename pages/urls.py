@@ -7,6 +7,7 @@ from .views import (
     SalesView,
     ProductView,
     OrderSummaryView,
+    ShopsView,
     add_to_cart,
     remove_from_cart,
     reduce_quantity_item,
@@ -17,7 +18,7 @@ app_name = 'pages'
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('sales', SalesView.as_view(), name='sales'),
-    path('shops', TemplateView.as_view(template_name='pages/shops.html'), name='shops'),
+    path('shops', ShopsView.as_view(), name='shops'),
     path('about/', views.about, name='about'),
     path('product/<pk>/', ProductView.as_view(), name='product'),
     path('add-to-cart/<pk>/', add_to_cart, name='add-to-cart'),

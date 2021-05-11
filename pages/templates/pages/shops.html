@@ -21,13 +21,11 @@
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
-
-  L.marker([49.673742, 21.776152]).addTo(map)
-      .bindPopup('<strong>Warsztat w Krośnie</strong><br>Godziny otwarcia:<br> 8:00-16:00')
+  {% for shop in object_list %}
+  L.marker([{{shop.mapLatitude}}, {{shop.mapLatitude}}]).addTo(map)
+      .bindPopup('{{shop}}<br>Numer telefonu: {{shop.telephone}}')
       .openPopup();
-  L.marker([50.038955, 22.017469]).addTo(map)
-      .bindPopup('<strong>Sklep w Rzeszowie</strong><br>Godziny otwarcia:<br> 7:00-21:00')
-      .openPopup();
+  {% endfor %}
 </script>
 
 {% endblock content %}
