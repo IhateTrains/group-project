@@ -19,8 +19,8 @@ class SzikPoint(models.Model):
     postalCode = models.CharField(max_length=20)
     telephone = models.CharField(max_length=9)
     photo = models.ImageField(upload_to='pages.SzikPointPhoto/bytes/filename/mimetype', blank=True, null=True)
-    mapLatitude = models.DecimalField()
-    mapLongitude = models.DecimalField()
+    mapLatitude = models.FloatField()
+    mapLongitude = models.FloatField()
 
     def __str__(self):
         return f"{self.streetAddress}, {self.postalCode} {self.city}"
