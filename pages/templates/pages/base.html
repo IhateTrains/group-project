@@ -19,6 +19,10 @@
   <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
   <!-- Your custom styles (optional) -->
   <link href="{% static 'css/style.min.css' %}" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+
   <style type="text/css">
     html,
     body {
@@ -87,11 +91,11 @@
           </li>
 
           <li class="nav-item mx-2">
-            <a class="nav-link" href="#">Promocje</a>
+            <a class="nav-link" href="{% url 'pages:sales' %}">Promocje</a>
           </li>
 
           <li class="nav-item mx-2">
-            <a class="nav-link" href="#">Nasze placówki</a>
+            <a class="nav-link" href="{% url 'pages:shops' %}">Nasze placówki</a>
           </li>
 
           <li class="nav-item mx-2">
