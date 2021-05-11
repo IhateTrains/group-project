@@ -11,10 +11,8 @@ from django.utils import timezone
 from django.views.generic import ListView, DetailView, View
 from django.contrib.auth.forms import UserCreationForm
 # project
-from .models import Product, Order, OrderLine
+from .models import Product, Order, OrderLine, SzikPoint
 from .forms import CreateUserForm, CreateProfileForm
-
-
 
 
 class HomeView(ListView):
@@ -30,6 +28,11 @@ class SalesView(ListView):
 class ProductView(DetailView):
     model = Product
     template_name = "pages/product.html"
+
+
+class ShopsView(ListView):
+    model = SzikPoint
+    template_name = "pages/shops.html"
 
 
 class OrderSummaryView(LoginRequiredMixin, View):
