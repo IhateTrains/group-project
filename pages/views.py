@@ -12,7 +12,7 @@ from django.views.generic import ListView, DetailView, View
 from django.contrib.auth.forms import UserCreationForm
 # project
 from .models import Product, Order, OrderLine
-from .forms import CreateUserForm
+from .forms import CreateUserForm, CreateProfileForm
 
 
 
@@ -125,12 +125,20 @@ def reduce_quantity_item(request, pk):
         messages.info(request, "You do not have an Order")
         return redirect("pages:order-summary")
 
+
 def registerView(request):
     form = CreateUserForm()
+    form_prof = CreateProfileForm()
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
-        if form.is_valid():
-            form.save()
+        form_prof = CreateProfileForm(request.POST)
+        if form.is_valid() and form_prof.is_valid():
+            user = form.save()
+            user.refresh_from_db()
+            form_prof = CreateProfileForm(request.POST, instance=user.userprofile)
+            form_prof.full_clean()
+            form_prof.save()
+            user.save()
             return redirect('/')
-    context = {'form': form}
+    context = {'form': form, 'form_prof': form_prof}
     return render(request, 'register.html', context)
