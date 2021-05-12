@@ -22,7 +22,10 @@
       }
   }
   function showUserPosition(position){
-      var map = L.map('mapid').setView([position.coords.latitude, position.coords.longitude], 9);
+      let latitude = position.coords.latitude;
+      let longitude = position.coords.longitude;
+
+      var map = L.map('mapid').setView([latitude, longitude], 9);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(map);
@@ -36,9 +39,18 @@
           shadowSize: [41, 41]
         });
 
-      L.marker([position.coords.latitude, position.coords.longitude], {icon: greenIcon}).addTo(map)
+      L.marker([latitude, longitude], {icon: greenIcon}).addTo(map)
           .bindPopup('<strong>Tutaj jesteś</strong>')
           .openPopup();
+      fetch('get-nearest-shop/' + latitude + '/' + longitude)
+      .then(response => {return response.json()})
+      .then(res => {
+          console.log(res);
+          L.marker([res['mapLatitude'], res['mapLongitude']]).addTo(map)
+          .bindPopup(res['city'])
+          .openPopup();
+      })
+      .catch(err => console.error(err));
   }
 </script>
 
