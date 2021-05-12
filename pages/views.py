@@ -60,8 +60,8 @@ def get_nearest_shop(request, lat, lng):
         doesn't require GeoDjango :)
     """
     query = """SELECT id, (6367*acos(cos(radians(%2f))
-                       *cos(radians(mapLatitude))*cos(radians(mapLongitude)-radians(%2f))
-                       +sin(radians(%2f))*sin(radians(mapLatitude))))
+                       *cos(radians(pages_szikpoint.mapLatitude))*cos(radians(pages_szikpoint.mapLongitude)-radians(%2f))
+                       +sin(radians(%2f))*sin(radians(pages_szikpoint.mapLatitude))))
                        AS distance FROM pages_szikpoint ORDER BY distance LIMIT 1""" % (
         float(lat),
         float(lng),
