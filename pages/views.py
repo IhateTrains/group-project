@@ -68,8 +68,8 @@ def get_nearest_shop(request, lat, lng):
         lng_col = '"' + lng_col + '"'
 
     query = """SELECT id, (6367*acos(cos(radians(%2f))
-                               *cos(radians(pages_szikpoint.mapLatitude))*cos(radians(pages_szikpoint.mapLongitude)-radians(%2f))
-                               +sin(radians(%2f))*sin(radians(pages_szikpoint.mapLatitude))))
+                               *cos(radians(lat_col))*cos(radians(lng_col)-radians(%2f))
+                               +sin(radians(%2f))*sin(radians(lat_col))))
                                AS distance FROM pages_szikpoint ORDER BY distance LIMIT 1""" % (
         float(lat),
         float(lng),
