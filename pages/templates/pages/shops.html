@@ -3,29 +3,44 @@
 {% block content %}
 
 
-
 <main>
-
+    <button id="getPosButton"onclick="getLocation()">Znajdź najbliższą placówkę</button>
     <div id="outer">
       <div id="mapid" style="margin: auto; width: 70%; height: 500px;"></div>
-
     </div>
 
-
-  </main>
-  <!--Main layout-->
+</main>
 
 <script>
-  let map = L.map('mapid').setView([50.03, 22.01], 9);
+  let x = document.getElementById("outer");
+  function getLocation() {
+      if (navigator.geolocation){
+          navigator.geolocation.getCurrentPosition(showUserPosition);
+          document.getElementById("getPosButton").style.display = "none";
+      } else{
+          x.innerHTML = "Twoja przeglądarka nie obsługuje geolokacji, zalecamy jej zmianę.";
+      }
+  }
+  function showUserPosition(position){
+      var map = L.map('mapid').setView([position.coords.latitude, position.coords.longitude], 9);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
 
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  }).addTo(map);
-  {% for shop in object_list %}
-  L.marker([{{shop.mapLatitude}}, {{shop.mapLongitude}}]).addTo(map)
-      .bindPopup('{{shop}}<br>Numer telefonu: {{shop.telephone}}')
-      .openPopup();
-  {% endfor %}
+      const greenIcon = new L.Icon({
+          iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+          shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+          iconSize: [25, 41],
+          iconAnchor: [12, 41],
+          popupAnchor: [1, -34],
+          shadowSize: [41, 41]
+        });
+
+      L.marker([position.coords.latitude, position.coords.longitude], {icon: greenIcon}).addTo(map)
+          .bindPopup('<strong>Tutaj jesteś</strong>')
+          .openPopup();
+  }
 </script>
+
 
 {% endblock content %}
