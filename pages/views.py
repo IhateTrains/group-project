@@ -64,8 +64,8 @@ def get_nearest_shop(request, lat, lng):
     latitude_col = 'pages_szikpoint.mapLatitude'
     longitude_col = 'pages_szikpoint.mapLongitude'
     if connection.vendor == 'postgresql':
-        latitude_col = '"' + latitude_col + '"'
-        longitude_col = '"' + longitude_col + '"'
+        latitude_col = "mapLatitude"
+        longitude_col = "mapLongitude"
 
     query = """SELECT id, (6367*acos(cos(radians(%2f))
                                *cos(radians(%s))*cos(radians(%s)-radians(%2f))
