@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django_countries',
     'crispy_forms',
     'widget_tweaks',
+    'rest_framework',
 
     'django.contrib.admin',
     'django.contrib.sites',
