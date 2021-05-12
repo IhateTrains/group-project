@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.views.generic import ListView, DetailView, View
@@ -13,6 +13,7 @@ from django.contrib.auth.forms import UserCreationForm
 # project
 from .models import Product, Order, OrderLine, SzikPoint
 from .forms import CreateUserForm, CreateProfileForm
+from .serializers import SzikPointSerializer
 
 
 class HomeView(ListView):
@@ -50,6 +51,26 @@ class OrderSummaryView(LoginRequiredMixin, View):
 
 def about(request):
     return HttpResponse('Projekt grupowy z Inżynierii Oprogramowania.')
+
+
+def get_nearest_shop(request, lat, lng):
+    """
+        Haversine Formula
+        https://en.wikipedia.org/wiki/Haversine_formula
+        doesn't require GeoDjango :)
+    """
+    query = """SELECT id, (6367*acos(cos(radians(%2f))
+                       *cos(radians(mapLatitude))*cos(radians(mapLongitude)-radians(%2f))
+                       +sin(radians(%2f))*sin(radians(mapLatitude))))
+                       AS distance FROM pages_szikpoint ORDER BY distance LIMIT 1""" % (
+        float(lat),
+        float(lng),
+        float(lat)
+    )
+
+    querySet = SzikPoint.objects.raw(query)[0]
+    serializer = SzikPointSerializer(querySet)
+    return JsonResponse(serializer.data)
 
 
 @login_required
