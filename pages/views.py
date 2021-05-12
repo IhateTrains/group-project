@@ -61,8 +61,8 @@ def get_nearest_shop(request, lat, lng):
         doesn't require GeoDjango :)
     """
 
-    latitude_col = 'pages_szikpoint.mapLatitude'
-    longitude_col = 'pages_szikpoint.mapLongitude'
+    latitude_col = '"pages_szikpoint.mapLatitude"'
+    longitude_col = '"pages_szikpoint.mapLongitude"'
     #if connection.vendor == 'postgresql':
     #    latitude_col = 'mapLatitude'
     #    longitude_col = 'mapLongitude'
