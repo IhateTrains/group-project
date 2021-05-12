@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
+from django.db import connection
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
@@ -59,10 +60,17 @@ def get_nearest_shop(request, lat, lng):
         https://en.wikipedia.org/wiki/Haversine_formula
         doesn't require GeoDjango :)
     """
+
+    lat_col = 'pages_szikpoint.mapLatitude'
+    lng_col = 'pages_szikpoint.mapLongitude'
+    if connection.vendor == 'postgresql':
+        lat_col = '"' + lat_col + '"'
+        lng_col = '"' + lng_col + '"'
+
     query = """SELECT id, (6367*acos(cos(radians(%2f))
-                       *cos(radians(pages_szikpoint.mapLatitude))*cos(radians(pages_szikpoint.mapLongitude)-radians(%2f))
-                       +sin(radians(%2f))*sin(radians(pages_szikpoint.mapLatitude))))
-                       AS distance FROM pages_szikpoint ORDER BY distance LIMIT 1""" % (
+                               *cos(radians(pages_szikpoint.mapLatitude))*cos(radians(pages_szikpoint.mapLongitude)-radians(%2f))
+                               +sin(radians(%2f))*sin(radians(pages_szikpoint.mapLatitude))))
+                               AS distance FROM pages_szikpoint ORDER BY distance LIMIT 1""" % (
         float(lat),
         float(lng),
         float(lat)
