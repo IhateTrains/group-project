@@ -61,11 +61,8 @@ def get_nearest_shop(request, lat, lng):
         doesn't require GeoDjango :)
     """
 
-    latitude_col = '"pages_szikpoint.mapLatitude"'
-    longitude_col = '"pages_szikpoint.mapLongitude"'
-    #if connection.vendor == 'postgresql':
-    #    latitude_col = 'mapLatitude'
-    #    longitude_col = 'mapLongitude'
+    latitude_col = 'mapLatitude'
+    longitude_col = 'mapLongitude'
 
     query = """SELECT id, (6367*acos(cos(radians( %2f ))
                                *cos(radians( %s ))*cos(radians( %s )-radians( %2f ))
@@ -78,6 +75,21 @@ def get_nearest_shop(request, lat, lng):
         float(lat),
         latitude_col
     )
+
+    if connection.vendor == 'postgresql':
+        query = """select id, distance
+                    from (
+                        select id, ( 6371 * acos( cos( radians( %2f ) ) * cos( radians( %s ) ) * cos( radians( %s ) - radians( %2f ) ) + sin( radians( %2f ) ) * sin( radians( %s ) ) ) ) as distance
+                        from pages_szikpoint
+                    ) as dt
+                    order by distance FETCH FIRST ROW ONLY""" % (
+            float(lat),
+            latitude_col,
+            longitude_col,
+            float(lng),
+            float(lat),
+            latitude_col
+        )
 
     querySet = SzikPoint.objects.raw(query)[0]
     serializer = SzikPointSerializer(querySet)
