@@ -79,16 +79,13 @@ def get_nearest_shop(request, lat, lng):
     if connection.vendor == 'postgresql':
         query = """select id, distance
                     from (
-                        select id, ( 6371 * acos( cos( radians( %2f ) ) * cos( radians( %s ) ) * cos( radians( %s ) - radians( %2f ) ) + sin( radians( %2f ) ) * sin( radians( %s ) ) ) ) as distance
+                        select id, ( 6371 * acos( cos( radians( %2f ) ) * cos( radians( "pages_szikpoint.mapLatitude" ) ) * cos( radians( "pages_szikpoint.mapLongitude" ) - radians( %2f ) ) + sin( radians( %2f ) ) * sin( radians( "pages_szikpoint.mapLatitude" ) ) ) ) as distance
                         from pages_szikpoint
                     ) as dt
                     order by distance FETCH FIRST ROW ONLY""" % (
             float(lat),
-            latitude_col,
-            longitude_col,
             float(lng),
-            float(lat),
-            latitude_col
+            float(lat)
         )
 
     querySet = SzikPoint.objects.raw(query)[0]
