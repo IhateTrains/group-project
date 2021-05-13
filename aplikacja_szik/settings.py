@@ -100,16 +100,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'pages.password_validators.MinimalLengthValidator',
+        'OPTIONS': {
+            'min_length': 8,
+        }
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'pages.password_validators.AtLeastOneDigitValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'pages.password_validators.AtLeastOneUppercaseLetterValidator',
     },
 ]
 
@@ -168,13 +168,3 @@ DEFAULT_FILE_STORAGE = 'db_file_storage.storage.DatabaseFileStorage'
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
-
-# if 'DATABASES' in locals():
-#     print("Database found")
-# else:
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.sqlite3',
-#             'NAME': BASE_DIR / 'db.sqlite3',
-#         }
-#     }
