@@ -106,10 +106,10 @@ AUTH_PASSWORD_VALIDATORS = [
         }
     },
     {
-        'NAME': 'AtLeastOneDigitValidator',
+        'NAME': 'pages.password_validators.AtLeastOneDigitValidator',
     },
     {
-        'NAME': 'AtLeastOneUppercaseLetterValidator',
+        'NAME': 'pages.password_validators.AtLeastOneUppercaseLetterValidator',
     },
 ]
 
