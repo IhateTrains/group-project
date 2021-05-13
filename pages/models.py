@@ -15,15 +15,15 @@ class SzikPointPhoto(models.Model):
 
 class SzikPoint(models.Model):
     city = models.CharField(max_length=30)
-    streetAddress = models.CharField(max_length=50)
-    postalCode = models.CharField(max_length=20)
+    street_address = models.CharField(max_length=50)
+    postal_code = models.CharField(max_length=20)
     telephone = models.CharField(max_length=9)
     photo = models.ImageField(upload_to='pages.SzikPointPhoto/bytes/filename/mimetype', blank=True, null=True)
-    mapLatitude = models.FloatField()
-    mapLongitude = models.FloatField()
+    map_latitude = models.FloatField()
+    map_longitude = models.FloatField()
 
     def __str__(self):
-        return f"{self.streetAddress}, {self.postalCode} {self.city}"
+        return f"{self.street_address}, {self.postal_code} {self.city}"
 
 
 class Category(models.Model):
@@ -40,10 +40,10 @@ class ProductImage(models.Model):
 
 
 class Product(models.Model):
-    categoryID = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category_id = models.ForeignKey(Category, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     price = models.DecimalField(max_digits=6, decimal_places=2)
-    discountPrice = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
+    discount_price = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     description = models.TextField()
     image = models.ImageField(upload_to='pages.ProductImage/bytes/filename/mimetype', blank=True, null=True)
 
@@ -66,17 +66,17 @@ class Product(models.Model):
         })
 
     def get_category_display(self):
-        return self.categoryID.name
+        return self.category_id.name
 
 
 class ProductQuantity(models.Model):
-    productID = models.ForeignKey(Product, on_delete=models.CASCADE)
-    pointID = models.ForeignKey(SzikPoint, on_delete=models.CASCADE)
+    product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
+    point_id = models.ForeignKey(SzikPoint, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=0)
 
 
 class OrderLine(models.Model):
-    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # userID
+    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # user_id
     product = models.ForeignKey(Product, related_name ='product_OrderLine', on_delete=models.CASCADE)   #related_name=...
     quantity = models.IntegerField(default=1)
     ordered = models.BooleanField(default=False)  # orderStatus
@@ -88,22 +88,22 @@ class OrderLine(models.Model):
         return self.quantity * self.product.price
 
     def get_discount_item_price(self):
-        return self.quantity * self.product.discountPrice
+        return self.quantity * self.product.discount_price
 
     def get_amount_saved(self):
         return self.get_total_item_price() - self.get_discount_item_price()
 
     def get_final_price(self):
-        if self.product.discountPrice:
+        if self.product.discount_price:
             return self.get_discount_item_price()
         return self.get_total_item_price()
 
 
 class Order(models.Model):
-    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # userID
-    paymentMethod = models.CharField(max_length=60, default="card")
+    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # user_id
+    payment_method = models.CharField(max_length=60, default="card")
     products = models.ManyToManyField(OrderLine)
-    orderDate = models.DateTimeField()
+    order_date = models.DateTimeField()
     ordered = models.BooleanField(default=False)
 
     def get_total_price(self):
@@ -121,15 +121,15 @@ class UserType(models.Model):
 
 
 class UserProfile(models.Model):
-    userID = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    userType = models.ForeignKey(UserType, null=True,  on_delete=models.CASCADE)
+    user_id = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user_type = models.ForeignKey(UserType, null=True, on_delete=models.CASCADE)
     telephone = models.CharField(max_length=9)
     city = models.CharField(max_length=30)
-    streetAddress = models.CharField(max_length=50)
-    postalCode = models.CharField(max_length=20)
+    street_address = models.CharField(max_length=50)
+    postal_code = models.CharField(max_length=20)
 
     def __str__(self):
-        return str(self.userID)
+        return str(self.user_id)
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
@@ -140,7 +140,7 @@ def update_user_profile(sender, instance, created, **kwargs):
 
 
 class VinNumber(models.Model):
-    userID = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     vin = models.CharField(max_length=17)
 
     def __str__(self):
@@ -154,5 +154,5 @@ class InvoiceFile(models.Model):
 
 
 class Invoice(models.Model):
-    orderID = models.ForeignKey(Order, on_delete=models.CASCADE)
-    pdfFile = models.FileField(upload_to='pages.InvoiceFile/bytes/filename/mimetype', blank=True, null=True)
+    order_id = models.ForeignKey(Order, on_delete=models.CASCADE)
+    pdf_file = models.FileField(upload_to='pages.InvoiceFile/bytes/filename/mimetype', blank=True, null=True)
