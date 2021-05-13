@@ -47,7 +47,7 @@
       .then(res => {
           console.log(res);
           L.marker([res['map_latitude'], res['map_longitude']]).addTo(map)
-          .bindPopup(res['city'])
+          .bindPopup('<strong>Najbliższa placówka:</strong><br>' + res['city'] + '<br>' + res['street_address'] + ' ' + res['postal_code'])
           .openPopup();
       })
       .catch(err => console.error(err));
