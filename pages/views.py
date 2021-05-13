@@ -10,7 +10,6 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.views.generic import ListView, DetailView, View
-from django.contrib.auth.forms import UserCreationForm
 # project
 from .models import Product, Order, OrderLine, SzikPoint
 from .forms import CreateUserForm, CreateProfileForm

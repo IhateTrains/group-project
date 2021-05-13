@@ -44,7 +44,7 @@ class InvoiceAdminForm(forms.ModelForm):
 class CreateUserForm(UserCreationForm):
     username = forms.CharField(label='Login', required=True, min_length=8, widget=forms.TextInput(attrs={'placeholder': 'Login'}))
     email = forms.EmailField(label='E-mail', required=True, widget=forms.TextInput(attrs={'placeholder': 'Email'}))
-    password1 = forms.CharField(label='Haslo', required=True, widget=forms.PasswordInput(attrs={'placeholder': 'Hasło'}))
+    password1 = forms.CharField(label='Hasło', required=True, widget=forms.PasswordInput(attrs={'placeholder': 'Hasło'}))
     password2 = forms.CharField(label='Powtórz hasło', required=True, widget=forms.PasswordInput(attrs={'placeholder': 'Powtórz hasło'}))
 
     class Meta:
