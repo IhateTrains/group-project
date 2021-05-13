@@ -100,7 +100,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'MinimalLengthValidator',
+        'NAME': 'pages.password_validators.MinimalLengthValidator',
         'OPTIONS': {
             'min_length': 8,
         }

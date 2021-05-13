@@ -135,7 +135,7 @@ class UserProfile(models.Model):
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def update_user_profile(sender, instance, created, **kwargs):
     if created:
-        UserProfile.objects.create(userID=instance)
+        UserProfile.objects.create(user_id=instance)
     instance.userprofile.save()
 
 
