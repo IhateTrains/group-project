@@ -88,8 +88,7 @@ def search_products(request):
         return render(request, 'pages/search_products.html',
                       {'searched': searched,
                        'matching_products': matching_products})
-    else:
-        return render(request, 'pages/search_products.html', {})
+    return render(request, 'pages/search_products.html', {})
 
 
 @login_required
