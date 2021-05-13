@@ -170,9 +170,10 @@
           </ul>
           <!-- Links -->
 
-          <form class="form-inline">
+          <form class="form-inline" method="POST" action={% url 'pages:search-products' %}>
+            {% csrf_token %}
             <div class="md-form my-0">
-              <input class="form-control mr-sm-2" type="text" placeholder="Szukaj" aria-label="Szukaj">
+              <input class="form-control mr-sm-2" type="text" placeholder="Szukaj" aria-label="Szukaj" name="searched">
               <button class="btn btn-light my-sm-0" type="submit">Szukaj</button>
             </div>
           </form>
@@ -209,7 +210,7 @@
               <!--Card content-->
               <div class="card-body text-center">
                 <!--Category & Title-->
-                <a href="" class="grey-text">
+                <a href="#" class="grey-text">
                   <h5>{{ item.get_category_display }}</h5>
                 </a>
                 <h5>

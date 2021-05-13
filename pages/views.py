@@ -81,6 +81,16 @@ def get_nearest_shop(request, lat, lng):
     return JsonResponse(serializer.data)
 
 
+def search_products(request):
+    if request.method == 'POST':
+        searched = request.POST['searched']
+        matching_products = Product.objects.filter(name__contains=searched)
+        return render(request, 'pages/search_products.html',
+                      {'searched': searched,
+                       'matching_products': matching_products})
+    return render(request, 'pages/search_products.html', {})
+
+
 @login_required
 def add_to_cart(request, pk):
     item = get_object_or_404(Product, pk=pk)
@@ -104,7 +114,7 @@ def add_to_cart(request, pk):
             return redirect("pages:order-summary")
     else:
         ordered_date = timezone.now()
-        order = Order.objects.create(customer=request.user, orderDate=ordered_date)
+        order = Order.objects.create(customer=request.user, order_date=ordered_date)
         order.products.add(order_item)
         messages.info(request, "Dodano do koszyka")
         return redirect("pages:order-summary")
@@ -132,7 +142,6 @@ def remove_from_cart(request, pk):
             messages.info(request, "Produktu nie ma w koszyku")
             return redirect("pages:product", pk=pk)
     else:
-        messages.info(request, "You do not have an Order")
         return redirect("pages:product", pk=pk)
 
 
@@ -154,7 +163,6 @@ def reduce_quantity_item(request, pk):
             messages.info(request, "Produktu nie ma w koszyku")
             return redirect("pages:order-summary")
     else:
-        messages.info(request, "You do not have an Order")
         return redirect("pages:order-summary")
 
 
