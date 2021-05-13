@@ -81,6 +81,18 @@ def get_nearest_shop(request, lat, lng):
     return JsonResponse(serializer.data)
 
 
+def search_products(request):
+    if request.method == 'POST':
+        searched = request.POST['searched']
+        matching_products = Product.objects.filter(name__contains=searched)
+        return render(request, 'pages/search_products.html',
+                      {'searched': searched,
+                       'matching_products': matching_products})
+    else:
+        return render(request, 'pages/search_products.html', {})
+
+
+
 @login_required
 def add_to_cart(request, pk):
     item = get_object_or_404(Product, pk=pk)
