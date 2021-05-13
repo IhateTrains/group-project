@@ -1,3 +1,4 @@
+# Django imports
 from django.conf import settings
 from django.db import models
 from django.shortcuts import reverse
@@ -77,7 +78,7 @@ class ProductQuantity(models.Model):
 
 class OrderLine(models.Model):
     customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # user_id
-    product = models.ForeignKey(Product, related_name ='product_OrderLine', on_delete=models.CASCADE)   #related_name=...
+    product = models.ForeignKey(Product, related_name='product_OrderLine', on_delete=models.CASCADE)   #related_name=...
     quantity = models.IntegerField(default=1)
     ordered = models.BooleanField(default=False)  # orderStatus
 

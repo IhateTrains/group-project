@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from db_file_storage.form_widgets import DBAdminClearableFileInput
 # project
 from .models import Product, SzikPoint, Invoice, UserProfile, UserType
+from .username_validators import validate_username
 
 
 class ProductAdminForm(forms.ModelForm):
@@ -42,7 +43,7 @@ class InvoiceAdminForm(forms.ModelForm):
 
 
 class CreateUserForm(UserCreationForm):
-    username = forms.CharField(label='Login', required=True, min_length=8, widget=forms.TextInput(attrs={'placeholder': 'Login'}))
+    username = forms.CharField(label='Login', required=True, min_length=8, validators=[validate_username], widget=forms.TextInput(attrs={'placeholder': 'Login'}))
     email = forms.EmailField(label='E-mail', required=True, widget=forms.TextInput(attrs={'placeholder': 'Email'}))
     password1 = forms.CharField(label='Hasło', required=True, widget=forms.PasswordInput(attrs={'placeholder': 'Hasło'}))
     password2 = forms.CharField(label='Powtórz hasło', required=True, widget=forms.PasswordInput(attrs={'placeholder': 'Powtórz hasło'}))
