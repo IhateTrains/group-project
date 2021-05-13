@@ -46,7 +46,7 @@
       .then(response => {return response.json()})
       .then(res => {
           console.log(res);
-          L.marker([res['mapLatitude'], res['mapLongitude']]).addTo(map)
+          L.marker([res['map_latitude'], res['map_longitude']]).addTo(map)
           .bindPopup(res['city'])
           .openPopup();
       })

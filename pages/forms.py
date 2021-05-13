@@ -56,4 +56,4 @@ class CreateProfileForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ['userType']
+        fields = ['user_type']
