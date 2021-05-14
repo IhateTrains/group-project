@@ -54,6 +54,7 @@ class CreateUserForm(UserCreationForm):
 
 
 class CreateProfileForm(forms.ModelForm):
+    user_type = forms.ModelChoiceField(label='Typ użytkownika', queryset=UserType.objects.all(), empty_label=None)
 
     class Meta:
         model = UserProfile
