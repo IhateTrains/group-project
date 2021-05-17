@@ -3,7 +3,7 @@
 {% block content %}
 
 <!--Main layout-->
-  <main class="mt-5 pt-4">
+  <main class="pt-1">
     <div class="container dark-grey-text mt-5">
 
       <!--Grid row-->
@@ -20,55 +20,49 @@
         <!--Grid column-->
 
         <!--Grid column-->
-        <div class="col-md-6 mb-4">
+        <div class="col-md-6">
 
           <!--Content-->
           <div class="p-4">
+            
+            <div class="card mt-5" style="width: 90%">
+              <div class="card-body float-right m-0">
+                
+                <div style="text-align: center;">
+                  <p class="lead font-weight-bold" style="display: inline;">{{ object.name }}</p>
+                  <p class="ml-2" style="display: inline;">{{ object.get_category_display }}</p>
+                </div>
 
-            <div class="mb-3">
-              <a href="">
-                <span class="badge purple mr-1">{{ object.get_category_display }}</span>
-              </a>
-              <a href="">
-                <span class="badge blue mr-1">{{ object.get_label_display }}</span>
-              </a>
+                <hr>
+
+                <div class="container-fluid justify-content-center" style="text-align: center;">
+
+                  <p style="color: rgb(0, 125, 0);">Dostępny</p>
+
+                  <div style="display: inline-block;">
+                    <p class="lead">
+                      {% if object.discount_price %}
+                        <div>
+                          <span class="mr-1">
+                            <del>{{ object.price }} zł</del>
+                            </span>
+                            <span>{{ object.discount_price }} zł</span>
+                        </div>
+                      {% else %}
+                      <span>{{ object.price }} zł</span>
+                      {% endif %}
+                    </p>
+                  </div>
+
+                  <div class="" style="display: inline-block;">
+                    <a href="{{ object.get_add_to_cart_url }}" class="btn btn-success btn-md my-0" >Dodaj do koszyka
+                      <i class="fas fa-shopping-cart ml-1"></i>
+                    </a>
+                  </div>
+
+                </div>
+              </div>
             </div>
-
-            <p class="lead">
-
-            {% if object.discount_price %}
-              <span class="mr-1">
-              <del>{{ object.price }} zł</del>
-              </span>
-              <span>{{ object.discount_price }} zł</span>
-            {% else %}
-             <span>{{ object.price }} zł</span>
-            {% endif %}
-
-            </p>
-
-            <p class="lead font-weight-bold">{{ object.name }}</p>
-
-            <p>{{ object.description }}</p>
-
-            {% comment %} <form class="d-flex justify-content-left">
-              <!-- Default input -->
-              <input type="number" value="1" aria-label="Search" class="form-control" style="width: 100px">
-              <button class="btn btn-primary btn-md my-0 p" type="submit">Add to cart
-                <i class="fas fa-shopping-cart ml-1"></i>
-              </button>
-
-            </form> {% endcomment %}
-
-            <a href="{{ object.get_add_to_cart_url }}" class="btn btn-primary btn-md my-0 p" >Dodaj do koszyka
-                <i class="fas fa-shopping-cart ml-1"></i>
-            </a>
-
-            {{ object.get_quantity_in_chart }}
-            <a href="{{ object.get_remove_from_cart_url }}" class="btn btn-danger btn-md my-0 p" >Usuń z koszyka
-                <i class="fas fa-trash ml-1"></i>
-            </a>
-           
 
           </div>
           <!--Content-->
@@ -79,49 +73,18 @@
       </div>
       <!--Grid row-->
 
-      <hr>
-
       <!--Grid row-->
       <div class="row d-flex justify-content-center wow fadeIn">
 
         <!--Grid column-->
-        <div class="col-md-6 text-center">
+        <div class="col-md-12 text-center">
 
-          <h4 class="my-4 h4">Additional information</h4>
+          <h4 class="my-4 h4">Opis produktu oraz specyfikacja</h4>
+          <hr>
 
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus suscipit modi sapiente illo soluta odit
-            voluptates,
-            quibusdam officia. Neque quibusdam quas a quis porro? Molestias illo neque eum in laborum.</p>
-
-        </div>
-        <!--Grid column-->
-
-      </div>
-      <!--Grid row-->
-
-      <!--Grid row-->
-      <div class="row wow fadeIn">
-
-        <!--Grid column-->
-        <div class="col-lg-4 col-md-12 mb-4">
-
-          <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/11.jpg" class="img-fluid" alt="">
-
-        </div>
-        <!--Grid column-->
-
-        <!--Grid column-->
-        <div class="col-lg-4 col-md-6 mb-4">
-
-          <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/12.jpg" class="img-fluid" alt="">
-
-        </div>
-        <!--Grid column-->
-
-        <!--Grid column-->
-        <div class="col-lg-4 col-md-6 mb-4">
-
-          <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/13.jpg" class="img-fluid" alt="">
+          <div class="text-left">
+            {{ object.description|safe }}
+          </p>
 
         </div>
         <!--Grid column-->

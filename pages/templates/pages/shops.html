@@ -4,11 +4,14 @@
 
 
 <main>
-    <button id="getPosButton" onclick="getLocation()">Znajdź najbliższą placówkę</button>
-    <div id="outer">
-      <div id="mapid" style="margin: auto; width: 90%; height: 500px;"></div>
+  <div class="container-fluid h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+      <button class="btn btn-primary btn-lg align-self-center" id="getPosButton" onclick="getLocation()">
+        <i class="fas fa-search-location"></i> Znajdź najbliższą placówkę
+      </button>
+      <div id="mapid" style="margin: auto; width: 90%; height: 750px;"></div>
     </div>
-
+  </div>
 </main>
 
 <script>
