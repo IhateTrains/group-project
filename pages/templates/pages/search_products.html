@@ -6,57 +6,56 @@
     <div class="container">
       <section class="text-center mb-4">
         {% if searched %}
-            <h1>Wyniki wyszukiwania dla: {{ searched }}</h1>
+            <h1 class="mb-5">Wyniki wyszukiwania dla: {{ searched }}</h1>
             <!--Grid row-->
             <div class="row wow fadeIn">
               {% for product in matching_products %}
               <!--Grid column-->
               <div class="col-lg-3 col-md-6 mb-4">
 
-                <!--Card-->
-                <div class="card">
+              <!--Card-->
+              <div class="card h-100">
+                <!--Card image-->
+                <div class="view overlay product-list-img d-flex align-items-center">
+                  {% if product.image %}
+                  <img src="{% url 'db_file_storage.get_file' %}?name={{ product.image }}" class="img-fluid card-img-top" alt="">
+                  {% else %}
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/0/0a/No-image-available.png" class="card-img-top" alt="">
+                  {% endif %}
+                  <a href="{{ product.get_absolute_url }}">
+                    <div class="mask rgba-white-slight"></div>
+                  </a>
+                </div>
+                <!--Card image-->
+                <!--Card content-->
+                <div class="card-body text-center">
+                  <!--Category & Title-->
+                  <a href="#" class="grey-text">
+                    <h5>{{ product.get_category_display }}</h5>
+                  </a>
+                  <h5>
+                    <strong>
+                      <a href="{{ product.get_absolute_url }}" class="dark-grey-text">{{ product.name }}
+                        <span class="badge badge-pill {% if product.get_label_display == 'New' %} danger-color {% else %} primary-color {% endif %}">{{ product.get_label_display }}</span>
+                      </a>
+                    </strong>
+                  </h5>
 
-                  <!--Card image-->
-                  <div class="view overlay">
-                    {% if product.image %}
-                    <img src="{% url 'db_file_storage.get_file' %}?name={{ product.image }}" class="card-img-top" alt="">
+                  <h4 class="font-weight-bold blue-text">
+                    <strong>
+                    {% if product.discount_price %}
+                      <span class="mr-1"> <del>{{ product.price }} zł</del> </span> <span>{{ product.discount_price }} zł</span>
                     {% else %}
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/0a/No-image-available.png" class="card-img-top" alt="">
+                      <span>{{ product.price }} zł</span>
                     {% endif %}
-                    <a href="{{ product.get_absolute_url }}">
-                      <div class="mask rgba-white-slight"></div>
-                    </a>
-                  </div>
-                  <!--Card image-->
-                  <!--Card content-->
-                  <div class="card-body text-center">
-                    <!--Category & Title-->
-                    <a href="#" class="grey-text">
-                      <h5>{{ product.get_category_display }}</h5>
-                    </a>
-                    <h5>
-                      <strong>
-                        <a href="{{ product.get_absolute_url }}" class="dark-grey-text">{{ product.name }}
-                          <span class="badge badge-pill {% if product.get_label_display == 'New' %} danger-color {% else %} primary-color {% endif %}">{{ product.get_label_display }}</span>
-                        </a>
-                      </strong>
-                    </h5>
-
-                    <h4 class="font-weight-bold blue-text">
-                      <strong>
-                      {% if product.discount_price %}
-                        <span class="mr-1"> <del>{{ product.price }} zł</del> </span> <span>{{ product.discount_price }} zł</span>
-                      {% else %}
-                        <span>{{ product.price }} zł</span>
-                      {% endif %}
-                      </strong>
-                    </h4>
-
-                  </div>
-                  <!--Card content-->
+                    </strong>
+                  </h4>
 
                 </div>
-                <!--Card-->
+                <!--Card content-->
+
+              </div>
+              <!--Card-->
 
               </div>
               <!--Grid column-->

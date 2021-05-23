@@ -9,7 +9,7 @@
       <button class="btn btn-primary btn-lg align-self-center" id="getPosButton" onclick="getLocation()">
         <i class="fas fa-search-location"></i> Znajdź najbliższą placówkę
       </button>
-      <div id="mapid" style="margin: auto; width: 90%; height: 750px;"></div>
+      <div id="mapid" style="display: none; width: 80%; height: 600px;"></div>
     </div>
   </div>
 </main>
@@ -20,6 +20,7 @@
       if (navigator.geolocation){
           navigator.geolocation.getCurrentPosition(showUserPosition);
           document.getElementById("getPosButton").style.display = "none";
+          document.getElementById("mapid").style.display = "block";
       } else{
           x.innerHTML = "Twoja przeglądarka nie obsługuje geolokacji, zalecamy jej zmianę.";
       }

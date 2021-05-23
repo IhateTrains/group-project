@@ -131,123 +131,71 @@
 
 <main>
     <div class="container">
-
-      <!--Navbar-->
-      <nav class="navbar navbar-expand-lg navbar-dark mdb-color lighten-3 mt-3 mb-5">
-
-        <!-- Navbar brand -->
-        <span class="navbar-brand">Kategorie:</span>
-
-        <!-- Collapse button -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
-          aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!-- Collapsible content -->
-        <div class="collapse navbar-collapse" id="basicExampleNav">
-
-          <!-- Links -->
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Wszystko
-                <span class="sr-only">(current)</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'pages:sales' %}">Promocje</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Części</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Płyny</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Usługi</a>
-            </li>
-
-          </ul>
-          <!-- Links -->
-
-          <form class="form-inline" method="POST" action={% url 'pages:search-products' %}>
-            {% csrf_token %}
-            <div class="md-form my-0">
-              <input class="form-control mr-sm-2" type="text" placeholder="Szukaj" aria-label="Szukaj" name="searched">
-              <button class="btn btn-light my-sm-0" type="submit">Szukaj</button>
-            </div>
-          </form>
-        </div>
-        <!-- Collapsible content -->
-
-      </nav>
-      <!--/.Navbar-->
+      {%  include "pages/category_bar.html" %}
 
       <!--Section: Products v.3-->
       <section class="text-center mb-4">
 
-        <!--Grid row-->
-        <div class="row wow fadeIn">
-          {% for item in object_list %}
-          <!--Grid column-->
-          <div class="col-lg-3 col-md-6 mb-4">
+          <!--Grid row-->
+          <div class="row wow fadeIn">
+            {% for item in object_list %}
+            <!--Grid column-->
+            <div class="col-lg-3 col-md-6 mb-4">
 
-            <!--Card-->
-            <div class="card">
-
-              <!--Card image-->
-              <div class="view overlay">
-                {% if item.image %}
-                <img src="{% url 'db_file_storage.get_file' %}?name={{ item.image }}" class="card-img-top" alt="">
-                {% else %}
-                <img src="https://upload.wikimedia.org/wikipedia/commons/0/0a/No-image-available.png" class="card-img-top" alt="">
-                {% endif %}
-                <a href="{{ item.get_absolute_url }}">
-                  <div class="mask rgba-white-slight"></div>
-                </a>
-              </div>
-              <!--Card image-->
-              <!--Card content-->
-              <div class="card-body text-center">
-                <!--Category & Title-->
-                <a href="#" class="grey-text">
-                  <h5>{{ item.get_category_display }}</h5>
-                </a>
-                <h5>
-                  <strong>
-                    <a href="{{ item.get_absolute_url }}" class="dark-grey-text">{{ item.name }}
-                      <span class="badge badge-pill {% if item.get_label_display == 'New' %} danger-color {% else %} primary-color {% endif %}">{{ item.get_label_display }}</span>
-                    </a>
-                  </strong>
-                </h5>
-
-                <h4 class="font-weight-bold blue-text">
-                  <strong>
-                  {% if item.discount_price %}
-                    <span class="mr-1"> <del>{{ item.price }} zł</del> </span> <span>{{ item.discount_price }} zł</span>
+              <!--Card-->
+              <div class="card h-100">
+                <!--Card image-->
+                <div class="view overlay product-list-img d-flex align-items-center">
+                  {% if item.image %}
+                  <img src="{% url 'db_file_storage.get_file' %}?name={{ item.image }}" class="img-fluid card-img-top" alt="">
                   {% else %}
-                    <span>{{ item.price }} zł</span>
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/0/0a/No-image-available.png" class="card-img-top" alt="">
                   {% endif %}
-                  </strong>
-                </h4>
+                  <a href="{{ item.get_absolute_url }}">
+                    <div class="mask rgba-white-slight"></div>
+                  </a>
+                </div>
+                <!--Card image-->
+                <!--Card content-->
+                <div class="card-body text-center">
+                  <!--Category & Title-->
+                  <a href="#" class="grey-text">
+                    <h5>{{ item.get_category_display }}</h5>
+                  </a>
+                  <h5>
+                    <strong>
+                      <a href="{{ item.get_absolute_url }}" class="dark-grey-text">{{ item.name }}
+                        <span class="badge badge-pill {% if item.get_label_display == 'New' %} danger-color {% else %} primary-color {% endif %}">{{ item.get_label_display }}</span>
+                      </a>
+                    </strong>
+                  </h5>
+
+                  <h4 class="font-weight-bold blue-text">
+                    <strong>
+                    {% if item.discount_price %}
+                      <span class="mr-1"> <del>{{ item.price }} zł</del> </span> <span>{{ item.discount_price }} zł</span>
+                    {% else %}
+                      <span>{{ item.price }} zł</span>
+                    {% endif %}
+                    </strong>
+                  </h4>
+
+                </div>
+                <!--Card content-->
 
               </div>
-              <!--Card content-->
+              <!--Card-->
 
             </div>
-            <!--Card-->
+            <!--Grid column-->
+            {% endfor %}
+
 
           </div>
-          <!--Grid column-->
+          <!--Grid row-->
 
-          {% endfor %}
-
-
-        </div>
-        <!--Grid row-->
-
-      </section>
-      <!--Section: Products v.3-->
+        </section>
+        <!--Section: Products v.3-->
 
     </div>
   </main>

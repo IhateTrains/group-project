@@ -1,23 +1,74 @@
-/* Required height of parents of the Half Page Carousel for proper displaying carousel itself */
 html,
-body,
-.view {
-  height: 100%; }
+body {
+  height: 100vh;
+  background-color: #f0f0f0;
+}
 
-/* Half Page Carousel itself*/
 .carousel {
-  height: 50%; }
-  .carousel .carousel-inner {
-    height: 100%; }
-    .carousel .carousel-inner .carousel-item,
-    .carousel .carousel-inner .active {
-      height: 100%; }
+  width: 70%;
+  height: 30vh;
+}
 
-/* Adjustment for mobile devices*/
-@media (max-width: 776px) {
+@media (max-width: 740px) {
   .carousel {
-    height: 100%; } }
+    height: 45vh;
+    width: 90%;
+  }
+}
 
-/* Footer color for sake of consistency with Navbar */
-.page-footer {
-  background-color: #929FBA; }
+@media (min-width: 800px) and (max-width: 850px) {
+  .carousel {
+    height: 45vh;
+    width: 90%;
+  }
+}
+
+#floating-cart {
+  width: 75px;
+  position: fixed;
+  margin-left: 0;
+  top: 3px;
+  right: 3px;
+  z-index: 99999;
+  white-space: nowrap;
+  text-align: center;
+}
+
+#footer {
+  background-color: #404040 !important;
+}
+
+.main-navbar {
+  background-color: #282828 !important;
+}
+
+.nav-category {
+  background-color: #404040 !important;
+}
+
+.nav-category .navbar-brand {
+  color: #FFEA09;
+  font-weight: bold;
+}
+
+.search-btn {
+  color: #282828;
+  background-color: #FFEA09;
+  font-size: 18px;
+}
+
+.product-list-img img {
+  height: 225px;
+  width: auto;
+  max-width: 240px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
+}
+
+.product-img {
+  max-height: 420px;
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
