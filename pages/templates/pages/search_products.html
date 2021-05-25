@@ -9,7 +9,7 @@
             <h1 class="mb-5">Wyniki wyszukiwania dla: {{ searched }}</h1>
             <!--Grid row-->
             <div class="row wow fadeIn">
-              {% for product in matching_products %}
+              {% for item in matching_products %}
               <!--Grid column-->
               <div class="col-lg-3 col-md-6 mb-4">
 
@@ -17,12 +17,12 @@
               <div class="card h-100">
                 <!--Card image-->
                 <div class="view overlay product-list-img d-flex align-items-center">
-                  {% if product.image %}
-                  <img src="{% url 'db_file_storage.get_file' %}?name={{ product.image }}" class="img-fluid card-img-top" alt="">
+                  {% if item.image %}
+                  <img src="{% url 'db_file_storage.get_file' %}?name={{ item.image }}" class="img-fluid card-img-top" alt="">
                   {% else %}
                   <img src="https://upload.wikimedia.org/wikipedia/commons/0/0a/No-image-available.png" class="card-img-top" alt="">
                   {% endif %}
-                  <a href="{{ product.get_absolute_url }}">
+                  <a href="{{ item.get_absolute_url }}">
                     <div class="mask rgba-white-slight"></div>
                   </a>
                 </div>
@@ -37,18 +37,18 @@
                   {% endif %}
                   <h5>
                     <strong>
-                      <a href="{{ product.get_absolute_url }}" class="dark-grey-text">{{ product.name }}
-                        <span class="badge badge-pill {% if product.get_label_display == 'New' %} danger-color {% else %} primary-color {% endif %}">{{ product.get_label_display }}</span>
+                      <a href="{{ item.get_absolute_url }}" class="dark-grey-text">{{ item.name }}
+                        <span class="badge badge-pill {% if item.get_label_display == 'New' %} danger-color {% else %} primary-color {% endif %}">{{ item.get_label_display }}</span>
                       </a>
                     </strong>
                   </h5>
 
                   <h4 class="font-weight-bold blue-text">
                     <strong>
-                    {% if product.discount_price %}
-                      <span class="mr-1"> <del>{{ product.price }} zł</del> </span> <span>{{ product.discount_price }} zł</span>
+                    {% if item.discount_price %}
+                      <span class="mr-1"> <del>{{ item.price }} zł</del> </span> <span>{{ item.discount_price }} zł</span>
                     {% else %}
-                      <span>{{ product.price }} zł</span>
+                      <span>{{ item.price }} zł</span>
                     {% endif %}
                     </strong>
                   </h4>
