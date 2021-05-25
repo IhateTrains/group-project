@@ -13,7 +13,7 @@ from django.db.models import Q
 # project
 from .models import Product, Order, OrderLine, SzikPoint
 from .forms import CreateUserForm, CreateProfileForm
-from .serializers import SzikPointSerializer
+import services
 
 
 class HomeView(ListView):
@@ -54,30 +54,8 @@ def about(request):
 
 
 def get_nearest_shop(request, lat, lng):
-    """
-        Haversine Formula
-        https://en.wikipedia.org/wiki/Haversine_formula
-        doesn't require GeoDjango :)
-    """
-
-    latitude_col = '"map_latitude"'
-    longitude_col = '"map_longitude"'
-
-    query = """SELECT id, (6367*acos(cos(radians( %2f ))
-                               *cos(radians( %s ))*cos(radians( %s )-radians( %2f ))
-                               +sin(radians( %2f ))*sin(radians( %s ))))
-                               AS distance FROM pages_szikpoint ORDER BY distance LIMIT 1""" % (
-        float(lat),
-        latitude_col,
-        longitude_col,
-        float(lng),
-        float(lat),
-        latitude_col
-    )
-
-    querySet = SzikPoint.objects.raw(query)[0]
-    serializer = SzikPointSerializer(querySet)
-    return JsonResponse(serializer.data)
+    nearest_shop_data = services.get_nearest_shop_data(lat, lng)
+    return JsonResponse(nearest_shop_data)
 
 
 def search_products(request):
