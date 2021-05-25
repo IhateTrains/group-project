@@ -71,6 +71,17 @@
         </ul>
 
         <!-- Right -->
+            <!-- Search -->
+              <form class="form-inline" method="POST" action={% url 'pages:search-products' %}>
+                {% csrf_token %}
+                <div class="md-form my-0">
+                  <input class="form-control mr-sm-2" type="text" placeholder="Szukaj" aria-label="Szukaj" name="searched">
+                  <button class="btn search-btn" type="submit">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </form>
+             <!-- Search -->
         <ul class="navbar-nav nav-flex-icons">
             <!-- Cart -->
             {% if user.is_authenticated %}
