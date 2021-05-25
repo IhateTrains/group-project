@@ -159,9 +159,11 @@
                 <!--Card content-->
                 <div class="card-body text-center">
                   <!--Category & Title-->
-                  <a href="#" class="grey-text">
+                  {% if not hide_category_on_product_cards %}
+                  <a href="{{ item.category.get_absolute_url }}" class="grey-text" >
                     <h5>{{ item.get_category_display }}</h5>
                   </a>
+                  {% endif %}
                   <h5>
                     <strong>
                       <a href="{{ item.get_absolute_url }}" class="dark-grey-text">{{ item.name }}
