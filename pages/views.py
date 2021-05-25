@@ -82,7 +82,7 @@ def get_nearest_shop(request, lat, lng):
 def search_products(request):
     if request.method == 'POST':
         searched = request.POST['searched']
-        matching_products = Product.objects.filter(name__contains=searched)
+        matching_products = Product.objects.filter(name__icontains=searched)
         return render(request, 'pages/search_products.html',
                       {'searched': searched,
                        'matching_products': matching_products})
