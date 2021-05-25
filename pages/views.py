@@ -13,7 +13,7 @@ from django.db.models import Q
 # project
 from .models import Product, Order, OrderLine, SzikPoint
 from .forms import CreateUserForm, CreateProfileForm
-import services
+from . import services
 
 
 class HomeView(ListView):
