@@ -19,52 +19,16 @@
   <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
   <!-- Your custom styles (optional) -->
   <link href="{% static 'css/style.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
-
-  <style>
-    html,
-    body {
-      height: 100vh;
-    }
-
-    .carousel {
-      width: 70%;
-      height: 30vh;
-    }
-
-    @media (max-width: 740px) {
-      .carousel {
-        height: 45vh;
-        width: 90%;
-      }
-    }
-
-    @media (min-width: 800px) and (max-width: 850px) {
-      .carousel {
-        height: 45vh;
-        width: 90%;
-      }
-    }
-
-    #floating-cart {
-      width: 75px;
-      position: fixed;
-      margin-left: 0;
-      top: 3px;
-      right: 3px;
-      z-index: 99999;
-      white-space: nowrap;
-      text-align: center;
-    }
-  </style>
 </head>
 
 <body>
 
   <!-- Navbar -->
-  <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark scrolling-navbar mb-4">
+  <nav id="navbar" class="navbar navbar-expand-lg navbar-dark main-navbar scrolling-navbar mb-4">
     <div class="container">
 
       <!-- Brand -->
@@ -155,7 +119,7 @@
   </nav>
 
   <!-- Page content -->
-  <div class="container-fluid" style="min-height: calc(100vh - 160px);">
+  <div class="container-fluid" style="min-height: calc(100vh - 240px);">
 
     {% if messages %}
       {% for message in messages %}
