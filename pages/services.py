@@ -1,4 +1,5 @@
-from .models import SzikPoint
+from django.db.models import Q
+from .models import SzikPoint, Product
 from .serializers import SzikPointSerializer
 
 
@@ -27,3 +28,8 @@ def get_nearest_shop_data(lat, lng):
     query_set = SzikPoint.objects.raw(query)[0]
     serializer = SzikPointSerializer(query_set)
     return serializer.data
+
+
+def get_matching_products(searched):
+    return Product.objects.filter(Q(name__icontains=searched)
+                                  | Q(description__icontains=searched))

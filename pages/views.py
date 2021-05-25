@@ -9,7 +9,6 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.views.generic import ListView, DetailView, View
-from django.db.models import Q
 # project
 from .models import Product, Order, OrderLine, SzikPoint
 from .forms import CreateUserForm, CreateProfileForm
@@ -61,8 +60,7 @@ def get_nearest_shop(request, lat, lng):
 def search_products(request):
     if request.method == 'POST':
         searched = request.POST['searched']
-        matching_products = Product.objects.filter(Q(name__icontains=searched)
-                                                   | Q(description__icontains=searched))
+        matching_products = services.get_matching_products(searched)
         return render(request, 'pages/search_products.html',
                       {'searched': searched,
                        'matching_products': matching_products})
