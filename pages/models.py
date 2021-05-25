@@ -41,7 +41,7 @@ class ProductImage(models.Model):
 
 
 class Product(models.Model):
-    category_id = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     price = models.DecimalField(max_digits=6, decimal_places=2)
     discount_price = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
@@ -67,7 +67,7 @@ class Product(models.Model):
         })
 
     def get_category_display(self):
-        return self.category_id.name
+        return self.category.name
 
 
 class ProductQuantity(models.Model):
