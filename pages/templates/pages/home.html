@@ -142,51 +142,9 @@
             <!--Grid column-->
             <div class="col-lg-3 col-md-6 mb-4">
 
-              <!--Card-->
-              <div class="card h-100">
-                <!--Card image-->
-                <div class="view overlay product-list-img d-flex align-items-center">
-                  {% if item.image %}
-                  <img src="{% url 'db_file_storage.get_file' %}?name={{ item.image }}" class="img-fluid card-img-top" alt="">
-                  {% else %}
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/0/0a/No-image-available.png" class="card-img-top" alt="">
-                  {% endif %}
-                  <a href="{{ item.get_absolute_url }}">
-                    <div class="mask rgba-white-slight"></div>
-                  </a>
-                </div>
-                <!--Card image-->
-                <!--Card content-->
-                <div class="card-body text-center">
-                  <!--Category & Title-->
-                  {% if not hide_category_on_product_cards %}
-                  <a href="{{ item.category.get_absolute_url }}" class="grey-text" >
-                    <h5>{{ item.get_category_display }}</h5>
-                  </a>
-                  {% endif %}
-                  <h5>
-                    <strong>
-                      <a href="{{ item.get_absolute_url }}" class="dark-grey-text">{{ item.name }}
-                        <span class="badge badge-pill {% if item.get_label_display == 'New' %} danger-color {% else %} primary-color {% endif %}">{{ item.get_label_display }}</span>
-                      </a>
-                    </strong>
-                  </h5>
-
-                  <h4 class="font-weight-bold blue-text">
-                    <strong>
-                    {% if item.discount_price %}
-                      <span class="mr-1"> <del>{{ item.price }} zł</del> </span> <span>{{ item.discount_price }} zł</span>
-                    {% else %}
-                      <span>{{ item.price }} zł</span>
-                    {% endif %}
-                    </strong>
-                  </h4>
-
-                </div>
-                <!--Card content-->
-
-              </div>
-              <!--Card-->
+              <!--Product Card-->
+                {%  include "pages/product_card.html" %}
+              <!--Product Card-->
 
             </div>
             <!--Grid column-->
