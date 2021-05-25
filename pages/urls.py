@@ -10,6 +10,7 @@ from .views import (
     ShopsView,
     search_products,
     get_nearest_shop,
+    get_category_product_list,
     add_to_cart,
     remove_from_cart,
     reduce_quantity_item,
@@ -27,6 +28,8 @@ urlpatterns = [
     path('product/<pk>/', ProductView.as_view(), name='product'),
     path('sales', SalesView.as_view(), name='sales'),
     path('search-products', search_products, name='search-products'),
+    # kategorie
+    path('category/<pk>/', get_category_product_list, name='category'),
     # koszyk
     path('add-to-cart/<pk>/', add_to_cart, name='add-to-cart'),
     path('remove-from-cart/<pk>/', remove_from_cart, name='remove-from-cart'),
