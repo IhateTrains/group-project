@@ -1,0 +1,57 @@
+{% extends 'pages/base.html' %}
+
+
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-dark nav-category mt-3 mb-5">
+
+    <div class="collapse navbar-collapse" id="basicExampleNav">
+        <span class="navbar-brand">Znajdź placówkę</span>
+    </div>
+<form class="form-inline" method="POST" action={% url 'pages:search-points' %}>
+        {% csrf_token %}
+        <div class="md-form my-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Wpisz miasto" aria-label="Szukaj" name="searched">
+          <button class="btn search-btn" type="submit">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </form>
+</nav>
+<div class="container dark-grey-text mt-5"><h1> Nasze placówki </h1> </div>
+{% if searched %}
+<div class="container dark-grey-text mt-1">
+   <h2> Wyniki wyszukiwania dla {{ searched }}:</h2>
+</div>
+{% else %}
+<div class="container dark-grey-text mt-1">
+   <h2> Nie podano miasta </h2>
+</div>
+{% endif %}
+{% if szik_points %}
+{% else %}
+<div class="container dark-grey-text mt-1">
+   <h2> Nie mamy placówki w podanej lokalizacji</h2>
+</div>
+{% endif %}
+
+  {% for point in szik_points %}
+  <body> <div class="container dark-grey-text mt-5"> <h2> {{ point.city }} {{ point.postal_code }} {{ point.street_address }}</h2> </div>
+
+<div class="container dark-grey-text mt-1">
+        <br> telefon: {{point.telephone}} </br>
+    <br>
+        <div class="col-lg-6 mb-4 text-center">
+          <div class="card product-card">
+            <div class="card-body">
+              {% if point.photo %}
+              <img src="{{ point.photo.url }}" class="img-fluid product-img" alt="">
+              {% else %}
+              <img src="https://upload.wikimedia.org/wikipedia/commons/0/0a/No-image-available.png" class="img-fluid" alt="">
+              {% endif %}
+            </div>
+          </div></br>
+        </div>
+</div></body>
+  {% endfor %}
+
+{% endblock %}

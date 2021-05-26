@@ -166,3 +166,27 @@ def registerView(request):
             return redirect('/')
     context = {'form': form, 'form_prof': form_prof}
     return render(request, 'register.html', context)
+
+def contact(request):
+    szik_points = SzikPoint.objects.all()
+    return render(request, 'pages/contact.html', {'szik_points': szik_points})
+
+def search_points(request):
+    if request.method == 'POST':
+        searched = request.POST['searched']
+        if searched != '':
+            szik_points = SzikPoint.objects.filter(city=searched)
+            return render(request, 'pages/search_points.html',
+                      {'searched': searched,
+                       'szik_points': szik_points})
+        else:
+            szik_points = SzikPoint.objects.all()
+            return render(request, 'pages/search_points.html', {'szik_points': szik_points})
+
+def users_orders_list(request):
+    user = request.user
+    list = Order.objects.filter(customer=user)
+    orders_list = list.order_by('-order_date')
+
+    return render(request, 'pages/orders_list.html', {'orders_list': orders_list})
+

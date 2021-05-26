@@ -52,6 +52,7 @@
           {% url 'pages:home' as home %}
           {% url 'pages:sales' as sales %}
           {% url 'pages:shops' as shops %}
+            {% url 'pages:contact' as contact %}
 
           <li {% if request.path == home %}class="nav-item mx-2 active"{% else %}class="nav-item mx-2"{% endif %}>
             <a class="nav-link" href="{{ home }}">Oferta</a>
@@ -65,8 +66,8 @@
             <a class="nav-link" href="{{ shops }}">Nasze placówki</a>
           </li>
 
-          <li class="nav-item mx-2">
-            <a class="nav-link" href="#">Kontakt</a>
+         <li {% if request.path == contact %}class="nav-item mx-2 active"{% else %}class="nav-item mx-2"{% endif %}>
+            <a class="nav-link" href="{{ contact }}">Kontakt</a>
           </li>
         </ul>
 
@@ -92,7 +93,7 @@
                 </a>
                 <ul class="dropdown-menu">
                   <li><a class="dropdown-item pl-4" href="#">Moje konto</a></li>
-                  <li><a class="dropdown-item pl-4" href="#">Zamówienia</a></li>
+                  <li><a class="dropdown-item pl-4" href="{% url 'pages:orders_list' %}">Zamówienia</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item pl-4" href="{% url 'logout' %}">
                     <i class="fas fa-power-off"></i> Wyloguj się
