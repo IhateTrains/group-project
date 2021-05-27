@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'widget_tweaks',
     'rest_framework',
+    'pwa',
 
     'django.contrib.admin',
     'django.contrib.sites',
@@ -168,3 +169,35 @@ DEFAULT_FILE_STORAGE = 'db_file_storage.storage.DatabaseFileStorage'
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
+
+
+# PWA settings
+PWA_APP_NAME = 'Aplikacja e-commerce'
+PWA_APP_DESCRIPTION = "Projekt grupowy z Inżynierii Oprogramowania."
+PWA_APP_THEME_COLOR = '#0A0302'
+PWA_APP_BACKGROUND_COLOR = '#ffffff'
+PWA_APP_DISPLAY = 'standalone'
+PWA_APP_SCOPE = '/'
+PWA_APP_ORIENTATION = 'any'
+PWA_APP_START_URL = '/'
+PWA_APP_STATUS_BAR_COLOR = 'default'
+PWA_APP_ICONS = [
+    {
+        'src': '/static/img/icon_square.png',
+        'sizes': '160x160'
+    }
+]
+PWA_APP_ICONS_APPLE = [
+    {
+        'src': '/static/img/icon_square.png',
+        'sizes': '160x160'
+    }
+]
+PWA_APP_SPLASH_SCREEN = [
+    {
+        'src': '/static/img/pexels-hebert-santos-3757226.jpg',
+        'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
+    }
+]
+PWA_APP_DIR = 'ltr'
+PWA_APP_LANG = 'pl'
