@@ -14,9 +14,7 @@ admin.site.register(models.UserType)
 admin.site.register(models.VinNumber)
 
 
-@admin.register(models.Product)
-class ProductAdmin(admin.ModelAdmin):
-    form = ProductAdminForm
+
 
 
 @admin.register(models.SzikPoint)
