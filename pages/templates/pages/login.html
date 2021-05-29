@@ -34,6 +34,12 @@
         top: 13px !important;
         color: #404040 !important
     }
+
+    .alert {
+        font-size: 15px;
+        color: #f00;
+        text-align: center;
+    }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/3.6.95/css/materialdesignicons.css">
 
@@ -41,8 +47,14 @@
 
         <div class="col-lg-6 d-flex card mx-auto text-center" style="background-color: #353535; color:white">
             <h3 class="card-title p-2 mt-2 font-weight-bold" style="color: #FFEA09;">Zaloguj się</h3>
-            <div class="d-flex card-body login-form justify-content-center">
 
+            {% if invalid_login %}
+            <p class="alert alert-danger">
+                Niepoprawny login lub hasło. Spróbuj ponownie.
+            </p>
+            {% endif %}
+
+            <div class="d-flex card-body login-form justify-content-center">
 
                 <form id="login-form" method="post">
                     {% csrf_token %}
@@ -61,14 +73,7 @@
                     <input type="hidden" name="next" value="{{ next }}" />
                 </form>
 
-
             </div>
-
-            {% if invalid_login %}
-            <p class="label label-danger">
-                Niepoprawny login lub hasło. Spróbuj ponownie.
-            </p>
-            {% endif %}
 
             <p class="card-text mb-3">Nie masz konta? 
                 <a href="{% url 'pages:register' %}" style="color: #fdf383">Zarejestruj się</a>
