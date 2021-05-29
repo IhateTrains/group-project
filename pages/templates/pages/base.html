@@ -119,7 +119,7 @@
                   <li><a class="dropdown-item pl-4" href="#">Moje konto</a></li>
                   <li><a class="dropdown-item pl-4" href="{% url 'pages:orders_list' %}">Zamówienia</a></li>
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item pl-4" href="{% url 'logout' %}">
+                  <li><a class="dropdown-item pl-4" href="{% url 'pages:logout' %}">
                     <i class="fas fa-power-off"></i> Wyloguj się
                   </a></li>
                 </ul>
@@ -132,7 +132,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link waves-effect" href="{% url 'login' %}">Zaloguj</a>
+                <a class="nav-link waves-effect" href="{% url 'pages:login' %}">Zaloguj</a>
             </li>
             {% endif %}
 

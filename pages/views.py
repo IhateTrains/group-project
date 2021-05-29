@@ -4,6 +4,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
@@ -159,6 +160,26 @@ def reduce_quantity_item(request, pk):
         return redirect("pages:order-summary")
 
 
+def loginPage(request):
+    context = {}
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            login(request, user)
+            return redirect('pages:home')
+        else:
+            context['invalid_login'] = True
+
+    return render(request, 'pages/login.html', context)
+
+def logoutUser(request):
+    logout(request)
+    return redirect('pages:home')
+
 def registerView(request):
     form = CreateUserForm()
     form_prof = CreateProfileForm()
@@ -174,7 +195,7 @@ def registerView(request):
             user.save()
             return redirect('/')
     context = {'form': form, 'form_prof': form_prof}
-    return render(request, 'register.html', context)
+    return render(request, 'pages/register.html', context)
 
 def contact(request):
     szik_points = SzikPoint.objects.all()
