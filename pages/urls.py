@@ -37,5 +37,10 @@ urlpatterns = [
     path('order-summary/', OrderSummaryView.as_view(), name='order-summary'),
     path('checkout/', HomeView.as_view(), name='checkout'),  # TODO: add CheckOutView
     # rejestracja
+    path('login/', views.loginPage, name='login'),
+    path('logout/', views.logoutUser, name='logout'),
     path('register/', views.registerView, name='register'),
+    path('contact/', views.contact, name='contact'),
+    path('search-points', views.search_points, name='search-points'),
+    path('orders_list/', views.users_orders_list, name='orders_list'),
 ]

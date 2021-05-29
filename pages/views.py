@@ -4,20 +4,29 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.views.generic import ListView, DetailView, View
 # project
-from .models import Product, Order, OrderLine, SzikPoint, Category
+from .models import Product, Category, Order, OrderLine, SzikPoint
 from .forms import CreateUserForm, CreateProfileForm
 from . import services
 
 
 class HomeView(ListView):
-    model = Product
     template_name = "pages/home.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['product_list'] = Product.objects.all()  # temporary
+        context['categories'] = Category.objects.all()  # temporary
+        return context
+
+    def get_queryset(self):
+        return Product.objects.all()
 
 
 class SalesView(ListView):
@@ -39,13 +48,14 @@ class OrderSummaryView(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
         try:
             order = Order.objects.get(customer=self.request.user, ordered=False)
-            context = {
-                'object': order
-            }
-            return render(self.request, 'pages/order_summary.html', context)
         except ObjectDoesNotExist:
-            messages.error(self.request, "You do not have an order")
-            return redirect("/")
+            order = Order(customer=self.request.user, ordered=False, order_date=timezone.now())
+            order.save()
+  
+        context = {
+            'object': order
+        }
+        return render(self.request, 'pages/order_summary.html', context)
 
 
 def about(request):
@@ -152,6 +162,26 @@ def reduce_quantity_item(request, pk):
         return redirect("pages:order-summary")
 
 
+def loginPage(request):
+    context = {}
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            login(request, user)
+            return redirect('pages:home')
+        else:
+            context['invalid_login'] = True
+
+    return render(request, 'pages/login.html', context)
+
+def logoutUser(request):
+    logout(request)
+    return redirect('pages:home')
+
 def registerView(request):
     form = CreateUserForm()
     form_prof = CreateProfileForm()
@@ -167,4 +197,28 @@ def registerView(request):
             user.save()
             return redirect('/')
     context = {'form': form, 'form_prof': form_prof}
-    return render(request, 'register.html', context)
+    return render(request, 'pages/register.html', context)
+
+def contact(request):
+    szik_points = SzikPoint.objects.all()
+    return render(request, 'pages/contact.html', {'szik_points': szik_points})
+
+def search_points(request):
+    if request.method == 'POST':
+        searched = request.POST['searched']
+        if searched != '':
+            szik_points = SzikPoint.objects.filter(city=searched)
+            return render(request, 'pages/search_points.html',
+                      {'searched': searched,
+                       'szik_points': szik_points})
+        else:
+            szik_points = SzikPoint.objects.all()
+            return render(request, 'pages/search_points.html', {'szik_points': szik_points})
+
+def users_orders_list(request):
+    user = request.user
+    list = Order.objects.filter(customer=user)
+    orders_list = list.order_by('-order_date')
+
+    return render(request, 'pages/orders_list.html', {'orders_list': orders_list})
+
