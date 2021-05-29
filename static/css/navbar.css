@@ -1,6 +1,6 @@
 
 #search-inp {
-    width: 40vh;
+    width: 35vh;
     height: 50px;
 }
   
@@ -19,27 +19,28 @@
     }
 }
 
-.disapear {
-    font-size: 16px;
-}
-
-@media (max-width: 1280px) and (min-width: 1101px) {
-    .disapear {
+@media (max-width: 1300px) and (min-width: 1101px) {
+    .disappear {
         font-size: 0;
     }
 
     #account-dropdown {
         left: -80px;
     }
+
+    #search-inp {
+        width: 25vh;
+        height: 50px;
+    }
 }
 
 @media (max-width: 1100px) and (min-width: 991px) {
-    .disapear {
+    .disappear {
         font-size: 0;
     }
 
     #search-inp {
-        width: 25vh;
+        width: 14vh;
     }
 }
 
@@ -71,6 +72,9 @@
         margin-top: 30px;
     }
 
+}
+
+@media (max-width: 576px) {
     .search-btn {
         top: -8px;
     }
