@@ -105,21 +105,21 @@
                   <span class="badge red z-depth-1 mr-1"> {{ request.user|cart_item_count }} </span>
                 {% endif %}
                 <i class="fas fa-shopping-cart"></i>
-                <span class="d-none d-sm-inline-block disapear"> Koszyk </span>
+                <span class="disappear"> Koszyk </span>
                 </a>
             </li>
 
             <!-- User account -->
             <li class="nav-item dropdown mx-1">
                 <a class="nav-link waves-effect" data-toggle="dropdown">
-                  <i class="fas fa-user"></i><span class="disapear">{{ user.username }}</span> 
+                  <i class="fas fa-user"></i><span class="disappear">{{ user.username }}</span> 
                   <i class="fas fa-angle-down"></i>
                 </a>
                 <ul class="dropdown-menu" id="account-dropdown">
                   <li><a class="dropdown-item pl-4" href="#">Moje konto</a></li>
                   <li><a class="dropdown-item pl-4" href="{% url 'pages:orders_list' %}">Zamówienia</a></li>
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item pl-4" href="{% url 'logout' %}">
+                  <li><a class="dropdown-item pl-4" href="{% url 'pages:logout' %}">
                     <i class="fas fa-power-off"></i> Wyloguj się
                   </a></li>
                 </ul>
@@ -132,7 +132,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link waves-effect" href="{% url 'login' %}">Zaloguj</a>
+                <a class="nav-link waves-effect" href="{% url 'pages:login' %}">Zaloguj</a>
             </li>
             {% endif %}
 
