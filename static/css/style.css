@@ -5,16 +5,10 @@ body {
   transition: all 3ms;
 }
 
-@media (max-width: 1280px) {
-  #nav-links {
-    margin-top: 30px;
-    transition: all 3ms;
-  }
-}
-
 .carousel {
   width: 100%;
   height: 30vh;
+  max-height: 300px;
 }
 
 #floating-cart {
@@ -47,11 +41,6 @@ body {
 .yellow-btn {
   color: #282828;
   background-color: #FFEA09;
-}
-
-.search-btn {
-  font-size: 16px !important;
-  width: 100px;
 }
 
 .product-list-img img {
@@ -103,6 +92,7 @@ body {
   color: #fff;
   transition: all 0.3s;
   margin-right: 10px;
+  max-height: 1200px;
 }
 
 a, a:hover, a:focus {

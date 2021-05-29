@@ -21,6 +21,7 @@
   <!-- Your custom styles (optional) -->
   <link href="{% static 'css/style.min.css' %}" rel="stylesheet">
   <link href="{% static 'css/style.css' %}" rel="stylesheet">
+  <link href="{% static 'css/navbar.css' %}" rel="stylesheet">
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
@@ -32,7 +33,7 @@
 
   <!-- Navbar -->
   <nav id="navbar" class="navbar navbar-expand-lg navbar-dark main-navbar scrolling-navbar mb-4">
-    <div class="container-fluid" style="width: 80%;">
+    <div class="container-fluid" id="nav-container">
 
       <!-- Brand -->
       <a class="navbar-brand waves-effect" href="/">
@@ -78,21 +79,19 @@
 
         <!-- Search -->
         <div class="navbar-nav mx-auto">
-          <div class="nav-item">
             <form class="form-inline" method="POST" action={% url 'pages:search-products' %}>
 
               {% csrf_token %}
-              <div class="input-group">
-                <input class="form-control" type="text" placeholder="Szukaj" aria-label="Szukaj" name="searched">
+              <div class="form-group">
+                <input class="form-control" id="search-inp" type="text" placeholder="Szukaj" aria-label="Szukaj" name="searched" id="search-inp">
               </div>
-              <div class="input-group-append">
+              <div class="form-group-append">
                 <button class="btn yellow-btn search-btn" type="submit">
                   <i class="fas fa-search"></i>
                 </button>
               </div>
               
-            </form>
-          </div>
+          </form>
         </div>
 
 
@@ -106,17 +105,17 @@
                   <span class="badge red z-depth-1 mr-1"> {{ request.user|cart_item_count }} </span>
                 {% endif %}
                 <i class="fas fa-shopping-cart"></i>
-                <span class="clearfix d-none d-sm-inline-block"> Koszyk </span>
+                <span class="d-none d-sm-inline-block disapear"> Koszyk </span>
                 </a>
             </li>
 
             <!-- User account -->
             <li class="nav-item dropdown mx-1">
                 <a class="nav-link waves-effect" data-toggle="dropdown">
-                  <i class="fas fa-user"></i> {{ user.username }}
+                  <i class="fas fa-user"></i><span class="disapear">{{ user.username }}</span> 
                   <i class="fas fa-angle-down"></i>
                 </a>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu" id="account-dropdown">
                   <li><a class="dropdown-item pl-4" href="#">Moje konto</a></li>
                   <li><a class="dropdown-item pl-4" href="{% url 'pages:orders_list' %}">Zamówienia</a></li>
                   <li><hr class="dropdown-divider"></li>
