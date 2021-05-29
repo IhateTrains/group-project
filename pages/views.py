@@ -10,14 +10,22 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.views.generic import ListView, DetailView, View
 # project
-from .models import Product, Order, OrderLine, SzikPoint
+from .models import Product, Category, Order, OrderLine, SzikPoint
 from .forms import CreateUserForm, CreateProfileForm
 from . import services
 
 
 class HomeView(ListView):
-    model = Product
     template_name = "pages/home.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['product_list'] = Product.objects.all()  # temporary
+        context['categories'] = Category.objects.all()  # temporary
+        return context
+
+    def get_queryset(self):
+        return Product.objects.all()
 
 
 class SalesView(ListView):
