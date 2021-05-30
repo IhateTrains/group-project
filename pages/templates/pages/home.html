@@ -32,9 +32,9 @@
       </div>
     
       <ul class="list-unstyled components">
-        {% for item in categories %}
+        {% for category in categories %}
         <li>
-          <a class="category-name" href="#">{{ item.name }}</a>
+          <a class="category-name" href="{{ category.get_absolute_url }}">{{ category.name }}</a>
         </li>
         {% endfor %}
       </ul>
