@@ -21,8 +21,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
-from django.http import HttpResponse
-from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -35,9 +33,11 @@ class HomeView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context = { 'product_list': Product.objects.all(),
+        context = {
+            'product_list': Product.objects.all(),
             'categories': Category.objects.all(),
-            'filter': ProductFilter(self.request.GET, queryset=self.get_queryset()) }
+            'filter': ProductFilter(self.request.GET, queryset=self.get_queryset())
+        }
         return context
 
     def get_queryset(self):
@@ -94,6 +94,8 @@ def search_products(request):
 
 def get_category_product_list(request, pk):
     context = {
+        'category': Category.objects.get(id=pk),
+        'subcategories': Category.objects.filter(parent_category_id=pk),
         'products': Product.objects.filter(category_id=pk),
         'hide_category_on_product_cards': 'True'
     }
