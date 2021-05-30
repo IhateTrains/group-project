@@ -58,24 +58,24 @@
           {% url 'pages:shops' as shops %}
             {% url 'pages:contact' as contact %}
 
-          <li {% if request.path == home %}class="nav-item mx-2 active"{% else %}class="nav-item mx-2"{% endif %}>
+          <li {% if request.path == home %}class="nav-item mx-2 active" {% else %}class="nav-item mx-2"{% endif %}>
             <a class="nav-link" href="{{ home }}">Oferta</a>
           </li>
 
-          <li {% if request.path == sales %}class="nav-item mx-2 active"{% else %}class="nav-item mx-2"{% endif %}>
+          <li {% if request.path == sales %}class="nav-item mx-2 active" {% else %}class="nav-item mx-2"{% endif %}>
             <a class="nav-link" href="{{ sales }}">Promocje</a>
           </li>
 
-          <li {% if request.path == shops %}class="nav-item mx-2 active"{% else %}class="nav-item mx-2"{% endif %}>
+          <li {% if request.path == shops %}class="nav-item mx-2 active" {% else %}class="nav-item mx-2"{% endif %}>
             <a class="nav-link" href="{{ shops }}">Nasze placówki</a>
           </li>
 
-         <li {% if request.path == contact %}class="nav-item mx-2 active"{% else %}class="nav-item mx-2"{% endif %}>
+         <li {% if request.path == contact %}class="nav-item mx-2 active" {% else %}class="nav-item mx-2"{% endif %}>
             <a class="nav-link" href="{{ contact }}">Kontakt</a>
           </li>
         </ul>
 
-        <br></br>
+        <br />
 
         <!-- Search -->
         <div class="navbar-nav mx-auto">
@@ -83,7 +83,7 @@
 
               {% csrf_token %}
               <div class="form-group">
-                <input class="form-control" id="search-inp" type="text" placeholder="Szukaj" aria-label="Szukaj" name="searched" id="search-inp">
+                <input class="form-control" id="search-inp" type="text" placeholder="Szukaj" aria-label="Szukaj" name="searched">
               </div>
               <div class="form-group-append">
                 <button class="btn yellow-btn search-btn" type="submit">
@@ -116,6 +116,9 @@
                   <i class="fas fa-angle-down"></i>
                 </a>
                 <ul class="dropdown-menu" id="account-dropdown">
+                  {% if user.is_staff %}
+                    <li><a class="dropdown-item pl-4" href="{% url 'admin:index' %}">Panel administratora</a></li>
+                  {% endif %}
                   <li><a class="dropdown-item pl-4" href="#">Moje konto</a></li>
                   <li><a class="dropdown-item pl-4" href="{% url 'pages:orders_list' %}">Zamówienia</a></li>
                   <li><hr class="dropdown-divider"></li>
