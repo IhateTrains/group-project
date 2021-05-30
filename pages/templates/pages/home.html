@@ -1,5 +1,7 @@
 {% extends 'pages/base.html' %}
 
+{% load static %}
+
 {% block content %}
 
 {% load cart_template_tags %}
@@ -24,17 +26,20 @@
   <div class="container">
     {%  include "pages/filter_bar.html" %}
   </div>
-  <div class="wrapper" id="main-wrapper">
+  <div class="wrapper mx-auto" id="main-wrapper">
 
     <nav id="sidebar">
       <div class="sidebar-header">
         <h3>Kategorie</h3>
       </div>
     
-      <ul class="list-unstyled components">
+      <ul class="list-unstyled components" id="category-list">
+        <li>
+          <a class="category-name" name="">Wszystko</a>
+        </li>
         {% for item in categories %}
         <li>
-          <a class="category-name" href="#">{{ item.name }}</a>
+          <a class="category-name" name="{{ item.pk }}">{{ item.name }}</a>
         </li>
         {% endfor %}
       </ul>
@@ -47,9 +52,9 @@
   
             <!--Grid row-->
             <div class="row wow fadeIn">
-              {% for item in product_list %}
+              {% for item in filter.qs %}
               <!--Grid column-->
-              <div class="col-lg-3 col-md-6 mb-4">
+              <div class="col-xl-3 col-lg-6 col-md-12 mb-4 product-col">
                 <!--Product Card-->
                 {%  include "pages/product_card.html" %}
                 <!--Product Card-->

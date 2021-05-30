@@ -14,6 +14,7 @@ from django.views.generic import ListView, DetailView, View
 from .models import Product, Category, Order, OrderLine, SzikPoint
 from .forms import CreateUserForm, CreateProfileForm
 from . import services
+from .filters import ProductFilter
 # for email confirmation
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
@@ -33,8 +34,10 @@ class HomeView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['product_list'] = Product.objects.all()  # temporary
-        context['categories'] = Category.objects.all()  # temporary
+
+        context = { 'product_list': Product.objects.all(),
+            'categories': Category.objects.all(),
+            'filter': ProductFilter(self.request.GET, queryset=self.get_queryset()) }
         return context
 
     def get_queryset(self):
