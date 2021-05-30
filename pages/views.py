@@ -174,8 +174,9 @@ def loginPage(request):
         if user is not None:
             login(request, user)
             return redirect('pages:home')
-           
-    context['invalid_login'] = True
+        else:
+            context['invalid_login'] = True
+            
     return render(request, 'pages/login.html', context)
 
 def logoutUser(request):
