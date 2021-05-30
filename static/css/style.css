@@ -168,3 +168,12 @@ a[data-toggle="collapse"] {
     min-width: 200px;
   }
 }
+@media (min-width: 2400px) {
+  #main-wrapper {
+    justify-content: center;
+  }
+}
+
+.page-content-wrapper {
+  max-width: 1400px;
+}
