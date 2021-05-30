@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'rest_framework',
     'pwa',
+    'django_filters',
 
     'django.contrib.admin',
     'django.contrib.sites',
@@ -149,6 +150,7 @@ AUTHENTICATION_BACKENDS = (
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
+LOGIN_URL = '/login/'
 
 # media files
 MEDIA_ROOT = ''

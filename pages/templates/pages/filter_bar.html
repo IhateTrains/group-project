@@ -1,3 +1,15 @@
+<style>
+  .filter-form {
+    color: white;
+  }
+
+  .select {
+    height: 40px;
+    width: 200px;
+    background: #ececec;
+  }
+</style>
+
 <nav class="navbar navbar-expand-lg navbar-dark nav-category mt-3 mb-5">
 
   <button type="button" id="sidebarCollapse" class="btn yellow-btn">
@@ -16,10 +28,21 @@
     <!-- Collapsible content -->
     <div class="collapse navbar-collapse" id="filter-bar">
 
-      <!-- Links -->
-      <ul class="navbar-nav mr-auto">
+      <!-- Filters -->
+      <ul class="navbar-nav mr-3">
         <li class="nav-item">
-          <a class="nav-link" href="#">Tutaj będą opcje filtrowania...</a>
+          <div class="filter-form">
+
+            <label for="pricing">Sortowanie:</label>
+            <select class="select mx-2" id="pricing">
+              <option value="">Cena: domyślnie</option>
+              <option value="ascending" selected="">Cena: od najtańszych</option>
+              <option value="descending">Cena: od najdroższych</option>
+            </select>
+
+            <button class="btn yellow-btn" id="filter-submit">Filtruj</button>
+
+          </div>
         </li>
       </ul>
     </div>
