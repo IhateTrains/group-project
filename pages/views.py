@@ -35,9 +35,11 @@ class HomeView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context = { 'product_list': Product.objects.all(),
+        context = {
+            'product_list': Product.objects.all(),
             'categories': Category.objects.all(),
-            'filter': ProductFilter(self.request.GET, queryset=self.get_queryset()) }
+            'filter': ProductFilter(self.request.GET, queryset=self.get_queryset())
+        }
         return context
 
     def get_queryset(self):

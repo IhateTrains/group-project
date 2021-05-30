@@ -39,6 +39,9 @@ class Category(models.Model):
             "pk": self.pk
         })
 
+    def get_subcategories(self):
+        return Category.objects.filter(parent_category_id=self.pk)
+
 
 class ProductImage(models.Model):
     bytes = models.TextField()
