@@ -13,6 +13,7 @@ from .views import (
     add_to_cart,
     remove_from_cart,
     reduce_quantity_item,
+    activate,
 )
 
 app_name = 'pages'
@@ -43,4 +44,5 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('search-points', views.search_points, name='search-points'),
     path('orders_list/', views.users_orders_list, name='orders_list'),
+    path('activate/<uidb64>/<token>/', views.activate, name='activate'),
 ]

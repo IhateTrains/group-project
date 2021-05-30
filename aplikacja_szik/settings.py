@@ -170,6 +170,16 @@ DEFAULT_FILE_STORAGE = 'db_file_storage.storage.DatabaseFileStorage'
 # Activate Django-Heroku.
 django_heroku.settings(locals())
 
+# Email verification
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+MAILER_EMAIL_BACKEND = EMAIL_BACKEND
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_PASSWORD = 'Siema123!'
+EMAIL_HOST_USER = 'szik.app.mail.ver@gmail.com'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
 
 # PWA settings
 PWA_APP_NAME = 'Aplikacja e-commerce'
