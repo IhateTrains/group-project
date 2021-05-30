@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'rest_framework',
     'pwa',
+    'django_filters',
 
     'django.contrib.admin',
     'django.contrib.sites',
