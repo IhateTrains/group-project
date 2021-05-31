@@ -37,6 +37,7 @@ class HomeView(ListView):
         context = {
             'product_list': Product.objects.all(),
             'categories': Category.objects.all(),
+            'special_offers': Product.objects.filter(discount_price__isnull=False),
             'filter': ProductFilter(self.request.GET, queryset=self.get_queryset())
         }
         return context
