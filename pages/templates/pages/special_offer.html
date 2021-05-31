@@ -21,10 +21,10 @@
                         <!-- Content -->
                         <div class="text-center white-text mx-5 wow fadeIn">
                           <h1 class="mb-4">
-                            <strong>{{ offer.name }}</strong>
+                              <strong><a href="{{ offer.get_absolute_url }}">{{ offer.name }}</a></strong>
                           </h1>
                           <p>
-                            <strong>Taniej o {{ offer.get_discount }} zł</strong>
+                            <strong><a href="{{ offer.get_absolute_url }}">Taniej o {{ offer.get_discount }} zł</a></strong>
                           </p>
                         </div>
                     <!-- Content -->
