@@ -127,16 +127,16 @@ $(document).ready(function () {
     }
 
     $('#filter-submit').click(function(){
-        filter_type = $('#pricing').val()
-        insertParam('pricing', filter_type);
+        filter_type = $('#sorting').val()
+        insertParam('sorting', filter_type);
     });
 
     // on page load set filter option based on get parameter
-    pricing_param = getUrlParameter('pricing')
-    if (pricing_param != false) {
-        $('#pricing').val(pricing_param).change();
+    sorting_param = getUrlParameter('sorting')
+    if (sorting_param != false) {
+        $('#sorting').val(sorting_param).change();
     } else {
-        $('#pricing').val('').change();
+        $('#sorting').val('').change();
     }
 
 

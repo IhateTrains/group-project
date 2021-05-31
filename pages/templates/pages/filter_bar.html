@@ -33,11 +33,13 @@
         <li class="nav-item">
           <div class="filter-form">
 
-            <label for="pricing">Sortowanie:</label>
-            <select class="select mx-2" id="pricing">
+            <label for="sorting">Sortowanie:</label>
+            <select class="select mx-2" id="sorting">
               <option value="">Cena: domyślnie</option>
-              <option value="ascending" selected="">Cena: od najtańszych</option>
-              <option value="descending">Cena: od najdroższych</option>
+              <option value="name_ascending">Nazwy: rosnąco</option>
+              <option value="name_descending">Nazwy: malejąco</option>
+              <option value="price_ascending">Cena: od najtańszych</option>
+              <option value="price_descending">Cena: od najdroższych</option>
             </select>
 
             <button class="btn yellow-btn" id="filter-submit">Filtruj</button>
