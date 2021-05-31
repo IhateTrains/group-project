@@ -127,18 +127,17 @@ $(document).ready(function () {
     }
 
     $('#filter-submit').click(function(){
-        let filter_type = $('#pricing').val()
-        insertParam('pricing', filter_type);
+        let filter_type = $('#sorting').val()
+        insertParam('sorting', filter_type);
     });
 
     // on page load set filter option based on get parameter
-    let pricing_param = getUrlParameter('pricing')
-    if (pricing_param != false) {
-        $('#pricing').val(pricing_param).change();
+    let sorting_param = getUrlParameter('sorting')
+    if (sorting_param != false) {
+        $('#sorting').val(sorting_param).change();
     } else {
-        $('#pricing').val('').change();
+        $('#sorting').val('').change();
     }
-
 
     // mark current selected category 
     const arrow_html = '<i class="fas fa-arrow-right mr-2"></i>';
