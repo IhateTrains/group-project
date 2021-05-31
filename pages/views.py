@@ -27,6 +27,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
 UserModel = get_user_model()
 
+
 class HomeView(ListView):
     template_name = "pages/home.html"
 
@@ -36,6 +37,7 @@ class HomeView(ListView):
         context = {
             'product_list': Product.objects.all(),
             'categories': Category.objects.all(),
+            'special_offers': Product.objects.filter(discount_price__isnull=False),
             'filter': ProductFilter(self.request.GET, queryset=self.get_queryset())
         }
         return context
@@ -250,8 +252,8 @@ def search_points(request):
         if searched != '':
             szik_points = SzikPoint.objects.filter(city=searched)
             return render(request, 'pages/search_points.html',
-                      {'searched': searched,
-                       'szik_points': szik_points})
+                          {'searched': searched,
+                           'szik_points': szik_points})
         else:
             szik_points = SzikPoint.objects.all()
             return render(request, 'pages/search_points.html', {'szik_points': szik_points})

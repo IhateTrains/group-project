@@ -78,6 +78,11 @@ class Product(models.Model):
     def get_category_display(self):
         return self.category.name
 
+    def get_discount(self):
+        if self.discount_price:
+            return self.price - self.discount_price
+        return 0
+
 
 class ProductQuantity(models.Model):
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
