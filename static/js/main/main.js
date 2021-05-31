@@ -118,21 +118,21 @@ $(document).ready(function () {
     var elements = document.getElementsByClassName('category-name');
 
     var category_click = function() {
-        var pk = this.getAttribute('name');
+        const pk = this.getAttribute('name');
         insertParam('category', pk); // set category param
     };
 
-    for (var i = 0; i < elements.length; i++) {
+    for (let i = 0; i < elements.length; i++) {
         elements[i].addEventListener('click', category_click, false);
     }
 
     $('#filter-submit').click(function(){
-        filter_type = $('#pricing').val()
+        let filter_type = $('#pricing').val()
         insertParam('pricing', filter_type);
     });
 
     // on page load set filter option based on get parameter
-    pricing_param = getUrlParameter('pricing')
+    let pricing_param = getUrlParameter('pricing')
     if (pricing_param != false) {
         $('#pricing').val(pricing_param).change();
     } else {
@@ -145,8 +145,9 @@ $(document).ready(function () {
     var current_category = getUrlParameter('category');
 
     $('#category-list li').each(function(index) {
-        category_link =  $(this).children();
-        category_id = category_link.attr('name');
+        let category_link = $(this).children();
+        let category_id = category_link.attr('name');
+        let inner_html;
         if (category_id == current_category) {
             inner_html = arrow_html + category_link.html();
             category_link.html(inner_html);
