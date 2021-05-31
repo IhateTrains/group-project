@@ -205,6 +205,12 @@ def registerView(request):
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         form_prof = CreateProfileForm(request.POST)
+
+        mail_exists = request.POST.get('email')
+        if User.objects.filter(email=mail_exists).exists():
+            messages.error(request, "Konto o podanym emailu już istnieje")
+            return redirect('pages:register')
+
         if form.is_valid() and form_prof.is_valid():
             user = form.save(commit=False)
             user.is_active = False
