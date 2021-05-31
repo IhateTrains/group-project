@@ -29,6 +29,7 @@ class SzikPoint(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=50)
+    parent_category = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -37,6 +38,9 @@ class Category(models.Model):
         return reverse("pages:category", kwargs={
             "pk": self.pk
         })
+
+    def get_subcategories(self):
+        return Category.objects.filter(parent_category_id=self.pk)
 
 
 class ProductImage(models.Model):

@@ -1,0 +1,8 @@
+        {% csrf_token %}
+        {% autoescape off %}
+        Witaj {{ user.username }},
+        kliknij w link aby potwierdzić swoją rejestrację,
+
+        http://{{ domain }}{% url 'pages:activate' uidb64=uid token=token %}
+        Jeśli ta wiadomość nie jest skierowana do Ciebie, poprostu ją zignoruj.
+        {% endautoescape %}

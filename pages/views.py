@@ -4,20 +4,45 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.views.generic import ListView, DetailView, View
 # project
-from .models import Product, Order, OrderLine, SzikPoint
+from .models import Product, Category, Order, OrderLine, SzikPoint
 from .forms import CreateUserForm, CreateProfileForm
 from . import services
+from .filters import ProductFilter
+# for email confirmation
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+
+UserModel = get_user_model()
 
 
 class HomeView(ListView):
-    model = Product
     template_name = "pages/home.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context = {
+            'product_list': Product.objects.all(),
+            'categories': Category.objects.all(),
+            'filter': ProductFilter(self.request.GET, queryset=self.get_queryset())
+        }
+        return context
+
+    def get_queryset(self):
+        return Product.objects.all()
 
 
 class SalesView(ListView):
@@ -39,13 +64,14 @@ class OrderSummaryView(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
         try:
             order = Order.objects.get(customer=self.request.user, ordered=False)
-            context = {
-                'object': order
-            }
-            return render(self.request, 'pages/order_summary.html', context)
         except ObjectDoesNotExist:
-            messages.error(self.request, "You do not have an order")
-            return redirect("/")
+            order = Order(customer=self.request.user, ordered=False, order_date=timezone.now())
+            order.save()
+
+        context = {
+            'object': order
+        }
+        return render(self.request, 'pages/order_summary.html', context)
 
 
 def about(request):
@@ -69,6 +95,8 @@ def search_products(request):
 
 def get_category_product_list(request, pk):
     context = {
+        'category': Category.objects.get(id=pk),
+        'subcategories': Category.objects.filter(parent_category_id=pk),
         'products': Product.objects.filter(category_id=pk),
         'hide_category_on_product_cards': 'True'
     }
@@ -150,26 +178,72 @@ def reduce_quantity_item(request, pk):
         return redirect("pages:order-summary")
 
 
+def loginPage(request):
+    context = {}
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('pages:home')
+        else:
+            context['invalid_login'] = True
+
+    return render(request, 'pages/login.html', context)
+
+
+def logoutUser(request):
+    logout(request)
+    return redirect('pages:home')
+
+
 def registerView(request):
     form = CreateUserForm()
     form_prof = CreateProfileForm()
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         form_prof = CreateProfileForm(request.POST)
+
+        mail_exists = request.POST.get('email')
+        if User.objects.filter(email=mail_exists).exists():
+            messages.error(request, "Konto o podanym emailu już istnieje")
+            return redirect('pages:register')
+
         if form.is_valid() and form_prof.is_valid():
-            user = form.save()
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
             user.refresh_from_db()
             form_prof = CreateProfileForm(request.POST, instance=user.userprofile)
             form_prof.full_clean()
             form_prof.save()
             user.save()
-            return redirect('/')
+            current_site = get_current_site(request)
+            mail_subject = 'Aktywacja konta.'
+            message = render_to_string('email_activation.html', {
+                'user': user,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': default_token_generator.make_token(user),
+            })
+            to_email = form.cleaned_data.get('email')
+            email = EmailMessage(
+                mail_subject, message, to=[to_email]
+            )
+            email.send()
+            messages.success(request, 'Proszę potwierdzić swój adres e-mail aby ukończyć rejestrację.')
+            return redirect('pages:login')
     context = {'form': form, 'form_prof': form_prof}
-    return render(request, 'register.html', context)
+    return render(request, 'pages/register.html', context)
+
 
 def contact(request):
     szik_points = SzikPoint.objects.all()
     return render(request, 'pages/contact.html', {'szik_points': szik_points})
+
 
 def search_points(request):
     if request.method == 'POST':
@@ -177,11 +251,12 @@ def search_points(request):
         if searched != '':
             szik_points = SzikPoint.objects.filter(city=searched)
             return render(request, 'pages/search_points.html',
-                      {'searched': searched,
-                       'szik_points': szik_points})
+                          {'searched': searched,
+                           'szik_points': szik_points})
         else:
             szik_points = SzikPoint.objects.all()
             return render(request, 'pages/search_points.html', {'szik_points': szik_points})
+
 
 def users_orders_list(request):
     user = request.user
@@ -190,3 +265,17 @@ def users_orders_list(request):
 
     return render(request, 'pages/orders_list.html', {'orders_list': orders_list})
 
+
+def activate(request, uidb64, token):
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = UserModel._default_manager.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and default_token_generator.check_token(user, token):
+        user.is_active = True
+        user.save()
+        messages.success(request, 'Dziękujemy za potwierdzenie mailowe. Teraz możesz się zalogować.')
+        return redirect('pages:login')
+    else:
+        return HttpResponse('Link aktywacyjny jest nieprawidłowy!')
