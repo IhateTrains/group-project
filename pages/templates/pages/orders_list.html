@@ -16,17 +16,17 @@
         <th>Cena łącznie</th>
     </tr>
         {% for o in order.products.all %}
-    <tr>
-        <td>{{o.product.name}}</td>
-        <td>{{o.quantity}}</td>
+            <tr>
+                <td>{{o.product.name}}</td>
+                <td>{{o.quantity}}</td>
 
-        <td>{% if o.product.discount is None %}
-        {{o.product.price}} zł
-        {% else %}
-        {{o.product.get_discount_price}} zł
-        {% endif %}</td>
-        <td>{{ o.get_final_price }} zł</td>
-    </tr>
+                <td>{% if o.product.discount is None %}
+                {{o.product.price}} zł
+                {% else %}
+                {{o.product.get_discount_price}} zł
+                {% endif %}</td>
+                <td>{{ o.get_final_price }} zł</td>
+            </tr>
         {% endfor %}
         </table>
         </p></div>

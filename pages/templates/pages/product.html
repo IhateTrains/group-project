@@ -83,13 +83,25 @@
         <!--Grid column-->
         <div class="col-md-12 text-center">
 
-          <h4 class="my-4 h4">Opis produktu oraz specyfikacja</h4>
+          <h4 class="my-4 h4">Opis produktu</h4>
           <hr>
 
           <div class="text-left">
             {{ object.description|safe }}
-          </p>
-
+          </div>
+          <h4 class="my-4 h4">Specyfikacja</h4>
+          <hr>
+          <div class="container dark-grey-text mt-1"><p>
+            <table class="table table-white table-striped">
+            {% for key,value in object.attributes.items %}
+                <tr>
+                    <td>{{key}}</td>
+                    <td>{{value}}</td>
+                </tr>
+            {% endfor %}
+            </table>
+            </p>
+          </div>
         </div>
         <!--Grid column-->
 
