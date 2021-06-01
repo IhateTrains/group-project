@@ -1,9 +1,12 @@
 {% extends 'pages/base.html' %}
 
+{% load comparison_tags %}
+{% load fontawesome_5 %}
+
 {% block content %}
 
 <!--Main layout-->
-  <main class="pt-1">
+<main class="pt-1">
     <div class="container dark-grey-text mt-5">
 
       <!--Grid row-->
@@ -28,10 +31,10 @@
 
           <!--Content-->
           <div class="p-4">
-            
+
             <div class="card" style="background-color: #f5f5f5;">
               <div class="card-body float-right">
-                
+
                 <div class="text-center">
                   <p class="lead font-weight-bold d-inline">{{ object.name }}</p>
                   <p class="ml-2 d-inline">{{ object.get_category_display }}</p>
@@ -59,10 +62,29 @@
                   </div>
 
                   <div class="mx-1 d-inline-block">
-                    <a href="{{ object.get_add_to_cart_url }}" class="btn btn-success btn-md my-0" >Dodaj do koszyka
+                    <a href="{{ object.get_add_to_cart_url }}" class="btn btn-success btn-md my-0 waves-effect">Dodaj do koszyka
                       <i class="fas fa-shopping-cart ml-1"></i>
                     </a>
+
+                    <button id="compare_btn" data-url="{% url 'comparison:toggle' object.id %}"
+                            data-role="comparison-button"
+                            data-active="{% if object.id|is_compared:request %}true{% else %}false{% endif %}"
+                            class="btn btn-light btn-md my-0 waves-effect"
+                            onload="ComparisonButton()">
+                        <i
+                           title="Dodaj do porównania"
+                           style="display: none;"
+                           data-role="comparison-add">
+                           {% fa5_icon 'balance-scale-right' %}</i>
+                        <i class="fa fa-minus-square"
+                           title="Usuń z porównania"
+                           style="display: none;"
+                           data-role="comparison-remove"></i>
+                        <i class="fa fa-spinner fa-pulse" data-role="loading"></i>
+                    </button>
                   </div>
+
+
 
                 </div>
               </div>
@@ -109,8 +131,8 @@
       <!--Grid row-->
 
     </div>
-  </main>
-  <!--Main layout-->
+</main>
+<!--Main layout-->
 
 {% endblock content %}
 

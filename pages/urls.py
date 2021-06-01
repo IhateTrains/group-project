@@ -20,6 +20,7 @@ app_name = 'pages'
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
+    path('home/', HomeView.as_view(), name='home'),
     path('about/', views.about, name='about'),
     # sklepy
     path('shops', ShopsView.as_view(), name='shops'),

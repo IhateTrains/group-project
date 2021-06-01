@@ -39,6 +39,7 @@ SITE_ID = 1
 
 INSTALLED_APPS = [
     'pages.apps.PagesConfig',
+    'comparison',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'pwa',
     'django_filters',
+    'fontawesome_5',
 
     'django.contrib.admin',
     'django.contrib.sites',
@@ -67,6 +69,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'comparison.middleware.ComparisonMiddleware',
 ]
 
 ROOT_URLCONF = 'aplikacja_szik.urls'
@@ -83,6 +86,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'builtins': [
+                'comparison.templatetags.comparison_tags'
+            ]
         },
     },
 ]
