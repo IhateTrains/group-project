@@ -25,7 +25,7 @@ $(function () {
                 self._toggleLoading(false);
                 $('#compare_btn').prop('disabled', false);
                 self._toggleComparison(response.is_active);
-                $('[data-role=comparison-dropdown]').html(response.dropdown);
+                $('#comparison-dropdown').replaceWith(response.dropdown);
                 $.notify({message: response.message}, {type: 'success'});
             });
         });

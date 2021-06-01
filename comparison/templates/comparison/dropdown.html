@@ -1,17 +1,16 @@
-
 {% load i18n %}
 {% load fontawesome_5 %}
-{% block comparison_dropdown %}
-<div class="nav-item dropdown mx-1">
+<div class="nav-item dropdown">
     <a href="javascript:void(0);"
        id="comparison-dropdown"
+       data-role="comparison-dropdown"
        data-toggle="dropdown"
        aria-haspopup="true"
        aria-expanded="false"
        class="nav-link waves-effect">
 
-       <span class="badge red z-depth-1 mr-1"> {{ request.comparison|length }} </span>
-       <span style="color:white"> {% fa5_icon 'balance-scale-right' color='white' %} Porównanie</span>
+       <span class="badge red z-depth-1 mr-1">{{ request.comparison|length }}</span>
+       {% fa5_icon 'balance-scale-right' color='white' %}<span style="color:white">Porównanie</span>
     </a>
 
     {% if not request.comparison.is_empty %}
@@ -26,6 +25,3 @@
         </ul>
     {% endif %}
 </div>
-
-{% endblock comparison_dropdown %}
-
