@@ -3,8 +3,8 @@ import logging
 
 from .models import Product
 
-class ProductFilter(django_filters.FilterSet):
 
+class ProductFilter(django_filters.FilterSet):
     CHOICES = (
         ('name_ascending', 'Nazwy rosnąco'),
         ('name_descending', 'Nazwy malejąco'),
@@ -16,18 +16,20 @@ class ProductFilter(django_filters.FilterSet):
 
     class Meta:
         model = Product
-        fields = ['category', 'name', 'price']
+        fields = ['category', 'name', 'price', 'discount']
 
-    def products_filter(self, queryset, name, value):
+    @staticmethod
+    def products_filter(queryset, name, value):
         if value == 'name_ascending':
             expr = 'name'
         elif value == 'name_descending':
             expr = '-name'
         elif value == 'price_ascending':
-            expr = 'price'
+            return queryset.extra(select={'price_val': 'CASE WHEN discount IS NULL THEN price '
+                                                       'WHEN discount is not NULL THEN price-discount END'},
+                                  order_by=['price_val'])
         elif value == 'price_descending':
-            expr = '-price'
-
+            return queryset.extra(select={'price_val': 'CASE WHEN discount IS NULL THEN price '
+                                                       'WHEN discount is not NULL THEN price-discount END'},
+                                  order_by=['-price_val'])
         return queryset.order_by(expr)
-
-        

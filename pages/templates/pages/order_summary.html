@@ -22,9 +22,9 @@
                     <tr>
                         <th scope="row"><a href="{{ order_item.product.get_absolute_url }}">{{ order_item.product.name }}</a></th>
                         <td>
-                        {% if order_item.product.discount_price %}
+                        {% if order_item.product.discount %}
                             <del>{{ order_item.product.price }} zł</del>
-                            {{ order_item.product.discount_price }} zł
+                            {{ order_item.product.get_discount_price }} zł
                         {% else %}
                             {{ order_item.product.price }} zł
                         {% endif %}
@@ -36,7 +36,7 @@
                             <a href="{% url 'pages:add-to-cart' order_item.product.pk %}"><i class="fas fa-plus ml-2"></i></a>
                         </td>
                         <td>
-                        {% if order_item.product.discount_price %}
+                        {% if order_item.product.discount %}
                             {{ order_item.get_discount_item_price }} zł
                             <span class="badge badge-success">Oszczędzasz {{ order_item.get_amount_saved }} zł</span>
                         {% else %}
