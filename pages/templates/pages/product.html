@@ -66,18 +66,22 @@
                       <i class="fas fa-shopping-cart ml-1"></i>
                     </a>
 
-                    <form method="post"
-                          action="{% url 'comparison:add' object.pk %}"
-                          class="pull-left">
-                        <input type="hidden" name="next" value="{{ request.get_full_path }}">
-
-                        <button type="submit"
-                                class="btn btn-light-blue btn-md my-0 waves-effect"
-                                title="Dodaj produkt do porównania">
-                                Dodaj do porównania
-                                <i class="ml-1">{% fa5_icon 'balance-scale-right' %}</i>
-                        </button>
-                    </form>
+                    <button id="compare_btn" data-url="{% url 'comparison:toggle' object.id %}"
+                            data-role="comparison-button"
+                            data-active="{% if object.id|is_compared:request %}true{% else %}false{% endif %}"
+                            class="btn btn-light btn-md my-0 waves-effect"
+                            onload="ComparisonButton()">
+                        <i
+                           title="Dodaj do porównania"
+                           style="display: none;"
+                           data-role="comparison-add">
+                           {% fa5_icon 'balance-scale-right' %}</i>
+                        <i class="fa fa-minus-square"
+                           title="Usuń z porównania"
+                           style="display: none;"
+                           data-role="comparison-remove"></i>
+                        <i class="fa fa-spinner fa-pulse" data-role="loading"></i>
+                    </button>
                   </div>
 
 
