@@ -20,8 +20,9 @@ from django.urls import path, include
 
 
 urlpatterns = [
-    path('files/', include('db_file_storage.urls')),
+    path('comparison/', include('comparison.urls')),
     path('admin/', admin.site.urls),
+    path('files/', include('db_file_storage.urls')),
     path('', include('pages.urls', namespace='pages')),
     path('', include('pwa.urls')),  # You MUST use an empty string as the URL prefix
 ]

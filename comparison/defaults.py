@@ -1,0 +1,3 @@
+
+COMPARISON_CATEGORY_MODEL = 'pages.Category'
+COMPARISON_PRODUCT_MODEL = 'pages.Product'
