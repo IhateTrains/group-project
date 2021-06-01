@@ -16,13 +16,11 @@ def prepare_attributes(products):
         if product.attributes:
             for key, value in dict(product.attributes).items():
                 all_attributes.add(key)
-                print('size of all:', len(all_attributes))
 
     attribute_map = defaultdict(list)
     for attribute in all_attributes:
         for count, product in enumerate(products):
             if product.attributes and attribute in product.attributes:
-                print('size of prodict attrs:', len(product.attributes))
                 attribute_map[attribute].append(str(product.attributes[attribute]))
             else:
                 attribute_map[attribute].append('-')
