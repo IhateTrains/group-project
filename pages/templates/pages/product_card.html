@@ -29,8 +29,8 @@
 
       <h4 class="font-weight-bold blue-text">
         <strong>
-        {% if item.discount_price %}
-          <span class="mr-1"> <del>{{ item.price }} zł</del> </span> <span>{{ item.discount_price }} zł</span>
+        {% if item.discount %}
+          <span class="mr-1"> <del>{{ item.price }} zł</del> </span> <span>{{ item.get_discount_price }} zł</span>
         {% else %}
           <span>{{ item.price }} zł</span>
         {% endif %}

@@ -53,7 +53,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     price = models.DecimalField(max_digits=6, decimal_places=2)
-    discount_price = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
+    discount = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     description = models.TextField()
     image = models.ImageField(upload_to='pages.ProductImage/bytes/filename/mimetype', blank=True, null=True)
 
@@ -78,10 +78,10 @@ class Product(models.Model):
     def get_category_display(self):
         return self.category.name
 
-    def get_discount(self):
-        if self.discount_price:
-            return self.price - self.discount_price
-        return 0
+    def get_discount_price(self):
+        if self.discount:
+            return self.price - self.discount
+        return self.price
 
 
 class ProductQuantity(models.Model):
@@ -103,13 +103,13 @@ class OrderLine(models.Model):
         return self.quantity * self.product.price
 
     def get_discount_item_price(self):
-        return self.quantity * self.product.discount_price
+        return self.quantity * self.product.get_discount_price()
 
     def get_amount_saved(self):
         return self.get_total_item_price() - self.get_discount_item_price()
 
     def get_final_price(self):
-        if self.product.discount_price:
+        if self.product.discount:
             return self.get_discount_item_price()
         return self.get_total_item_price()
 
