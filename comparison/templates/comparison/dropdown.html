@@ -1,19 +1,26 @@
 {% load i18n %}
 {% load fontawesome_5 %}
-{% if not request.comparison.is_empty %}
-    <div class="nav-item dropdown">
-        <a href="javascript:void(0);"
-           id="comparison-dropdown"
-           data-role="comparison-dropdown"
-           data-toggle="dropdown"
-           aria-haspopup="true"
-           aria-expanded="false"
-           class="nav-link waves-effect">
 
-           <span class="badge red z-depth-1 mr-1">{{ request.comparison|length }}</span>
-           {% fa5_icon 'balance-scale-right' color='white' %}<span style="color:white">Porównanie</span>
-        </a>
+<div class="nav-item dropdown">
+    <a href="javascript:void(0);"
+       id="comparison-dropdown"
+       data-role="comparison-dropdown"
+       data-toggle="dropdown"
+       aria-haspopup="true"
+       aria-expanded="false"
+       class="nav-link waves-effect"
+       {% if request.comparison.is_empty %}
+           style="visibility:hidden"
+       {% endif %}
+    >
 
+        {% if not request.comparison.is_empty %}
+            <span class="badge red z-depth-1 mr-1">{{ request.comparison|length }}</span>
+            {% fa5_icon 'balance-scale-right' color='white' %}<span style="color:white">Porównanie</span>
+        {% endif %}
+    </a>
+
+    {% if not request.comparison.is_empty %}
         <ul class="dropdown-menu" aria-labelledby="comparison-dropdown">
             {% for category in request.comparison.get_categories %}
                 <li>
@@ -23,5 +30,5 @@
                 </li>
             {% endfor %}
         </ul>
-    </div>
-{% endif %}
+    {% endif %}
+</div>
