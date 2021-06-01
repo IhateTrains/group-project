@@ -2,7 +2,6 @@
 from django.apps import apps
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404, render, redirect
-from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_POST
 from django.http.response import JsonResponse
 from django.template.loader import render_to_string
@@ -63,7 +62,7 @@ def add(request, product_id):
         request,
         product_id,
         action=lambda p: request.comparison.add(p),
-        message=lambda p: _('{} added to comparison').format(p.name))
+        message=lambda p: 'Przedmiot {} dodany do porównania'.format(p.name))
 
 
 @require_POST
@@ -73,7 +72,7 @@ def remove(request, product_id):
         request,
         product_id,
         action=lambda p: request.comparison.remove(p),
-        message=lambda p: _('{} removed from comparison').format(p.name))
+        message=lambda p: 'Przedmiot {} usunięty z porównania'.format(p.name))
 
 
 def _action_view(request, product_id, action, message):
@@ -82,8 +81,6 @@ def _action_view(request, product_id, action, message):
         apps.get_model('pages', 'Product'), id=product_id)
 
     action(product)
-
-    print(message(product)) # TODO: REMOVE
 
     if not request.is_ajax():
         return redirect(request.POST.get('next', 'home'))
