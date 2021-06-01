@@ -1,18 +1,21 @@
 
 {% load i18n %}
-
-<div class="dropdown pull-right">
+{% load fontawesome_5 %}
+{% block comparison_dropdown %}
+<div class="nav-item dropdown mx-1">
     <a href="javascript:void(0);"
        id="comparison-dropdown"
        data-toggle="dropdown"
        aria-haspopup="true"
        aria-expanded="false">
 
-        <i class="fa fa-exchange"></i>
-        Porównanie ({{ request.comparison|length }})
+        {% fa5_icon 'balance-scale-right' %}
+        <i class="text-white">Porównanie ({{ request.comparison|length }})</i>
     </a>
 
+
     {% if not request.comparison.is_empty %}
+        {% fa5_icon 'angle-down' color='white' %}
         <ul class="dropdown-menu" aria-labelledby="comparison-dropdown">
             {% for category in request.comparison.get_categories %}
                 <li>
@@ -25,4 +28,5 @@
     {% endif %}
 </div>
 
+{% endblock comparison_dropdown %}
 
