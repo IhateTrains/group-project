@@ -1,5 +1,5 @@
 
-{% load i18n comparison %}
+{% load i18n comparison_tags %}
 
 
 <button data-url="{% url 'comparison:toggle' object.id %}"
@@ -7,11 +7,11 @@
         data-active="{% if object.id|is_compared:request %}true{% else %}false{% endif %}"
         class="{{ class }}">
     <i class="fa fa-exchange"
-       title="{% trans 'Add to comparison' %}"
+       title="Dodaj do porównania"
        style="display: none;"
        data-role="comparison-add"></i>
     <i class="fa fa-minus-square"
-       title="{% trans 'Remove from comparison' %}"
+       title="Usuń z porównania"
        style="display: none;"
        data-role="comparison-remove"></i>
     <i class="fa fa-spinner fa-pulse" data-role="loading"></i>

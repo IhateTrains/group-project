@@ -39,7 +39,7 @@ SITE_ID = 1
 
 INSTALLED_APPS = [
     'pages.apps.PagesConfig',
-    'comparison.ComparisonAppConfig',
+    'comparison',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -86,6 +86,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'builtins': [
+                'comparison.templatetags.comparison_tags'
+            ]
         },
     },
 ]
