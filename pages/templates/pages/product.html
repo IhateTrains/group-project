@@ -1,9 +1,12 @@
 {% extends 'pages/base.html' %}
 
+{% load fontawesome_5 %}
+
 {% block content %}
 
+<head>{% fontawesome_5_static %}</head>
 <!--Main layout-->
-  <main class="pt-1">
+<main class="pt-1">
     <div class="container dark-grey-text mt-5">
 
       <!--Grid row-->
@@ -28,10 +31,10 @@
 
           <!--Content-->
           <div class="p-4">
-            
+
             <div class="card" style="background-color: #f5f5f5;">
               <div class="card-body float-right">
-                
+
                 <div class="text-center">
                   <p class="lead font-weight-bold d-inline">{{ object.name }}</p>
                   <p class="ml-2 d-inline">{{ object.get_category_display }}</p>
@@ -59,10 +62,25 @@
                   </div>
 
                   <div class="mx-1 d-inline-block">
-                    <a href="{{ object.get_add_to_cart_url }}" class="btn btn-success btn-md my-0" >Dodaj do koszyka
+                    <a href="{{ object.get_add_to_cart_url }}" class="btn btn-success btn-md my-0 waves-effect">Dodaj do koszyka
                       <i class="fas fa-shopping-cart ml-1"></i>
                     </a>
+
+                    <form method="post"
+                          action="{% url 'comparison:add' object.pk %}"
+                          class="pull-left">
+                        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+
+                        <button type="submit"
+                                class="btn btn-light-blue btn-md my-0 waves-effect"
+                                title="Dodaj produkt do porównania">
+                                Dodaj do porównania
+                                <i class="ml-1">{% fa5_icon 'balance-scale-right' %}</i>
+                        </button>
+                    </form>
                   </div>
+
+
 
                 </div>
               </div>
@@ -109,8 +127,8 @@
       <!--Grid row-->
 
     </div>
-  </main>
-  <!--Main layout-->
+</main>
+<!--Main layout-->
 
 {% endblock content %}
 

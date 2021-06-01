@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'pwa',
     'django_filters',
-    'easy_thumbnails',
+    'fontawesome_5',
 
     'django.contrib.admin',
     'django.contrib.sites',

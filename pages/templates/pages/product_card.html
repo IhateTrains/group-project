@@ -34,20 +34,6 @@
         {% else %}
           <span>{{ item.price }} zł</span>
         {% endif %}
-                                        <form method="post"
-                                              action="{% url 'comparison:add' item.pk  %}"
-                                              class="pull-left">
-                                            <input type="hidden" name="next" value="{{ request.get_full_path }}">
-
-                                            <button type="submit"
-                                                    class="nav-link waves-effect"
-                                                    title="Dodaj do porównania">
-                                                <i class="fa fa-remove"></i>
-                                            </button>
-                                        </form>
-
-
-            <a class="nav-link waves-effect" href="{% url 'comparison:index' item.category.pk %}">Porównanie</a>
         </strong>
       </h4>
     </div>

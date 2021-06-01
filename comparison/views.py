@@ -8,10 +8,29 @@ from django.http.response import JsonResponse
 from django.template.loader import render_to_string
 
 from comparison.config import COMPARISON_CATEGORY_MODEL
+from collections import defaultdict
+
+
+def prepare_attributes(products):
+    all_attributes = set()
+    for product in products:
+        if product.attributes:
+            for key, value in dict(product.attributes).items():
+                all_attributes.add(key)
+                print('size of all:', len(all_attributes))
+
+    attribute_map = defaultdict(list)
+    for attribute in all_attributes:
+        for count, product in enumerate(products):
+            if product.attributes and attribute in product.attributes:
+                print('size of prodict attrs:', len(product.attributes))
+                attribute_map[attribute].append(str(product.attributes[attribute]))
+            else:
+                attribute_map[attribute].append('-')
+    return dict(attribute_map)
 
 
 def index(request, category_id):
-    print(COMPARISON_CATEGORY_MODEL) # TODO: REMOVE DEBUG
     category_model = apps.get_model(COMPARISON_CATEGORY_MODEL)
 
     category = get_object_or_404(category_model, id=category_id)
@@ -21,12 +40,8 @@ def index(request, category_id):
     context = {
         'category': category,
         'products': products,
+        'attributes': prepare_attributes(products)
     }
-
-    if apps.is_installed('attributes'):
-        from attributes.utils import format_attributes
-        context['attributes'] = format_attributes(
-            category, [p.id for p in products])
 
     return render(request, 'comparison/index.html', context)
 

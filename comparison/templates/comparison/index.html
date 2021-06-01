@@ -1,7 +1,6 @@
-
 {% extends 'pages/base.html' %}
 
-{% load i18n thumbnail %}
+{% load i18n %}
 
 
 {% block content %}
@@ -26,8 +25,11 @@
                                 <td>
                                     <a href="{{ product.get_absolute_url }}">
                                         {% block product_logo %}
-                                            {% thumbnail product.image "500" crop="center" as img %}
-                                                <img class="img-responsive" src="{{ img }}" alt="{{ product.name }}">
+                                            {% if product.image %}
+                                                <img class="img-fluid card-img-top" style="width: 200px" src="{% url 'db_file_storage.get_file' %}?name={{ product.image }}" alt="{{ product.name }}">
+                                            {% else %}
+                                                Brak
+                                            {% endif %}
                                         {% endblock %}
                                     </a>
                                 </td>
@@ -42,11 +44,9 @@
                             {% for product in products %}
                                 <td>
                                     {% block product_name %}
-                                        <h3>
-                                            <a href="{{ product.get_absolute_url }}">
-                                                {{ product.name }}
-                                            </a>
-                                        </h3>
+                                        <a href="{{ product.get_absolute_url }}">
+                                            {{ product.name }}
+                                        </a>
                                     {% endblock %}
                                 </td>
                             {% endfor %}
@@ -68,7 +68,6 @@
                                             <button type="submit"
                                                     class="btn btn-danger btn-md m-r-10"
                                                     title="Usuń produkt z porównania">
-                                                    <i class="fa fa-remove"></i>
                                                     Usuń z porównania
                                             </button>
                                         </form>
@@ -92,14 +91,14 @@
                         </tr>
 
                         {% block attributes %}
-                            {% for attr in attributes %}
+                            {% for name, list in attributes.items %}
                                 <tr>
                                     <td>
-                                        {{ attr.name }}
+                                        {{ name }}
                                     </td>
 
-                                    {% for value in attr.values %}
-                                        <td>{{ value|default_if_none:'-' }}</td>
+                                    {% for value in list %}
+                                        <td>{{ value }}</td>
                                     {% endfor %}
                                 </tr>
                             {% endfor %}
