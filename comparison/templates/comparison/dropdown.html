@@ -7,15 +7,14 @@
        id="comparison-dropdown"
        data-toggle="dropdown"
        aria-haspopup="true"
-       aria-expanded="false">
+       aria-expanded="false"
+       class="nav-link waves-effect">
 
-        {% fa5_icon 'balance-scale-right' %}
-        <i class="text-white">Porównanie ({{ request.comparison|length }})</i>
+       <span class="badge red z-depth-1 mr-1"> {{ request.comparison|length }} </span>
+       <span style="color:white"> {% fa5_icon 'balance-scale-right' color='white' %} Porównanie</span>
     </a>
 
-
     {% if not request.comparison.is_empty %}
-        {% fa5_icon 'angle-down' color='white' %}
         <ul class="dropdown-menu" aria-labelledby="comparison-dropdown">
             {% for category in request.comparison.get_categories %}
                 <li>
