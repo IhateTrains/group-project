@@ -8,14 +8,11 @@ SESSION_KEY = 'COMPARISON'
 
 
 class Comparison(object):
-
     Product = apps.get_model(config.COMPARISON_PRODUCT_MODEL)
     ProductCategory = apps.get_model(config.COMPARISON_CATEGORY_MODEL)
 
     def __init__(self, session):
-
         self.session = session
-
         self._product_ids = self.session.get(SESSION_KEY, [])
 
     @property
@@ -41,14 +38,12 @@ class Comparison(object):
         self.session.modified = True
 
     def add(self, product):
-
         if product.id not in self._products:
             self._product_ids.append(product.id)
             self._products_cache[product.id] = product
             self._update_session()
 
     def remove(self, product):
-
         product_id = product.id
 
         if product_id in self._product_ids:
@@ -68,7 +63,6 @@ class Comparison(object):
         return len(self._product_ids) == 0
 
     def get_products(self, category_id):
-
         products = []
 
         for product in self._products.values():
@@ -82,4 +76,4 @@ class Comparison(object):
 
     def get_categories(self):
         return self.ProductCategory.objects.filter(
-            products__in=self._products.keys()).distinct()
+            product__in=self._products.keys()).distinct()
