@@ -22,7 +22,6 @@
             navigator.geolocation.getCurrentPosition(showUserPosition,
                 function(error) {
                     if (error.code === error.PERMISSION_DENIED){
-                        console.log('FUCKK');
                       x.innerHTML = "Mapa placówek wymaga dostępu do lokalizacji! ";
                     }
                 }

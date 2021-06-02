@@ -261,8 +261,8 @@ def search_points(request):
 
 def users_orders_list(request):
     user = request.user
-    list = Order.objects.filter(customer=user)
-    orders_list = list.order_by('-order_date')
+    filtered_list = Order.objects.filter(customer=user)
+    orders_list = filtered_list.order_by('-order_date')
 
     return render(request, 'pages/orders_list.html', {'orders_list': orders_list})
 
