@@ -5,7 +5,8 @@ from django.shortcuts import reverse
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-# Create your models here.
+# our imports
+from django_countries.fields import CountryField
 
 
 class SzikPointPhoto(models.Model):
@@ -127,6 +128,17 @@ class Order(models.Model):
         for order_item in self.products.all():
             total += order_item.get_final_price()
         return total
+
+
+class CheckoutAddress(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    street_address = models.CharField(max_length=100)
+    apartment_address = models.CharField(max_length=100)
+    country = CountryField(multiple=False)
+    zip = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.user.name
 
 
 class UserType(models.Model):
