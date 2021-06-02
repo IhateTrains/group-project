@@ -87,7 +87,7 @@ class CheckoutView(View):
         form = CheckoutForm(self.request.POST or None)
 
         try:
-            order = Order.objects.get(user=self.request.user, ordered=False)
+            order = Order.objects.get(customer=self.request.user, ordered=False)
             if form.is_valid():
                 street_address = form.cleaned_data.get('street_address')
                 apartment_address = form.cleaned_data.get('apartment_address')
