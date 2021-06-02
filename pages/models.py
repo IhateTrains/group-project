@@ -135,7 +135,7 @@ class CheckoutAddress(models.Model):
     street_address = models.CharField(max_length=100)
     apartment_address = models.CharField(max_length=100)
     country = CountryField(multiple=False)
-    zip = models.CharField(max_length=100)
+    zip_code = models.CharField(max_length=100)
 
     def __str__(self):
         return self.user.name

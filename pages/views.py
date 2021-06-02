@@ -11,8 +11,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.views.generic import ListView, DetailView, View
 # project
-from .models import Product, Category, Order, OrderLine, SzikPoint
-from .forms import CreateUserForm, CreateProfileForm
+from .models import Product, Category, Order, OrderLine, SzikPoint, CheckoutAddress
+from .forms import CreateUserForm, CreateProfileForm, CheckoutForm
 from . import services
 from .filters import ProductFilter
 # for email confirmation
@@ -73,6 +73,47 @@ class OrderSummaryView(LoginRequiredMixin, View):
             'object': order
         }
         return render(self.request, 'pages/order_summary.html', context)
+
+
+class CheckoutView(View):
+    def get(self, *args, **kwargs):
+        form = CheckoutForm()
+        context = {
+            'form': form
+        }
+        return render(self.request, 'pages/checkout.html', context)
+
+    def post(self, *args, **kwargs):
+        form = CheckoutForm(self.request.POST or None)
+
+        try:
+            order = Order.objects.get(user=self.request.user, ordered=False)
+            if form.is_valid():
+                street_address = form.cleaned_data.get('street_address')
+                apartment_address = form.cleaned_data.get('apartment_address')
+                country = form.cleaned_data.get('country')
+                zip_code = form.cleaned_data.get('zip')
+                same_billing_address = form.cleaned_data.get('same_billing_address')
+                save_info = form.cleaned_data.get('save_info')
+                payment_option = form.cleaned_data.get('payment_option')
+
+                checkout_address = CheckoutAddress(
+                    user=self.request.user,
+                    street_address=street_address,
+                    apartment_address=apartment_address,
+                    country=country,
+                    zip_code=zip_code
+                )
+                checkout_address.save()
+                order.checkout_address = checkout_address
+                order.save()
+                return redirect('pages:checkout')
+            messages.warning(self.request, "Failed checkout")
+            return redirect('pages:checkout')
+
+        except ObjectDoesNotExist:
+            messages.error(self.request, "Nie masz żadnego zamówienia")
+            return redirect("core:order-summary")
 
 
 def about(request):
