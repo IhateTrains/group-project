@@ -20,6 +20,7 @@ class ProductFilter(django_filters.FilterSet):
 
     @staticmethod
     def products_filter(queryset, name, value):
+        expr = 'name'  # fallback
         if value == 'name_ascending':
             expr = 'name'
         elif value == 'name_descending':
