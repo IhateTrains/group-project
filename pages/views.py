@@ -78,8 +78,10 @@ class OrderSummaryView(LoginRequiredMixin, View):
 class CheckoutView(View):
     def get(self, *args, **kwargs):
         form = CheckoutForm()
+        order = Order.objects.get(customer=self.request.user, ordered=False)
         context = {
-            'form': form
+            'form': form,
+            'order': order
         }
         return render(self.request, 'pages/checkout.html', context)
 
@@ -93,8 +95,6 @@ class CheckoutView(View):
                 apartment_address = form.cleaned_data.get('apartment_address')
                 country = form.cleaned_data.get('country')
                 zip_code = form.cleaned_data.get('zip')
-                same_billing_address = form.cleaned_data.get('same_billing_address')
-                save_info = form.cleaned_data.get('save_info')
                 payment_option = form.cleaned_data.get('payment_option')
 
                 checkout_address = CheckoutAddress(
@@ -113,7 +113,7 @@ class CheckoutView(View):
 
         except ObjectDoesNotExist:
             messages.error(self.request, "Nie masz żadnego zamówienia")
-            return redirect("core:order-summary")
+            return redirect("pages:order-summary")
 
 
 def about(request):
