@@ -27,10 +27,10 @@ class ProductFilter(django_filters.FilterSet):
             expr = '-name'
         elif value == 'price_ascending':
             return queryset.extra(select={'price_val': 'CASE WHEN discount IS NULL THEN price '
-                                                       'ELSE price-discount END'},
+                                                       'ELSE discount END'},
                                   order_by=['price_val'])
         elif value == 'price_descending':
             return queryset.extra(select={'price_val': 'CASE WHEN discount IS NULL THEN price '
-                                                       'ELSE price-discount END'},
+                                                       'ELSE discount END'},
                                   order_by=['-price_val'])
         return queryset.order_by(expr)
