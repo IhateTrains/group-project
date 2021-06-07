@@ -16,7 +16,7 @@ class ProductFilter(django_filters.FilterSet):
 
     class Meta:
         model = Product
-        fields = ['category', 'name', 'price', 'discount']
+        fields = ['name', 'price', 'discount']
 
     @staticmethod
     def products_filter(queryset, name, value):

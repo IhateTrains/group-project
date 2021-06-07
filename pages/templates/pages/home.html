@@ -30,12 +30,26 @@
 
     <nav id="sidebar">
       <div class="sidebar-header">
-        <h3>Kategorie</h3>
+        {% if section is not None %}
+          <h3>{{ section }}</h3>
+          <a href="?category=">
+            <h5 style="color: #fdf383">
+              <i class="fas fa-angle-left"></i> Zmień sekcję
+            </h5>
+          </a>
+        {% else %}
+          <h3>Sekcje produktów</h3>
+        {% endif %}
+        
       </div>
     
       <ul class="list-unstyled components" id="category-list">
         <li>
-          <a class="category-name" name="">Wszystko</a>
+          {% if section is not None %}
+            <a class="category-name" name="{{ section.pk }}">Wszystko</a>
+          {% else %}
+            <a class="category-name" name="">Wszystko</a>
+          {% endif %}
         </li>
         {% for item in categories %}
         <li>
