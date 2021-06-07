@@ -89,7 +89,7 @@ class CheckoutForm(forms.Form):
     country = CountryField(blank_label='(wybierz kraj)').formfield(widget=CountrySelectWidget(attrs={
         'class': 'custom-select d-block w-100'
     }))
-    zip_code = forms.CharField(widget=forms.TextInput(attrs={
+    zip_code = forms.CharField(required=True, widget=forms.TextInput(attrs={
         'class': 'form-control'
     }))
     payment_option = forms.ChoiceField(

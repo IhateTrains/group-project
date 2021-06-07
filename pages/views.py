@@ -94,7 +94,7 @@ class CheckoutView(View):
                 street_address = form.cleaned_data.get('street_address')
                 apartment_address = form.cleaned_data.get('apartment_address')
                 country = form.cleaned_data.get('country')
-                zip_code = form.cleaned_data.get('zip')
+                zip_code = form.cleaned_data.get('zip_code')
                 payment_option = form.cleaned_data.get('payment_option')
 
                 checkout_address = CheckoutAddress(

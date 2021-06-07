@@ -12,6 +12,7 @@ admin.site.register(models.Order)
 admin.site.register(models.UserProfile)
 admin.site.register(models.UserType)
 admin.site.register(models.VinNumber)
+admin.site.register(models.CheckoutAddress)
 
 
 @admin.register(models.Product)

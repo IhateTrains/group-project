@@ -135,10 +135,10 @@ class CheckoutAddress(models.Model):
     street_address = models.CharField(max_length=100)
     apartment_address = models.CharField(max_length=100)
     country = CountryField(multiple=False)
-    zip_code = models.CharField(max_length=100)
+    zip_code = models.CharField(max_length=100, null=False, blank=False)
 
     def __str__(self):
-        return self.user.name
+        return self.user.username
 
 
 class UserType(models.Model):
