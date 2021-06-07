@@ -8,6 +8,9 @@ from db_file_storage.form_widgets import DBAdminClearableFileInput
 from .models import Product, SzikPoint, Invoice, UserProfile, UserType
 from .username_validators import validate_username
 
+from django_countries.fields import CountryField
+from django_countries.widgets import CountrySelectWidget
+
 
 class ProductAdminForm(forms.ModelForm):
     class Meta(object):
@@ -68,3 +71,26 @@ class CreateProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['user_type']
+
+
+PAYMENT = (
+    ('B', 'BLIK'),
+    ('P', 'PayPal')
+)
+
+
+class CheckoutForm(forms.Form):
+    street_address = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+    }))
+    apartment_address = forms.CharField(required=False, widget=forms.TextInput(attrs={
+        'class': 'form-control',
+    }))
+    country = CountryField(blank_label='(wybierz kraj)').formfield(widget=CountrySelectWidget(attrs={
+        'class': 'custom-select d-block w-100'
+    }))
+    zip_code = forms.CharField(required=True, widget=forms.TextInput(attrs={
+        'class': 'form-control'
+    }))
+    payment_option = forms.ChoiceField(
+        widget=forms.RadioSelect, choices=PAYMENT)
