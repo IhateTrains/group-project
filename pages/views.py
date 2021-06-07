@@ -27,25 +27,6 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
 UserModel = get_user_model()
 
-
-class HomeView(ListView):
-    template_name = "pages/home.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        context = {
-            'product_list': Product.objects.all(),
-            'categories': Category.objects.all(),
-            'special_offers': Product.objects.filter(discount__isnull=False),
-            'filter': ProductFilter(self.request.GET, queryset=self.get_queryset())
-        }
-        return context
-
-    def get_queryset(self):
-        return Product.objects.all()
-
-
 class SalesView(ListView):
     model = Product
     template_name = "pages/sales.html"
@@ -74,6 +55,35 @@ class OrderSummaryView(LoginRequiredMixin, View):
         }
         return render(self.request, 'pages/order_summary.html', context)
 
+def home_view(request): # TODO: change this to products_list view and make new home view
+
+    context = {
+        'special_offers': Product.objects.filter(discount__isnull=False)
+    }
+
+    selected_category_pk = request.GET.get('category')
+    if selected_category_pk is not None and len(selected_category_pk) > 0:
+        
+        selected_category = Category.objects.get(pk=selected_category_pk)
+
+        if selected_category.parent_category is not None:
+            section_pk = selected_category.parent_category.pk
+            product_list = Product.objects.filter(category=selected_category_pk)
+        else:
+            section_pk = selected_category.pk
+            product_list = Product.objects.filter(category__parent_category=section_pk)
+
+        context['categories'] = Category.objects.filter(parent_category=section_pk)
+    else:
+        section_pk = None
+        context['categories'] = Category.objects.filter(parent_category__isnull=True)
+        product_list = Product.objects.all()
+
+    context['filter'] = ProductFilter(request.GET, queryset=product_list)
+    if section_pk is not None:
+        context['section'] = Category.objects.get(pk=section_pk)
+
+    return render(request, 'pages/home.html', context)
 
 def about(request):
     return HttpResponse('Projekt grupowy z Inżynierii Oprogramowania.')

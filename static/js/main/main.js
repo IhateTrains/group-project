@@ -140,7 +140,7 @@ $(document).ready(function () {
     }
 
     // mark current selected category 
-    const arrow_html = '<i class="fas fa-arrow-right mr-2"></i>';
+    const arrow_html = '<i class="fas fa-angle-right"></i>&nbsp&nbsp';
     var current_category = getUrlParameter('category');
 
     $('#category-list li').each(function(index) {
@@ -148,6 +148,7 @@ $(document).ready(function () {
         let category_id = category_link.attr('name');
         let inner_html;
         if (category_id == current_category) {
+            category_link.addClass('category-selected')
             inner_html = arrow_html + category_link.html();
             category_link.html(inner_html);
         }

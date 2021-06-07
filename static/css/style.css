@@ -177,3 +177,7 @@ a[data-toggle="collapse"] {
 .page-content-wrapper {
   max-width: 1400px;
 }
+
+.category-selected {
+  background-color: #5b5b5b;
+}

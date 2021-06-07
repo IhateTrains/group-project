@@ -2,11 +2,11 @@
 from django.urls import path, include
 from . import views
 from .views import (
-    HomeView,
     SalesView,
     ProductView,
     OrderSummaryView,
     ShopsView,
+    home_view,
     search_products,
     get_nearest_shop,
     get_category_product_list,
@@ -19,8 +19,8 @@ from .views import (
 app_name = 'pages'
 
 urlpatterns = [
-    path('', HomeView.as_view(), name='home'),
-    path('home/', HomeView.as_view(), name='home'),
+    path('', home_view, name='home'),
+    path('home/', home_view, name='home'),
     path('about/', views.about, name='about'),
     # sklepy
     path('shops', ShopsView.as_view(), name='shops'),
@@ -37,7 +37,7 @@ urlpatterns = [
     path('reduce-quantity-item/<pk>/', reduce_quantity_item, name='reduce-quantity-item'),
     # zamówienia
     path('order-summary/', OrderSummaryView.as_view(), name='order-summary'),
-    path('checkout/', HomeView.as_view(), name='checkout'),  # TODO: add CheckOutView
+    path('checkout/', home_view, name='checkout'),  # TODO: add CheckOutView
     # rejestracja
     path('login/', views.loginPage, name='login'),
     path('logout/', views.logoutUser, name='logout'),
