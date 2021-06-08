@@ -36,6 +36,7 @@ def get_matching_products(searched):
     return Product.objects.filter(Q(name__icontains=searched)
                                   | Q(description__icontains=searched))
 
+
 def get_products_and_categories(request, on_sale=False):
     context = { 'section': None }
     selected_category_pk = request.GET.get('category')
@@ -66,6 +67,7 @@ def get_products_and_categories(request, on_sale=False):
     context['product_list'] = product_list
     return context
 
+
 def get_product_list_page(request, product_list):
 
     product_list = product_list.order_by('category__parent_category', 'category')
@@ -77,4 +79,3 @@ def get_product_list_page(request, product_list):
         page_number = 1
 
     return paginator.get_page(page_number)
-    

@@ -10,7 +10,7 @@
 <form class="form-inline" method="POST" action={% url 'pages:search-points' %}>
         {% csrf_token %}
         <div class="md-form my-0">
-          <input class="form-control mr-sm-2" type="text" placeholder="Wpisz miasto" aria-label="Szukaj" name="searched">
+          <input class="form-control mr-sm-2" type="text" aria-label="Szukaj" name="searched">
           <button class="btn yellow-btn" type="submit">
             <i class="fas fa-search"></i>
           </button>
