@@ -24,6 +24,10 @@ class SzikPoint(models.Model):
     map_latitude = models.FloatField()
     map_longitude = models.FloatField()
 
+    class Meta:
+        verbose_name = "Punkt SZiK"
+        verbose_name_plural = "Punkty SZiK"
+
     def __str__(self):
         return f"{self.street_address}, {self.postal_code} {self.city}"
 
@@ -31,6 +35,10 @@ class SzikPoint(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=50)
     parent_category = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Kategoria"
+        verbose_name_plural = "Kategorie"
 
     def __str__(self):
         return self.name
@@ -58,6 +66,10 @@ class Product(models.Model):
     description = models.TextField()
     image = models.ImageField(upload_to='pages.ProductImage/bytes/filename/mimetype', blank=True, null=True)
     attributes = models.JSONField(blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Produkt"
+        verbose_name_plural = "Produkty"
 
     def __str__(self):
         return self.name
@@ -104,6 +116,10 @@ class OrderLine(models.Model):
     quantity = models.IntegerField(default=1)
     ordered = models.BooleanField(default=False)  # orderStatus
 
+    class Meta:
+        verbose_name = "Pozycja na zamówieniu"
+        verbose_name_plural = "Pozycje na zamówieniu"
+
     def __str__(self):
         return f"{self.quantity} x {self.product.name}"
 
@@ -129,6 +145,10 @@ class Order(models.Model):
     order_date = models.DateTimeField()
     ordered = models.BooleanField(default=False)
 
+    class Meta:
+        verbose_name = "Zamówienie"
+        verbose_name_plural = "Zamówienia"
+
     def get_total_price(self):
         total = 0
         for order_item in self.products.all():
@@ -149,6 +169,10 @@ class CheckoutAddress(models.Model):
 
 class UserType(models.Model):
     name = models.CharField(max_length=20, null=False)
+
+    class Meta:
+        verbose_name = "Typ użytkownika"
+        verbose_name_plural = "Typy użytkowników"
 
     def __str__(self):
         return self.name
@@ -177,6 +201,10 @@ class VinNumber(models.Model):
     user_id = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     vin = models.CharField(max_length=17)
 
+    class Meta:
+        verbose_name = "Numer VIN"
+        verbose_name_plural = "Numery VIN"
+
     def __str__(self):
         return self.vin
 
@@ -190,3 +218,7 @@ class InvoiceFile(models.Model):
 class Invoice(models.Model):
     order_id = models.ForeignKey(Order, on_delete=models.CASCADE)
     pdf_file = models.FileField(upload_to='pages.InvoiceFile/bytes/filename/mimetype', blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Faktura"
+        verbose_name_plural = "Faktury"
