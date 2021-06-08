@@ -327,6 +327,9 @@ def search_points(request):
         else:
             szik_points = SzikPoint.objects.all()
             return render(request, 'pages/search_points.html', {'szik_points': szik_points})
+    else:
+        szik_points = SzikPoint.objects.all()
+        return render(request, 'pages/search_points.html', {'szik_points': szik_points})
 
 
 def users_orders_list(request):
