@@ -4,9 +4,14 @@
 
     <!--Indicators-->
     <ol class="carousel-indicators">
-      <li data-target="#carousel-example-1z" data-slide-to="0" class="active"></li>
-      <li data-target="#carousel-example-1z" data-slide-to="1"></li>
-      <li data-target="#carousel-example-1z" data-slide-to="2"></li>
+
+        {% for offer in special_offers %}
+            {% if forloop.first %}
+                <li data-target="#carousel-example-1z" data-slide-to="0" class="active"></li>
+            {% else %}
+                <li data-target="#carousel-example-1z" data-slide-to="{{ forloop.counter }}"></li>
+            {% endif %}
+        {% endfor %}
     </ol>
     <!--/.Indicators-->
 
@@ -15,7 +20,7 @@
         {% for offer in special_offers %}
 
             <div {% if forloop.first %} class="carousel-item active" {% else %} class="carousel-item"{% endif %}>
-                <div class="view" style="background-image: url('{{ offer.image.url }}'); background-repeat: no-repeat; background-size: cover;">
+                <div class="view" style="{% if offer.image %} background-image: url('{{ offer.image.url }}');{% endif %} background-repeat: no-repeat; background-size: cover;">
                     <!-- Mask & flexbox options-->
                     <div class="mask rgba-black-strong d-flex justify-content-center align-items-center">
                         <!-- Content -->
