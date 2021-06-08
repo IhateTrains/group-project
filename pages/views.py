@@ -121,11 +121,12 @@ class CheckoutView(View):
                 order.checkout_address = checkout_address
                 order.save()
 
-                if payment_option in PAYMENT:
-                    order.payment_method = PAYMENT[payment_option]
-                    order.ordered = True
-                    order.save()
-                    return redirect('pages:orders_list')
+                for payment_tuple in PAYMENT:
+                    if payment_option == payment_tuple[0]:
+                        order.payment_method = payment_tuple[1]
+                        order.ordered = True
+                        order.save()
+                        return redirect('pages:orders_list')
                 else:
                     messages.warning(self.request, "Niepoprawna metoda płatności")
                     return redirect('pages:checkout')
