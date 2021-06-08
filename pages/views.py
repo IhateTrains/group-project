@@ -12,7 +12,7 @@ from django.utils import timezone
 from django.views.generic import ListView, DetailView, View
 # project
 from .models import Product, Category, Order, OrderLine, SzikPoint, CheckoutAddress
-from .forms import CreateUserForm, CreateProfileForm, CheckoutForm
+from .forms import CreateUserForm, CreateProfileForm, CheckoutForm, PAYMENT
 from . import services
 from .filters import ProductFilter
 # for email confirmation
@@ -26,6 +26,7 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
 UserModel = get_user_model()
+
 
 class SalesView(ListView):
     model = Product
@@ -54,6 +55,7 @@ class OrderSummaryView(LoginRequiredMixin, View):
             'object': order
         }
         return render(self.request, 'pages/order_summary.html', context)
+
 
 def home_view(request): # TODO: change this to products_list view and make new home view
 
@@ -84,6 +86,7 @@ def home_view(request): # TODO: change this to products_list view and make new h
         context['section'] = Category.objects.get(pk=section_pk)
 
     return render(request, 'pages/home.html', context)
+
 
 class CheckoutView(View):
     def get(self, *args, **kwargs):
@@ -117,9 +120,16 @@ class CheckoutView(View):
                 checkout_address.save()
                 order.checkout_address = checkout_address
                 order.save()
+
+                for payment_tuple in PAYMENT:
+                    if payment_option == payment_tuple[0]:
+                        order.payment_method = payment_tuple[1]
+                        order.ordered = True
+                        order.save()
+                        return redirect('pages:orders_list')
+
+                messages.warning(self.request, "Niepoprawna metoda płatności")
                 return redirect('pages:checkout')
-            messages.warning(self.request, "Failed checkout")
-            return redirect('pages:checkout')
 
         except ObjectDoesNotExist:
             messages.error(self.request, "Nie masz żadnego zamówienia")
