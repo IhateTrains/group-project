@@ -55,6 +55,7 @@ class OrderSummaryView(LoginRequiredMixin, View):
         }
         return render(self.request, 'pages/order_summary.html', context)
 
+
 def home_view(request): # TODO: change this to products_list view and make new home view
 
     context = {
@@ -84,6 +85,7 @@ def home_view(request): # TODO: change this to products_list view and make new h
         context['section'] = Category.objects.get(pk=section_pk)
 
     return render(request, 'pages/home.html', context)
+
 
 class CheckoutView(View):
     def get(self, *args, **kwargs):
@@ -117,9 +119,18 @@ class CheckoutView(View):
                 checkout_address.save()
                 order.checkout_address = checkout_address
                 order.save()
-                return redirect('pages:checkout')
-            messages.warning(self.request, "Failed checkout")
-            return redirect('pages:checkout')
+
+                if payment_option == 'B':
+                    order.payment_method = 'blik'
+                elif payment_option == 'P':
+                    order.payment_method = 'paypal'
+                else:
+                    messages.warning(self.request, "Niepoprawna metoda płatności")
+                    return redirect('pages:checkout')
+
+                order.ordered = True
+                order.save()
+                return redirect('pages:orders_list')
 
         except ObjectDoesNotExist:
             messages.error(self.request, "Nie masz żadnego zamówienia")
