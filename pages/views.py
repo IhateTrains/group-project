@@ -127,9 +127,9 @@ class CheckoutView(View):
                         order.ordered = True
                         order.save()
                         return redirect('pages:orders_list')
-                else:
-                    messages.warning(self.request, "Niepoprawna metoda płatności")
-                    return redirect('pages:checkout')
+
+                messages.warning(self.request, "Niepoprawna metoda płatności")
+                return redirect('pages:checkout')
 
         except ObjectDoesNotExist:
             messages.error(self.request, "Nie masz żadnego zamówienia")
