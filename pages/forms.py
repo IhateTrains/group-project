@@ -75,6 +75,9 @@ class CreateProfileForm(forms.ModelForm):
 
 PAYMENT = (
     ('B', 'BLIK'),
+    ('V', 'karta VISA'),
+    ('A', 'Apple Pay'),
+    ('G', 'Google Pay'),
     ('P', 'PayPal')
 )
 
