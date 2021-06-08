@@ -1,3 +1,4 @@
+{% if special_offers %}
 <!--Carousel Wrapper-->
 <div class="container">
   <div id="carousel-example-1z" class="carousel slide carousel-fade mx-auto" data-ride="carousel">
@@ -19,7 +20,7 @@
         {% for offer in special_offers %}
 
             <div {% if forloop.first %} class="carousel-item active" {% else %} class="carousel-item"{% endif %}>
-                <div class="view" style="{% if offer.image %} background-image: url('{{ offer.image.url }}');{% endif %} background-repeat: no-repeat; background-size: cover;">
+                <div class="view special-offer" style="{% if offer.image %} background-image: url('{{ offer.image.url }}') {% endif %}">
                     <!-- Mask & flexbox options-->
                     <div class="mask rgba-black-strong d-flex justify-content-center align-items-center">
                         <!-- Content -->
@@ -53,3 +54,4 @@
 
 </div>
 </div>
+{% endif %}
