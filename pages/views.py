@@ -322,7 +322,7 @@ def search_points(request):
 
 def users_orders_list(request):
     user = request.user
-    filtered_list = Order.objects.filter(customer=user)
+    filtered_list = Order.objects.filter(customer=user, ordered=True)
     orders_list = filtered_list.order_by('-order_date')
 
     return render(request, 'pages/orders_list.html', {'orders_list': orders_list})
