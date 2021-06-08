@@ -12,7 +12,7 @@ from django.utils import timezone
 from django.views.generic import ListView, DetailView, View
 # project
 from .models import Product, Category, Order, OrderLine, SzikPoint, CheckoutAddress
-from .forms import CreateUserForm, CreateProfileForm, CheckoutForm
+from .forms import CreateUserForm, CreateProfileForm, CheckoutForm, PAYMENT
 from . import services
 from .filters import ProductFilter
 # for email confirmation
@@ -26,6 +26,7 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
 UserModel = get_user_model()
+
 
 class SalesView(ListView):
     model = Product
@@ -120,17 +121,14 @@ class CheckoutView(View):
                 order.checkout_address = checkout_address
                 order.save()
 
-                if payment_option == 'B':
-                    order.payment_method = 'blik'
-                elif payment_option == 'P':
-                    order.payment_method = 'paypal'
+                if payment_option in PAYMENT:
+                    order.payment_method = PAYMENT[payment_option]
+                    order.ordered = True
+                    order.save()
+                    return redirect('pages:orders_list')
                 else:
                     messages.warning(self.request, "Niepoprawna metoda płatności")
                     return redirect('pages:checkout')
-
-                order.ordered = True
-                order.save()
-                return redirect('pages:orders_list')
 
         except ObjectDoesNotExist:
             messages.error(self.request, "Nie masz żadnego zamówienia")
