@@ -11,6 +11,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.views.generic import ListView, DetailView, View
 from django.core.paginator import Paginator
+from django.db.models import Q
 # project
 from .models import Product, Category, Order, OrderLine, SzikPoint, CheckoutAddress
 from .forms import CreateUserForm, CreateProfileForm, CheckoutForm, PAYMENT
@@ -293,7 +294,11 @@ def search_points(request):
     if request.method == 'POST':
         searched = request.POST['searched']
         if searched != '':
-            szik_points = SzikPoint.objects.filter(city=searched)
+            szik_points = SzikPoint.objects.filter(Q(city__icontains=searched) |
+                                                   Q(street_address__icontains=searched) |
+                                                   Q(postal_code__icontains=searched) |
+                                                   Q(telephone__icontains=searched)
+                                                   )
             return render(request, 'pages/search_points.html',
                           {'searched': searched,
                            'szik_points': szik_points})
