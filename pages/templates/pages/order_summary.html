@@ -28,6 +28,7 @@
                         <td>
                         {% if order_item.product.discount %}
                             {{ order_item.get_discount_item_price }} zł
+                            <br>
                             <span class="badge badge-success">Oszczędzasz {{ order_item.get_amount_saved }} zł</span>
                         {% else %}
                             {{ order_item.get_total_item_price}} zł
