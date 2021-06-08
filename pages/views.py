@@ -58,41 +58,14 @@ class OrderSummaryView(LoginRequiredMixin, View):
         return render(self.request, 'pages/order_summary.html', context)
 
 
-def home_view(request): # TODO: change this to products_list view and make new home view
-
+def home_view(request):
+    pc = services.get_products_and_categories(request)
     context = {
-        'special_offers': Product.objects.filter(discount__isnull=False)
+        'special_offers': Product.objects.filter(discount__isnull=False).order_by('discount'),
+        'page_obj': services.get_product_list_page(request, pc['product_list']),
+        'categories': pc['categories'],
+        'section': pc['section']
     }
-
-    selected_category_pk = request.GET.get('category')
-    if selected_category_pk is not None and len(selected_category_pk) > 0:
-        
-        selected_category = Category.objects.get(pk=selected_category_pk)
-
-        if selected_category.parent_category is not None:
-            section_pk = selected_category.parent_category.pk
-            product_list = Product.objects.filter(category=selected_category_pk)
-        else:
-            section_pk = selected_category.pk
-            product_list = Product.objects.filter(category__parent_category=section_pk)
-
-        context['categories'] = Category.objects.filter(parent_category=section_pk)
-    else:
-        section_pk = None
-        context['categories'] = Category.objects.filter(parent_category__isnull=True)
-        product_list = Product.objects.all()
-
-    if section_pk is not None:
-        context['section'] = Category.objects.get(pk=section_pk)
-
-    product_list = product_list.order_by('category__parent_category', 'category')
-    product_filter = ProductFilter(request.GET, queryset=product_list)
-    paginator = Paginator(product_filter.qs, 12)
-    page_number = request.GET.get('page')
-    if page_number is None or len(page_number) == 0:
-        page_number = 1
-
-    context['page_obj'] = paginator.get_page(page_number)
 
     return render(request, 'pages/home.html', context)
 
