@@ -80,6 +80,12 @@ class Product(models.Model):
     def get_category_display(self):
         return self.category.name
 
+    def get_discount(self):
+        if self.discount:
+            return self.price - self.discount
+        else:
+            return 0.0
+
     def get_discount_price(self):
         if self.discount:
             return self.discount
