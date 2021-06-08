@@ -69,7 +69,7 @@
                 </div>
                 {% endfor %}
               </div>
-             
+
               <hr class="mb-4">
               <button class="btn btn-primary btn-lg btn-block" type="submit">Zapłać</button>
 
@@ -92,14 +92,13 @@
 
           <!-- Cart -->
           <ul class="list-group mb-3 z-depth-1">
-            
+
             {% for order_item in order.products.all %}
             <li class="list-group-item d-flex justify-content-between lh-condensed">
-              <div>
-                <h6 class="my-0">{{ order_item.quantity }} x {{ order_item.product.name }}</h6>
-                <small class="text-muted">{{ order_item.product.description }}</small>
+              <div style="overflow-wrap: break-word;">
+                <small>{{ order_item.quantity }} x {{ order_item.product.name }}</small>
               </div>
-              <span class="text-muted">{{ order_item.get_final_price }}</span>
+              <span class="text-muted"><small>{{ order_item.get_final_price }} zł</small></span>
             </li>
             {% endfor %}
 
