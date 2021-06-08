@@ -44,9 +44,8 @@ class Category(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse("pages:category", kwargs={
-            "pk": self.pk
-        })
+        url = reverse("pages:home")
+        return f'{url}?&category={self.pk}'
 
     def get_subcategories(self):
         return Category.objects.filter(parent_category_id=self.pk)

@@ -147,16 +147,6 @@ def search_products(request):
     return render(request, 'pages/search_products.html', {})
 
 
-def get_category_product_list(request, pk):
-    context = {
-        'category': Category.objects.get(id=pk),
-        'subcategories': Category.objects.filter(parent_category_id=pk),
-        'products': Product.objects.filter(category_id=pk),
-        'hide_category_on_product_cards': 'True'
-    }
-    return render(request, 'pages/category.html', context=context)
-
-
 @login_required
 def add_to_cart(request, pk):
     item = get_object_or_404(Product, pk=pk)
