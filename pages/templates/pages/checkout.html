@@ -95,15 +95,15 @@
 
             {% for order_item in order.products.all %}
             <li class="list-group-item d-flex justify-content-between lh-condensed">
-              <div style="overflow-wrap: break-word;">
-                <small>{{ order_item.quantity }} x {{ order_item.product.name }}</small>
+              <div class="text-break text-wrap">
+                {{ order_item.quantity }} x {{ order_item.product.name }}
               </div>
-              <span class="text-muted"><small>{{ order_item.get_final_price }} zł</small></span>
+              <span class="text-muted">{{ order_item.get_final_price }}&nbsp;zł</span>
             </li>
             {% endfor %}
 
             <li class="list-group-item d-flex justify-content-between">
-              <span>Łączna cena: </span><strong>{{ order.get_total_price }} zł</strong>
+              <span>Łączna cena: </span><strong>{{ order.get_total_price }}&nbsp;zł</strong>
             </li>
           </ul>
           <!-- Cart -->
