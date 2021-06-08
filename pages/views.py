@@ -85,6 +85,7 @@ def home_view(request): # TODO: change this to products_list view and make new h
     if section_pk is not None:
         context['section'] = Category.objects.get(pk=section_pk)
 
+    product_list = product_list.order_by('category__parent_category', 'category')
     product_filter = ProductFilter(request.GET, queryset=product_list)
     paginator = Paginator(product_filter.qs, 12)
     page_number = request.GET.get('page')
