@@ -10,6 +10,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.views.generic import ListView, DetailView, View
+from django.core.paginator import Paginator
 # project
 from .models import Product, Category, Order, OrderLine, SzikPoint, CheckoutAddress
 from .forms import CreateUserForm, CreateProfileForm, CheckoutForm, PAYMENT
@@ -81,9 +82,17 @@ def home_view(request): # TODO: change this to products_list view and make new h
         context['categories'] = Category.objects.filter(parent_category__isnull=True)
         product_list = Product.objects.all()
 
-    context['filter'] = ProductFilter(request.GET, queryset=product_list)
     if section_pk is not None:
         context['section'] = Category.objects.get(pk=section_pk)
+
+    context['filter'] = ProductFilter(request.GET, queryset=product_list)
+
+    products_per_page = 12
+    paginator = Paginator(context['filter'].qs, products_per_page)
+    page_number = request.GET.get('page')
+    if page_number == '' or page_number is None:
+        page_number = 1
+    context['page_obj'] = paginator.get_page(page_number)
 
     return render(request, 'pages/home.html', context)
 
