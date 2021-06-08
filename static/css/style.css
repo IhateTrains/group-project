@@ -181,3 +181,10 @@ a[data-toggle="collapse"] {
 .category-selected {
   background-color: #5b5b5b;
 }
+
+.special-offer {
+  background-color: white;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: auto 28vh;
+}

@@ -34,6 +34,16 @@ class SalesView(ListView):
     template_name = "pages/sales.html"
 
 
+def sales_view(request):
+    pc = services.get_products_and_categories(request, on_sale=True)
+    context = {
+        'page_obj': services.get_product_list_page(request, pc['product_list']),
+        'categories': pc['categories'],
+        'section': pc['section']
+    }
+    return render(request, 'pages/sales.html', context)
+
+
 class ProductView(DetailView):
     model = Product
     template_name = "pages/product.html"

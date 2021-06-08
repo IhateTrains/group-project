@@ -8,6 +8,7 @@ from .views import (
     CheckoutView,
     ShopsView,
     home_view,
+    sales_view,
     search_products,
     get_nearest_shop,
     get_category_product_list,
@@ -28,7 +29,7 @@ urlpatterns = [
     path('get-nearest-shop/<str:lat>/<str:lng>/', get_nearest_shop, name='get-nearest-shop'),
     # produkty
     path('product/<pk>/', ProductView.as_view(), name='product'),
-    path('sales', SalesView.as_view(), name='sales'),
+    path('sales', sales_view, name='sales'),
     path('search-products', search_products, name='search-products'),
     # kategorie
     path('category/<pk>/', get_category_product_list, name='category'),
