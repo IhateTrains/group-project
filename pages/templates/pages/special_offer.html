@@ -4,12 +4,11 @@
 
     <!--Indicators-->
     <ol class="carousel-indicators">
-
         {% for offer in special_offers %}
             {% if forloop.first %}
                 <li data-target="#carousel-example-1z" data-slide-to="0" class="active"></li>
             {% else %}
-                <li data-target="#carousel-example-1z" data-slide-to="{{ forloop.counter }}"></li>
+                <li data-target="#carousel-example-1z" data-slide-to="{{ forloop.counter0 }}"></li>
             {% endif %}
         {% endfor %}
     </ol>
