@@ -72,7 +72,7 @@ class OrderSummaryView(LoginRequiredMixin, View):
 def home_view(request):
     pc = services.get_products_and_categories(request)
     context = {
-        'special_offers': Product.objects.filter(discount__isnull=False).order_by('discount'),
+        'special_offers': Product.objects.filter(discount__isnull=False).order_by('discount')[:10],
         'page_obj': services.get_product_list_page(request, pc['product_list']),
         'categories': pc['categories'],
         'section': pc['section']

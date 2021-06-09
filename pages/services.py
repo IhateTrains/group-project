@@ -69,7 +69,6 @@ def get_products_and_categories(request, on_sale=False):
 
 
 def get_product_list_page(request, product_list):
-
     product_list = product_list.order_by('category__parent_category', 'category')
     product_filter = ProductFilter(request.GET, queryset=product_list)
     paginator = Paginator(product_filter.qs, 12)
