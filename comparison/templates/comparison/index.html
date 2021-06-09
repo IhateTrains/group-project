@@ -5,6 +5,20 @@
 {% block content %}
 
     {% if products %}
+        <style>
+            .comparsion-product-img {
+            max-height: 200px;
+            width: auto;
+            margin-left: auto;
+            margin-right: auto;
+            }
+
+            .product-card {
+                height: 225px;
+                width: 275px;
+            }
+        </style>
+
         <div class="container">
 
             <h2>
@@ -24,11 +38,13 @@
                                 <td>
                                     <a href="{{ product.get_absolute_url }}">
                                         {% block product_logo %}
+                                            <div class="card product-card p-3">
                                             {% if product.image %}
-                                                <img class="img-fluid card-img-top" style="width: 200px" src="{% url 'db_file_storage.get_file' %}?name={{ product.image }}" alt="{{ product.name }}">
+                                                <img src="{% url 'db_file_storage.get_file' %}?name={{ product.image }}" class="img-fluid h-100 comparsion-product-img" alt="{{ product.name }}">
                                             {% else %}
-                                                Brak
+                                                <img src="https://upload.wikimedia.org/wikipedia/commons/0/0a/No-image-available.png" class="img-fluid comparsion-product-img" alt="{{ product.name }}">
                                             {% endif %}
+                                            </div>
                                         {% endblock %}
                                     </a>
                                 </td>
