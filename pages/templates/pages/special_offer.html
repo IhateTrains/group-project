@@ -22,7 +22,7 @@
             <div {% if forloop.first %} class="carousel-item active" {% else %} class="carousel-item"{% endif %}>
                 <div class="view special-offer" style="{% if offer.image %} background-image: url('{{ offer.image.url }}') {% endif %}">
                     <!-- Mask & flexbox options-->
-                    <div class="mask rgba-black-strong d-flex justify-content-center align-items-center">
+                    <div class="mask d-flex justify-content-center align-items-center" style="background: rgba(0, 0, 0, 0.4)">
                         <!-- Content -->
                         <div class="text-center white-text mx-5 wow fadeIn">
                           <h3 class="mb-4 text-break text-wrap">
