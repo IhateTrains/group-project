@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 # third party
 from db_file_storage.form_widgets import DBAdminClearableFileInput
 # project
-from .models import Product, SzikPoint, Invoice, UserProfile, UserType
+from .models import Product, SzikPoint, Invoice, UserProfile, UserType, VinNumber
 from .username_validators import validate_username
 
 from django_countries.fields import CountryField
@@ -71,6 +71,33 @@ class CreateProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['user_type']
+
+
+class UpdateUserForm(forms.ModelForm):
+    username = forms.CharField(label='Login',
+                               required=False,
+                               min_length=8, validators=[validate_username])
+    email = forms.EmailField(label='E-mail',
+                             required=False)
+    first_name = forms.CharField(label='Imie',
+                                 required=False)
+    last_name = forms.CharField(label='Nazwisko',
+                                 required=False)
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'first_name', 'last_name']
+
+
+class UpdateProfileForm(forms.ModelForm):
+    telephone = forms.CharField(label='Telefon', required=False, max_length=9)
+    city = forms.CharField(label='Miasto', required=False, max_length=30)
+    street_address = forms.CharField(label='Adres', required=False, max_length=50)
+    postal_code = forms.CharField(label='Kod pocztowy', required=False, max_length=20)
+
+    class Meta:
+        model = UserProfile
+        fields = ['telephone', 'city', 'street_address', 'postal_code']
 
 
 PAYMENT = (

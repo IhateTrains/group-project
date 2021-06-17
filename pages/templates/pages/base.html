@@ -124,7 +124,7 @@
                   {% if user.is_staff %}
                     <li><a class="dropdown-item pl-4" href="{% url 'admin:index' %}">Panel administratora</a></li>
                   {% endif %}
-                  <li><a class="dropdown-item pl-4" href="#">Moje konto</a></li>
+                  <li><a class="dropdown-item pl-4" href="{% url 'pages:update_profile' %}">Moje konto</a></li>
                   <li><a class="dropdown-item pl-4" href="{% url 'pages:orders_list' %}">Zamówienia</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item pl-4" href="{% url 'pages:logout' %}">

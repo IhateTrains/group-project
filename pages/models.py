@@ -180,10 +180,10 @@ class UserType(models.Model):
 class UserProfile(models.Model):
     user_id = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     user_type = models.ForeignKey(UserType, null=True, on_delete=models.CASCADE)
-    telephone = models.CharField(max_length=9)
-    city = models.CharField(max_length=30)
-    street_address = models.CharField(max_length=50)
-    postal_code = models.CharField(max_length=20)
+    telephone = models.CharField(max_length=9, null=True)
+    city = models.CharField(max_length=30, null=True)
+    street_address = models.CharField(max_length=50, null=True)
+    postal_code = models.CharField(max_length=20, null=True)
 
     def __str__(self):
         return str(self.user_id)

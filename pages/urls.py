@@ -45,4 +45,5 @@ urlpatterns = [
     path('search-points', views.search_points, name='search-points'),
     path('orders_list/', views.users_orders_list, name='orders_list'),
     path('activate/<uidb64>/<token>/', views.activate, name='activate'),
+    path('update_profile/', views.update_profileView, name='update_profile'),
 ]

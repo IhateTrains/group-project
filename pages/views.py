@@ -14,7 +14,7 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 # project
 from .models import Product, Category, Order, OrderLine, SzikPoint, CheckoutAddress
-from .forms import CreateUserForm, CreateProfileForm, CheckoutForm, PAYMENT
+from .forms import CreateUserForm, CreateProfileForm, UpdateUserForm, UpdateProfileForm, CheckoutForm, PAYMENT
 from . import services
 from .filters import ProductFilter
 # for email confirmation
@@ -283,6 +283,24 @@ def registerView(request):
             return redirect('pages:login')
     context = {'form': form, 'form_prof': form_prof}
     return render(request, 'pages/register.html', context)
+
+
+@login_required
+def update_profileView(request):
+    u_form = UpdateUserForm(instance=request.user)
+    u_form_prof = UpdateProfileForm(instance=request.user.userprofile)
+    if request.method == 'POST':
+        u_form = UpdateUserForm(request.POST, instance=request.user)
+        u_form_prof = UpdateProfileForm(request.POST, instance=request.user.userprofile)
+
+        if u_form.is_valid() and u_form_prof.is_valid():
+            u_form.save()
+            u_form_prof.save()
+            messages.success(request, 'Zmiana danych zakończona pomyślnie!')
+            return redirect('pages:update_profile')
+
+    context = {'u_form': u_form, 'u_form_prof': u_form_prof}
+    return render(request, 'pages/update_profile.html', context)
 
 
 def contact(request):
