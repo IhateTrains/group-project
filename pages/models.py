@@ -104,8 +104,8 @@ class Product(models.Model):
 
 
 class ProductQuantity(models.Model):
-    product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
-    point_id = models.ForeignKey(SzikPoint, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    point = models.ForeignKey(SzikPoint, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=0)
 
 
