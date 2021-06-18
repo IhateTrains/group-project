@@ -124,7 +124,12 @@ class CheckoutView(View):
                         from InvoiceGenerator.api import Invoice, Item, Client, Provider, Creator
                         os.environ["INVOICE_LANG"] = "pl"
 
-                        client = Client(order.customer.username + '\n' + str(order.customer.email))
+                        client = Client(order.customer.username + '\n'
+                                        + str(order.customer.email) + '\n'
+                                        + order.customer.userprofile.street_address + '\n'
+                                        + order.customer.userprofile.postal_code + ' '
+                                        + order.customer.userprofile.city
+                                        )
                         provider = Provider('Auto Parts', bank_account='2600420569', bank_code='2010')
                         creator = Creator('Jan Kowalski')
                         invoice = Invoice(client, provider, creator)
