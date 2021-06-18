@@ -109,11 +109,35 @@ class ProductQuantity(models.Model):
     quantity = models.IntegerField(default=0)
 
 
-class OrderLine(models.Model):
+class InvoiceFile(models.Model):
+    bytes = models.TextField()
+    filename = models.CharField(max_length=255)
+    mimetype = models.CharField(max_length=50)
+
+
+class Order(models.Model):
     customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # user_id
-    product = models.ForeignKey(Product, related_name='product_OrderLine', on_delete=models.CASCADE)
+    payment_method = models.CharField(max_length=60, default="card")
+    order_date = models.DateTimeField()
+    ordered = models.BooleanField(default=False)
+    invoice_file = models.FileField(upload_to='pages.InvoiceFile/bytes/filename/mimetype', blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Zamówienie"
+        verbose_name_plural = "Zamówienia"
+
+    def get_total_price(self):
+        total = 0
+        for order_line in self.order_lines.all():
+            total += order_line.get_final_price()
+        return total
+
+
+class OrderLine(models.Model):
+    order = models.ForeignKey(Order, related_name='order_lines', on_delete=models.CASCADE)
+    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name='order_lines', on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
-    ordered = models.BooleanField(default=False)  # orderStatus
 
     class Meta:
         verbose_name = "Pozycja na zamówieniu"
@@ -135,31 +159,6 @@ class OrderLine(models.Model):
         if self.product.discount:
             return self.get_discount_item_price()
         return self.get_total_item_price()
-
-
-class InvoiceFile(models.Model):
-    bytes = models.TextField()
-    filename = models.CharField(max_length=255)
-    mimetype = models.CharField(max_length=50)
-
-
-class Order(models.Model):
-    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # user_id
-    payment_method = models.CharField(max_length=60, default="card")
-    products = models.ManyToManyField(OrderLine)
-    order_date = models.DateTimeField()
-    ordered = models.BooleanField(default=False)
-    invoice_file = models.FileField(upload_to='pages.InvoiceFile/bytes/filename/mimetype', blank=True, null=True)
-
-    class Meta:
-        verbose_name = "Zamówienie"
-        verbose_name_plural = "Zamówienia"
-
-    def get_total_price(self):
-        total = 0
-        for order_item in self.products.all():
-            total += order_item.get_final_price()
-        return total
 
 
 class CheckoutAddress(models.Model):
