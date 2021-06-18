@@ -177,7 +177,7 @@ class UserType(models.Model):
         return self.name
 
 
-class UserProfile(models.Model):
+class Profile(models.Model):
     user_id = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     user_type = models.ForeignKey(UserType, null=True, on_delete=models.CASCADE)
     telephone = models.CharField(max_length=9, null=True)
@@ -192,12 +192,12 @@ class UserProfile(models.Model):
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def update_user_profile(sender, instance, created, **kwargs):
     if created:
-        UserProfile.objects.create(user_id=instance)
+        Profile.objects.create(user_id=instance)
     instance.userprofile.save()
 
 
 class VinNumber(models.Model):
-    user_id = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
     vin = models.CharField(max_length=17)
 
     class Meta:
