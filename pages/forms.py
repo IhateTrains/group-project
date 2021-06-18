@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 # third party
 from db_file_storage.form_widgets import DBAdminClearableFileInput
 # project
-from .models import Product, SzikPoint, Invoice, Profile, UserType, VinNumber
+from .models import Product, SzikPoint, Order, Profile, UserType, VinNumber
 from .username_validators import validate_username
 
 from django_countries.fields import CountryField
@@ -34,9 +34,9 @@ class SzikPointAdminForm(forms.ModelForm):
         }
 
 
-class InvoiceAdminForm(forms.ModelForm):
+class OrderAdminForm(forms.ModelForm):
     class Meta(object):
-        model = Invoice
+        model = Order
         exclude = []
         widgets = {
             'index': DBAdminClearableFileInput,
