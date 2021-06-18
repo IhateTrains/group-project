@@ -12,13 +12,12 @@ from django.utils import timezone
 from django.views.generic import ListView, DetailView, View
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.core.files.base import ContentFile
+from django.core.files.base import File
 # project
 import os
 from .models import Product, Order, OrderLine, SzikPoint, CheckoutAddress
 from .forms import CreateUserForm, CreateProfileForm, UpdateUserForm, UpdateProfileForm, CheckoutForm, PAYMENT
 from . import services
-from .filters import ProductFilter
 # for email confirmation
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
@@ -139,9 +138,8 @@ class CheckoutView(View):
 
                         pdf = SimpleInvoice(invoice)
                         pdf.gen("invoice" + str(order.id) + ".pdf")
-
                         with open('invoice.pdf', 'rb') as f:
-                            order.invoice_file.save('invoice.pdf', ContentFile(f.read()))
+                            order.invoice_file.save('invoice.pdf', File(f))
 
                         order.save()
                         return redirect('pages:orders_list')
