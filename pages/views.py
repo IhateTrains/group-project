@@ -262,7 +262,7 @@ def registerView(request):
             user.is_active = False
             user.save()
             user.refresh_from_db()
-            form_prof = CreateProfileForm(request.POST, instance=user.userprofile)
+            form_prof = CreateProfileForm(request.POST, instance=user.profile)
             form_prof.full_clean()
             form_prof.save()
             user.save()
@@ -288,10 +288,10 @@ def registerView(request):
 @login_required
 def update_profileView(request):
     u_form = UpdateUserForm(instance=request.user)
-    u_form_prof = UpdateProfileForm(instance=request.user.userprofile)
+    u_form_prof = UpdateProfileForm(instance=request.user.profile)
     if request.method == 'POST':
         u_form = UpdateUserForm(request.POST, instance=request.user)
-        u_form_prof = UpdateProfileForm(request.POST, instance=request.user.userprofile)
+        u_form_prof = UpdateProfileForm(request.POST, instance=request.user.profile)
 
         if u_form.is_valid() and u_form_prof.is_valid():
             u_form.save()

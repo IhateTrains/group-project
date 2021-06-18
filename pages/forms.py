@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 # third party
 from db_file_storage.form_widgets import DBAdminClearableFileInput
 # project
-from .models import Product, SzikPoint, Invoice, UserProfile, UserType, VinNumber
+from .models import Product, SzikPoint, Invoice, Profile, UserType, VinNumber
 from .username_validators import validate_username
 
 from django_countries.fields import CountryField
@@ -69,7 +69,7 @@ class CreateProfileForm(forms.ModelForm):
     user_type = forms.ModelChoiceField(label='Typ użytkownika', queryset=UserType.objects.all(), empty_label=None)
 
     class Meta:
-        model = UserProfile
+        model = Profile
         fields = ['user_type']
 
 
@@ -96,7 +96,7 @@ class UpdateProfileForm(forms.ModelForm):
     postal_code = forms.CharField(label='Kod pocztowy', required=False, max_length=20)
 
     class Meta:
-        model = UserProfile
+        model = Profile
         fields = ['telephone', 'city', 'street_address', 'postal_code']
 
 
