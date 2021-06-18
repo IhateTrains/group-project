@@ -159,7 +159,6 @@ def add_to_cart(request, pk):
             order=order,
             product=item,
             customer=request.user,
-            ordered=False
         )
 
         if not created:
@@ -179,7 +178,6 @@ def add_to_cart(request, pk):
             order=order,
             product=item,
             customer=request.user,
-            ordered=False
         )
         order.order_lines.add(order_line)
         messages.info(request, "Dodano do koszyka")
@@ -200,7 +198,6 @@ def remove_from_cart(request, pk):
                 order=order,
                 product=item,
                 customer=request.user,
-                ordered=False
             )[0]
             order_item.delete()
             messages.info(request, "Usunięto \"" + order_item.product.name + "\" z koszyka")
@@ -223,7 +220,6 @@ def reduce_quantity_item(request, pk):
                 order=order,
                 product=item,
                 customer=request.user,
-                ordered=False
             )[0]
             if order_item.quantity > 1:
                 order_item.quantity -= 1

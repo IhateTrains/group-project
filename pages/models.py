@@ -138,7 +138,6 @@ class OrderLine(models.Model):
     customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, related_name='order_lines', on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
-    ordered = models.BooleanField(default=False)  # orderStatus
 
     class Meta:
         verbose_name = "Pozycja na zamówieniu"
