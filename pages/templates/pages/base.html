@@ -9,172 +9,186 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Aplikacja e-commerce</title>
-  <link rel="shortcut icon" type="image/png" href="{% static 'pages/favicon.ico' %}"/>
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-  <!-- Bootstrap core CSS -->
-  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-  <!-- Material Design Bootstrap -->
-  <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
-  <!-- Your custom styles (optional) -->
-  <link href="{% static 'css/style.min.css' %}" rel="stylesheet">
-  <link href="{% static 'css/style.css' %}" rel="stylesheet">
-  <link href="{% static 'css/navbar.css' %}" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Aplikacja e-commerce</title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'pages/favicon.ico' %}"/>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="{% static 'css/style.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'css/navbar.css' %}" rel="stylesheet">
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossorigin=""></script>
 
-  {% progressive_web_app_meta %}
-  {% fontawesome_5_static %}
+    {% progressive_web_app_meta %}
+    {% fontawesome_5_static %}
 </head>
 
 <body>
 
-  <!-- Navbar -->
-  <nav id="navbar" class="navbar navbar-expand-lg navbar-dark main-navbar scrolling-navbar mb-4">
+<!-- Navbar -->
+<nav id="navbar" class="navbar navbar-expand-lg navbar-dark main-navbar scrolling-navbar mb-4">
     <div class="container-fluid" id="nav-container">
 
-      <!-- Brand -->
-      <a class="navbar-brand waves-effect" href="/">
-        <div style="width: 120px; height: 60px;">
-            <img src="{% static 'img/logo.png' %}" width="100%" height="100%" alt="logo">
-        </div>
-      </a>
+        <!-- Brand -->
+        <a class="navbar-brand waves-effect" href="/">
+            <div style="width: 120px; height: 60px;">
+                <img src="{% static 'img/logo.png' %}" width="100%" height="100%" alt="logo">
+            </div>
+        </a>
 
-      <!-- Collapse -->
-      <button id="nb-toggle" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+        <!-- Collapse -->
+        <button id="nb-toggle" class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-      <!-- Links -->
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <!-- Links -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-        <!-- Left -->
-        <ul class="navbar-nav" id="nav-links">
-          {% url 'pages:home' as home %}
-          {% url 'pages:sales' as sales %}
-          {% url 'pages:shops' as shops %}
-            {% url 'pages:contact' as contact %}
+            <!-- Left -->
+            <ul class="navbar-nav" id="nav-links">
+                {% url 'pages:home' as home %}
+                {% url 'pages:sales' as sales %}
+                {% url 'pages:shops' as shops %}
+                {% url 'pages:contact' as contact %}
 
-          <li {% if request.path == home %}class="nav-item mx-2 active" {% else %}class="nav-item mx-2"{% endif %}>
-            <a class="nav-link" href="{{ home }}">Oferta</a>
-          </li>
+                <li {% if request.path == home %}class="nav-item mx-2 active"
+                    {% else %}class="nav-item mx-2"{% endif %}>
+                    <a class="nav-link" href="{{ home }}">Oferta</a>
+                </li>
 
-          <li {% if request.path == sales %}class="nav-item mx-2 active" {% else %}class="nav-item mx-2"{% endif %}>
-            <a class="nav-link" href="{{ sales }}">Promocje</a>
-          </li>
+                <li {% if request.path == sales %}class="nav-item mx-2 active"
+                    {% else %}class="nav-item mx-2"{% endif %}>
+                    <a class="nav-link" href="{{ sales }}">Promocje</a>
+                </li>
 
-          <li {% if request.path == shops %}class="nav-item mx-2 active" {% else %}class="nav-item mx-2"{% endif %}>
-            <a class="nav-link" href="{{ shops }}">Nasze placówki</a>
-          </li>
+                <li {% if request.path == shops %}class="nav-item mx-2 active"
+                    {% else %}class="nav-item mx-2"{% endif %}>
+                    <a class="nav-link" href="{{ shops }}">Nasze placówki</a>
+                </li>
 
-         <li {% if request.path == contact %}class="nav-item mx-2 active" {% else %}class="nav-item mx-2"{% endif %}>
-            <a class="nav-link" href="{{ contact }}">Kontakt</a>
-          </li>
-        </ul>
+                <li {% if request.path == contact %}class="nav-item mx-2 active"
+                    {% else %}class="nav-item mx-2"{% endif %}>
+                    <a class="nav-link" href="{{ contact }}">Kontakt</a>
+                </li>
+            </ul>
 
-        <br />
+            <br/>
 
-        <!-- Search -->
-        <div class="navbar-nav mx-auto">
-            <form class="form-inline" method="POST" action={% url 'pages:search-products' %}>
+            <!-- Search -->
+            <div class="navbar-nav mx-auto">
+                <form class="form-inline" method="POST" action={% url 'pages:search-products' %}>
 
-              {% csrf_token %}
-              <div class="form-group">
-                <input class="form-control" id="search-inp" type="text" placeholder="Szukaj" aria-label="Szukaj" name="searched">
-              </div>
-              <div class="form-group-append">
-                <button class="btn yellow-btn search-btn" type="submit">
-                  <i class="fas fa-search"></i>
-                </button>
-              </div>
-              
-          </form>
-        </div>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input class="form-control" id="search-inp" type="text" placeholder="Szukaj" aria-label="Szukaj"
+                               name="searched">
+                    </div>
+                    <div class="form-group-append">
+                        <button class="btn yellow-btn search-btn" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
 
-        {% include 'comparison/dropdown.html' %}
+                </form>
+            </div>
+
+            {% include 'comparison/dropdown.html' %}
 
 
-        <!-- Right -->
-        <ul class="navbar-nav nav-flex-icons">
-            <!-- Cart -->
-            {% if user.is_authenticated %}
-            <li class="nav-item mx-1">
-                <a href="{% url 'pages:order-summary' %}" class="nav-link waves-effect">
-                {% if request.user|cart_item_count != 0 %}
-                  <span class="badge red z-depth-1 mr-1"> {{ request.user|cart_item_count }} </span>
+            <!-- Right -->
+            <ul class="navbar-nav nav-flex-icons">
+                <!-- Cart -->
+                {% if user.is_authenticated %}
+                    <li class="nav-item mx-1">
+                        <a href="{% url 'pages:order-summary' %}" class="nav-link waves-effect">
+                            {% if request.user|cart_item_count != 0 %}
+                                <span class="badge red z-depth-1 mr-1"> {{ request.user|cart_item_count }} </span>
+                            {% endif %}
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="disappear"> Koszyk </span>
+                        </a>
+                    </li>
+
+                    <!-- User account -->
+                    <li class="nav-item dropdown mx-1">
+                        <a class="nav-link waves-effect" data-toggle="dropdown">
+                            <i class="fas fa-user"></i><span class="disappear">{{ user.username }}</span>
+                            <i class="fas fa-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu" id="account-dropdown">
+                            {% if user.is_staff %}
+                                <li><a class="dropdown-item pl-4" href="{% url 'admin:index' %}">Panel
+                                    administratora</a></li>
+                            {% endif %}
+                            <li><a class="dropdown-item pl-4" href="{% url 'pages:update_profile' %}">Moje konto</a>
+                            </li>
+                            <li><a class="dropdown-item pl-4" href="{% url 'pages:orders_list' %}">Zamówienia</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item pl-4" href="{% url 'pages:logout' %}">
+                                <i class="fas fa-power-off"></i> Wyloguj się
+                            </a></li>
+                        </ul>
+                    </li>
+                {% else %}
+
+                    <!-- Login -->
+                    <li class="nav-item">
+                        <a class="nav-link waves-effect" href="{% url 'pages:register' %}">Zarejestruj się</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link waves-effect" href="{% url 'pages:login' %}">Zaloguj</a>
+                    </li>
                 {% endif %}
-                <i class="fas fa-shopping-cart"></i>
-                <span class="disappear"> Koszyk </span>
-                </a>
-            </li>
 
-            <!-- User account -->
-            <li class="nav-item dropdown mx-1">
-                <a class="nav-link waves-effect" data-toggle="dropdown">
-                  <i class="fas fa-user"></i><span class="disappear">{{ user.username }}</span> 
-                  <i class="fas fa-angle-down"></i>
-                </a>
-                <ul class="dropdown-menu" id="account-dropdown">
-                  {% if user.is_staff %}
-                    <li><a class="dropdown-item pl-4" href="{% url 'admin:index' %}">Panel administratora</a></li>
-                  {% endif %}
-                  <li><a class="dropdown-item pl-4" href="{% url 'pages:update_profile' %}">Moje konto</a></li>
-                  <li><a class="dropdown-item pl-4" href="{% url 'pages:orders_list' %}">Zamówienia</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item pl-4" href="{% url 'pages:logout' %}">
-                    <i class="fas fa-power-off"></i> Wyloguj się
-                  </a></li>
-                </ul>
-              </li>
-            {% else %}
+            </ul>
 
-            <!-- Login -->
-            <li class="nav-item">
-                <a class="nav-link waves-effect" href="{% url 'pages:register' %}">Zarejestruj się</a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link waves-effect" href="{% url 'pages:login' %}">Zaloguj</a>
-            </li>
-            {% endif %}
-
-        </ul>
-
-      </div>
+        </div>
 
     </div>
-  </nav>
+</nav>
 
-  <!-- Page content -->
-  <div class="container-fluid" style="min-height: calc(100vh - 240px);">
+<!-- Page content -->
+<div class="container-fluid" style="min-height: calc(100vh - 240px);">
 
     {% if messages %}
-      {% for message in messages %}
-        <div class="alert alert-{{message.tags}}" role="alert">
-            {{ message }}
-        </div>
-      {% endfor %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
     {% endif %}
-  
+
 
     {% block content %}
     {% endblock content %}
 
-  </div>
-  <!-- Page content end -->
+</div>
+<!-- Page content end -->
 
-    {% include 'pages/footer.html' %}
-  
-    {% include 'pages/scripts.html' %}
+{% include 'pages/footer.html' %}
 
-    {% block extra_scripts %}
-    {% endblock extra_scripts %}
+{% include 'pages/scripts.html' %}
+
+{% block extra_scripts %}
+{% endblock extra_scripts %}
 
 </body>
 

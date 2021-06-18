@@ -1,53 +1,53 @@
 <style>
-  .filter-form {
-    color: white;
-  }
+    .filter-form {
+        color: white;
+    }
 
-  .select {
-    height: 40px;
-    width: 200px;
-    background: #ececec;
-  }
+    .select {
+        height: 40px;
+        width: 200px;
+        background: #ececec;
+    }
 </style>
 
 <nav class="navbar navbar-expand-lg navbar-dark nav-category mt-3 mb-5">
 
-  <button type="button" id="sidebarCollapse" class="btn yellow-btn">
-    <i class="fas fa-align-left"></i>
-    <span>Kategorie</span>
-  </button>
+    <button type="button" id="sidebarCollapse" class="btn yellow-btn">
+        <i class="fas fa-align-left"></i>
+        <span>Kategorie</span>
+    </button>
 
     <!-- Navbar brand -->
 
     <!-- Collapse button -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#filter-bar"
-      aria-controls="filter-bar" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+            aria-controls="filter-bar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
     </button>
 
     <!-- Collapsible content -->
     <div class="collapse navbar-collapse" id="filter-bar">
 
-      <!-- Filters -->
-      <ul class="navbar-nav mr-3">
-        <li class="nav-item">
-          <div class="filter-form">
+        <!-- Filters -->
+        <ul class="navbar-nav mr-3">
+            <li class="nav-item">
+                <div class="filter-form">
 
-            <label for="sorting">Sortowanie:</label>
-            <select class="select mx-2" id="sorting">
-              <option value="">Sortowanie: domyślnie</option>
-              <option value="name_ascending">Nazwy: rosnąco</option>
-              <option value="name_descending">Nazwy: malejąco</option>
-              <option value="price_ascending">Cena: od najtańszych</option>
-              <option value="price_descending">Cena: od najdroższych</option>
-            </select>
+                    <label for="sorting">Sortowanie:</label>
+                    <select class="select mx-2" id="sorting">
+                        <option value="">Sortowanie: domyślnie</option>
+                        <option value="name_ascending">Nazwy: rosnąco</option>
+                        <option value="name_descending">Nazwy: malejąco</option>
+                        <option value="price_ascending">Cena: od najtańszych</option>
+                        <option value="price_descending">Cena: od najdroższych</option>
+                    </select>
 
-            <button class="btn yellow-btn" id="filter-submit">Filtruj</button>
+                    <button class="btn yellow-btn" id="filter-submit">Filtruj</button>
 
-          </div>
-        </li>
-      </ul>
+                </div>
+            </li>
+        </ul>
     </div>
     <!-- Collapsible content -->
 
-  </nav>
+</nav>

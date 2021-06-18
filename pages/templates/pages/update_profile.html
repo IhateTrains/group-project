@@ -2,87 +2,88 @@
 
 {% block content %}
 
-<style>
-    .form-inp {
-        width: 300px;
-    }
+    <style>
+        .form-inp {
+            width: 300px;
+        }
 
-    .form-group {
-        position: relative;
-        margin-bottom: 15px;
-    }
+        .form-group {
+            position: relative;
+            margin-bottom: 15px;
+        }
 
-    .form-control {
-        width: 100%;
-        height: 50px;
-        border: none;
-        padding: 5px 7px 5px 15px;
-        background: #fff;
-        color: #666;
-        border: 2px solid #ddd
-    }
+        .form-control {
+            width: 100%;
+            height: 50px;
+            border: none;
+            padding: 5px 7px 5px 15px;
+            background: #fff;
+            color: #666;
+            border: 2px solid #ddd
+        }
 
-    .form-group .mdi {
-        position: absolute;
-        right: 15px;
-        top: 17px;
-        color: #999
-    }
+        .form-group .mdi {
+            position: absolute;
+            right: 15px;
+            top: 17px;
+            color: #999
+        }
 
-    .mdi {
-        top: 13px !important;
-        color: #404040 !important
-    }
+        .mdi {
+            top: 13px !important;
+            color: #404040 !important
+        }
 
-    .alert {
-        font-size: 15px;
-        color: #f00;
-        text-align: center;
-    }
-</style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/3.6.95/css/materialdesignicons.css">
+        .alert {
+            font-size: 15px;
+            color: #f00;
+            text-align: center;
+        }
+    </style>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/3.6.95/css/materialdesignicons.css">
 
-<main class="container">
+    <main class="container">
         <div class="col-lg-6 d-flex card mx-auto text-center" style="background-color: #353535; color:white">
             <h3 class="card-title p-2 mt-2 font-weight-bold" style="color: #FFEA09;">Twój profil</h3>
             <div class="d-flex card-body login-form justify-content-center">
 
                 <form id="login-form" method="post">{% csrf_token %}{% load widget_tweaks %}
-        
+
                     <div class="form-group">
                         <p class="font-weight-bold" style="color: #FFEA09;">Login</p>
-                        {{u_form.username | add_class:"form-control"}}
+                        {{ u_form.username | add_class:"form-control" }}
                     </div>
                     <div class="form-group">
                         <p class="font-weight-bold" style="color: #FFEA09;">E-mail</p>
-                        {{u_form.email | add_class:"form-control"}}
+                        {{ u_form.email | add_class:"form-control" }}
                     </div>
                     <div class="form-group">
                         <p class="font-weight-bold" style="color: #FFEA09;">Imię</p>
-                        {{u_form.first_name | add_class:"form-control"}}
+                        {{ u_form.first_name | add_class:"form-control" }}
                     </div>
                     <div class="form-group">
                         <p class="font-weight-bold" style="color: #FFEA09;">Nazwisko</p>
-                        {{u_form.last_name | add_class:"form-control"}}
+                        {{ u_form.last_name | add_class:"form-control" }}
                     </div>
                     <div class="form-group">
                         <p class="font-weight-bold" style="color: #FFEA09;">Telefon</p>
-                        {{u_form_prof.telephone | add_class:"form-control"}}
+                        {{ u_form_prof.telephone | add_class:"form-control" }}
                     </div>
                     <div class="form-group">
                         <p class="font-weight-bold" style="color: #FFEA09;">Miasto</p>
-                        {{u_form_prof.city | add_class:"form-control"}}
+                        {{ u_form_prof.city | add_class:"form-control" }}
                     </div>
                     <div class="form-group">
                         <p class="font-weight-bold" style="color: #FFEA09;">Adres</p>
-                        {{u_form_prof.street_address | add_class:"form-control"}}
+                        {{ u_form_prof.street_address | add_class:"form-control" }}
                     </div>
                     <div class="form-group">
                         <p class="font-weight-bold" style="color: #FFEA09;">Kod pocztowy</p>
-                        {{u_form_prof.postal_code | add_class:"form-control"}}
+                        {{ u_form_prof.postal_code | add_class:"form-control" }}
                     </div>
 
-        
+
                     {% if form.errors %}
                         <p class="d-block mt-3">Wystąpił problem: </p>
                         {% for field in form %}
@@ -98,14 +99,14 @@
                             </div>
                         {% endfor %}
                     {% endif %}
-        
+
                     <button type="submit" class="btn yellow-btn mt-3">Zmień dane</button>
-                    <input type="hidden" name="next" value="{{ next }}" />
+                    <input type="hidden" name="next" value="{{ next }}"/>
                 </form>
 
             </div>
 
         </div>
-</main>
+    </main>
 
 {% endblock content %}
