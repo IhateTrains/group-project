@@ -2,22 +2,23 @@
 
 # Django
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.files.base import File
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.views.generic import ListView, DetailView, View
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.core.files.base import File
 # project
 import os
 from .models import Product, Order, OrderLine, SzikPoint, CheckoutAddress
 from .forms import CreateUserForm, CreateProfileForm, UpdateUserForm, UpdateProfileForm, CheckoutForm, PAYMENT
 from . import services
+from InvoiceGenerator.pdf import SimpleInvoice
 # for email confirmation
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
@@ -123,18 +124,16 @@ class CheckoutView(View):
                         from InvoiceGenerator.api import Invoice, Item, Client, Provider, Creator
                         os.environ["INVOICE_LANG"] = "pl"
 
-                        client = Client(order.customer.username)
+                        client = Client(order.customer.username + '\n' + str(order.customer.email))
                         provider = Provider('Auto Parts', bank_account='2600420569', bank_code='2010')
-                        creator = Creator('John Doe')
+                        creator = Creator('Jan Kowalski')
                         invoice = Invoice(client, provider, creator)
+                        invoice.number = order.id
                         invoice.currency = 'PLN'
                         invoice.currency_locale = 'pl_PL.UTF-8'
-                        invoice.add_item(Item(32, 600, description="Item 1"))
-                        invoice.add_item(Item(60, 50, description="Item 2", tax=21))
-                        invoice.add_item(Item(50, 60, description="Item 3", tax=0))
-                        invoice.add_item(Item(5, 600, description="Item 4", tax=15))
-
-                        from InvoiceGenerator.pdf import SimpleInvoice
+                        for order_line in order.products.all():
+                            invoice.add_item(Item(order_line.quantity, order_line.product.get_discount_price(),
+                                                  description=order_line.product.name, tax=23))
 
                         pdf_name = "invoice" + str(order.id) + ".pdf"
                         pdf = SimpleInvoice(invoice)
