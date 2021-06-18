@@ -2,80 +2,84 @@
 
 {% block content %}
 
-<main>
-    <div class= "container">
-        <div class="table-responsive text-nowrap">
-            <h3>
-                <strong>Koszyk</strong>
-            </h3>
-            <table class="table">
-                <thead>
+    <main>
+        <div class="container">
+            <div class="table-responsive text-nowrap">
+                <h3>
+                    <strong>Koszyk</strong>
+                </h3>
+                <table class="table">
+                    <thead>
                     <tr>
                         <th scope="col">Nazwa</th>
                         <th scope="col">Ilość</th>
                         <th scope="col">Całkowita cena</th>
                     </tr>
-                </thead>
-                <tbody>
-                {% for order_item in object.products.all %}
-                    <tr>
-                        <th scope="row"><a href="{{ order_item.product.get_absolute_url }}" class="text-break text-wrap">{{ order_item.product.name }}</a></th>
-                        <td>
-                            <a href="{% url 'pages:reduce-quantity-item' order_item.product.pk %}"><i class="fas fa-minus mr-2"></i></a>
-                            {{ order_item.quantity }}
-                            <a href="{% url 'pages:add-to-cart' order_item.product.pk %}"><i class="fas fa-plus ml-2"></i></a>
-                        </td>
-                        <td>
-                        {% if order_item.product.discount %}
-                            {{ order_item.get_discount_item_price }} zł
-                        {% else %}
-                            {{ order_item.get_total_item_price}} zł
-                        {% endif %}
+                    </thead>
+                    <tbody>
+                    {% for order_item in object.products.all %}
+                        <tr>
+                            <th scope="row"><a href="{{ order_item.product.get_absolute_url }}"
+                                               class="text-break text-wrap">{{ order_item.product.name }}</a></th>
+                            <td>
+                                <a href="{% url 'pages:reduce-quantity-item' order_item.product.pk %}"><i
+                                        class="fas fa-minus mr-2"></i></a>
+                                {{ order_item.quantity }}
+                                <a href="{% url 'pages:add-to-cart' order_item.product.pk %}"><i
+                                        class="fas fa-plus ml-2"></i></a>
+                            </td>
+                            <td>
+                                {% if order_item.product.discount %}
+                                    {{ order_item.get_discount_item_price }} zł
+                                {% else %}
+                                    {{ order_item.get_total_item_price }} zł
+                                {% endif %}
 
-                         <a href="{% url 'pages:remove-from-cart' order_item.product.pk %}">
-                            <i class="fas fa-trash float-md-right text-danger"></i>
-                         </a>
+                                <a href="{% url 'pages:remove-from-cart' order_item.product.pk %}">
+                                    <i class="fas fa-trash float-md-right text-danger"></i>
+                                </a>
 
-                        <br>
+                                <br>
 
-                        <span class="text-muted text-break text-wrap"><small>
+                                <span class="text-muted text-break text-wrap"><small>
                             {{ order_item.product.get_discount_price }} zł
                             za sztukę
                         </small></span>
 
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
 
                     {% empty %}
-                    <tr>
-                        <td colspan="5">Twój koszyk jest pusty</td>
-                    </tr>
+                        <tr>
+                            <td colspan="5">Twój koszyk jest pusty</td>
+                        </tr>
 
-                    <tr>
-                        <td colspan="5">
-                            <a href="/" class="btn btn-primary float-right">Kontynuuj zakupy</a>
-                        </td>
-                    </tr>
-                {% endfor %}
+                        <tr>
+                            <td colspan="5">
+                                <a href="/" class="btn btn-primary float-right">Kontynuuj zakupy</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
 
-                {% if object.get_total_price %}
-                    <tr>
-                        <td colspan="2"><b>Łączna cena zamówienia</b></td>
-                        <td>{{ object.get_total_price }} zł</td>
-                    </tr>
-                    <tr>
-                        <td colspan="4">
-                            <a href="{% url 'pages:checkout' %}" class="btn btn-warning float-right ml-2">Wybierz dostawę i płatność</a>
-                            <a href="/" class="btn btn-primary float-right">Kontynuuj zakupy</a>
-                        </td>
-                    </tr>
+                    {% if object.get_total_price %}
+                        <tr>
+                            <td colspan="2"><b>Łączna cena zamówienia</b></td>
+                            <td>{{ object.get_total_price }} zł</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <a href="{% url 'pages:checkout' %}" class="btn btn-warning float-right ml-2">Wybierz
+                                    dostawę i płatność</a>
+                                <a href="/" class="btn btn-primary float-right">Kontynuuj zakupy</a>
+                            </td>
+                        </tr>
 
-                {% endif %}
+                    {% endif %}
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-</main>
+    </main>
 
 {% endblock content %}

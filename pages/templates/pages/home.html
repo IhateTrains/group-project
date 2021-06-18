@@ -4,24 +4,24 @@
 
 {% block content %}
 
-{% load cart_template_tags %}
+    {% load cart_template_tags %}
 
-{%  include "pages/special_offer.html" %}
+    {% include "pages/special_offer.html" %}
 
-<!-- Floating cart -->
-{% if user.is_authenticated %}
-<div id="floating-cart" class="card waves-effect d-lg-none">
-  <a href="{% url 'pages:order-summary' %}" class="card-body">
-    <p class="card-text">
-      {% if request.user|cart_item_count != 0 %}
-        <span class="badge red z-depth-1 mr-1"> {{ request.user|cart_item_count }} </span>
-      {% endif %}
-      <i class="fas fa-shopping-cart"></i>
-    </p>
-  </a>
-</div>
-{% endif %}
+    <!-- Floating cart -->
+    {% if user.is_authenticated %}
+        <div id="floating-cart" class="card waves-effect d-lg-none">
+            <a href="{% url 'pages:order-summary' %}" class="card-body">
+                <p class="card-text">
+                    {% if request.user|cart_item_count != 0 %}
+                        <span class="badge red z-depth-1 mr-1"> {{ request.user|cart_item_count }} </span>
+                    {% endif %}
+                    <i class="fas fa-shopping-cart"></i>
+                </p>
+            </a>
+        </div>
+    {% endif %}
 
-{%  include "pages/product_list.html" %}
+    {% include "pages/product_list.html" %}
 
 {% endblock content %}

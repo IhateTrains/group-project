@@ -4,29 +4,29 @@
 
 
     <div class="container">
-      <section class="text-center mb-4">
-        {% if searched %}
-            <h1 class="mb-5">Wyniki wyszukiwania dla: {{ searched }}</h1>
-            <!--Grid row-->
-            <div class="row wow fadeIn">
-              {% for item in matching_products %}
-              <!--Grid column-->
-              <div class="col-lg-3 col-md-6 mb-4">
-                  <!--Product Card-->
-                  {%  include "pages/product_card.html" %}
-                  <!--Product Card-->
-              </div>
-              <!--Grid column-->
+        <section class="text-center mb-4">
+            {% if searched %}
+                <h1 class="mb-5">Wyniki wyszukiwania dla: {{ searched }}</h1>
+                <!--Grid row-->
+                <div class="row wow fadeIn">
+                    {% for item in matching_products %}
+                        <!--Grid column-->
+                        <div class="col-lg-3 col-md-6 mb-4">
+                            <!--Product Card-->
+                            {% include "pages/product_card.html" %}
+                            <!--Product Card-->
+                        </div>
+                        <!--Grid column-->
 
-              {% endfor %}
+                    {% endfor %}
 
 
-            </div>
-            <!--Grid row-->
-        {% else %}
-            <h1>Niczego nie szukałeś!</h1>
-        {% endif %}
-      </section>
+                </div>
+                <!--Grid row-->
+            {% else %}
+                <h1>Niczego nie szukałeś!</h1>
+            {% endif %}
+        </section>
     </div>
 
 
