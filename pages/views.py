@@ -136,10 +136,13 @@ class CheckoutView(View):
 
                         from InvoiceGenerator.pdf import SimpleInvoice
 
+                        pdf_name = "invoice" + str(order.id) + ".pdf"
                         pdf = SimpleInvoice(invoice)
-                        pdf.gen("invoice" + str(order.id) + ".pdf")
-                        with open('invoice.pdf', 'rb') as f:
-                            order.invoice_file.save('invoice.pdf', File(f))
+                        pdf.gen(pdf_name)
+                        with open(pdf_name, 'rb') as f:
+                            order.invoice_file.save(pdf_name, File(f))
+                        if os.path.exists(pdf_name):
+                            os.remove(pdf_name)
 
                         order.save()
                         return redirect('pages:orders_list')
