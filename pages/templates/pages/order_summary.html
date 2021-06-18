@@ -17,7 +17,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for order_item in object.products.all %}
+                    {% for order_item in object.order_lines.all %}
                         <tr>
                             <th scope="row"><a href="{{ order_item.product.get_absolute_url }}"
                                                class="text-break text-wrap">{{ order_item.product.name }}</a></th>
@@ -42,8 +42,7 @@
                                 <br>
 
                                 <span class="text-muted text-break text-wrap"><small>
-                            {{ order_item.product.get_discount_price }} zł
-                            za sztukę
+                            {{ order_item.product.get_discount_price }} zł za sztukę
                         </small></span>
 
                             </td>

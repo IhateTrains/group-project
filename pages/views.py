@@ -151,28 +151,37 @@ def search_products(request):
 @login_required
 def add_to_cart(request, pk):
     item = get_object_or_404(Product, pk=pk)
-    order_item, created = OrderLine.objects.get_or_create(
-        product=item,
-        customer=request.user,
-        ordered=False
-    )
     order_qs = Order.objects.filter(customer=request.user, ordered=False)
 
     if order_qs.exists():
         order = order_qs[0]
+        order_line, created = OrderLine.objects.get_or_create(
+            order=order,
+            product=item,
+            customer=request.user,
+            ordered=False
+        )
 
-        if order.products.filter(product__pk=item.pk).exists():
-            order_item.quantity += 1
-            order_item.save()
+        if not created:
+            # jesli w zamowieniu jest juz pozycja z danym produktem
+            order_line.quantity += 1
+            order_line.save()
+            messages.info(request, "Zwiększono ilość produktu w koszyku")
             return redirect("pages:order-summary")
         else:
-            order.products.add(order_item)
+            order.order_lines.add(order_line)
             messages.info(request, "Dodano do koszyka")
             return redirect("pages:order-summary")
     else:
         ordered_date = timezone.now()
         order = Order.objects.create(customer=request.user, order_date=ordered_date)
-        order.products.add(order_item)
+        order_line, created = OrderLine.objects.get_or_create(
+            order=order,
+            product=item,
+            customer=request.user,
+            ordered=False
+        )
+        order.order_lines.add(order_line)
         messages.info(request, "Dodano do koszyka")
         return redirect("pages:order-summary")
 
@@ -186,8 +195,9 @@ def remove_from_cart(request, pk):
     )
     if order_qs.exists():
         order = order_qs[0]
-        if order.products.filter(product__pk=item.pk).exists():
+        if order.order_lines.filter(product__pk=item.pk).exists():
             order_item = OrderLine.objects.filter(
+                order=order,
                 product=item,
                 customer=request.user,
                 ordered=False
@@ -208,8 +218,13 @@ def reduce_quantity_item(request, pk):
     order_qs = Order.objects.filter(customer=request.user, ordered=False)
     if order_qs.exists():
         order = order_qs[0]
-        if order.products.filter(product__pk=item.pk).exists():
-            order_item = OrderLine.objects.filter(product=item, customer=request.user, ordered=False)[0]
+        if order.order_lines.filter(product__pk=item.pk).exists():
+            order_item = OrderLine.objects.filter(
+                order=order,
+                product=item,
+                customer=request.user,
+                ordered=False
+            )[0]
             if order_item.quantity > 1:
                 order_item.quantity -= 1
                 order_item.save()

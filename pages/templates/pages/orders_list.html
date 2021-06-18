@@ -15,7 +15,7 @@
                         <th>Cena za sztukę</th>
                         <th>Cena łącznie</th>
                     </tr>
-                    {% for o in order.products.all %}
+                    {% for o in order.order_lines.all %}
                         <tr>
                             <td>{{ o.product.name }}</td>
                             <td>{{ o.quantity }}</td>
