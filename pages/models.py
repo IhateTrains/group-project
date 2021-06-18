@@ -137,12 +137,19 @@ class OrderLine(models.Model):
         return self.get_total_item_price()
 
 
+class InvoiceFile(models.Model):
+    bytes = models.TextField()
+    filename = models.CharField(max_length=255)
+    mimetype = models.CharField(max_length=50)
+
+
 class Order(models.Model):
     customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # user_id
     payment_method = models.CharField(max_length=60, default="card")
     products = models.ManyToManyField(OrderLine)
     order_date = models.DateTimeField()
     ordered = models.BooleanField(default=False)
+    invoice_file = models.FileField(upload_to='pages.InvoiceFile/bytes/filename/mimetype', blank=True, null=True)
 
     class Meta:
         verbose_name = "Zamówienie"
@@ -206,18 +213,3 @@ class VinNumber(models.Model):
 
     def __str__(self):
         return self.vin
-
-
-class InvoiceFile(models.Model):
-    bytes = models.TextField()
-    filename = models.CharField(max_length=255)
-    mimetype = models.CharField(max_length=50)
-
-
-class Invoice(models.Model):
-    order_id = models.ForeignKey(Order, on_delete=models.CASCADE)
-    pdf_file = models.FileField(upload_to='pages.InvoiceFile/bytes/filename/mimetype', blank=True, null=True)
-
-    class Meta:
-        verbose_name = "Faktura"
-        verbose_name_plural = "Faktury"

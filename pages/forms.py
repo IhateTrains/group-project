@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 # third party
 from db_file_storage.form_widgets import DBAdminClearableFileInput
 # project
-from .models import Product, SzikPoint, Invoice, UserProfile, UserType, VinNumber
+from .models import Product, SzikPoint, Order, UserProfile, UserType, VinNumber
 from .username_validators import validate_username
 
 from django_countries.fields import CountryField
@@ -34,9 +34,9 @@ class SzikPointAdminForm(forms.ModelForm):
         }
 
 
-class InvoiceAdminForm(forms.ModelForm):
+class OrderAdminForm(forms.ModelForm):
     class Meta(object):
-        model = Invoice
+        model = Order
         exclude = []
         widgets = {
             'index': DBAdminClearableFileInput,
@@ -79,10 +79,10 @@ class UpdateUserForm(forms.ModelForm):
                                min_length=8, validators=[validate_username])
     email = forms.EmailField(label='E-mail',
                              required=False)
-    first_name = forms.CharField(label='Imie',
+    first_name = forms.CharField(label='Imię',
                                  required=False)
     last_name = forms.CharField(label='Nazwisko',
-                                 required=False)
+                                required=False)
 
     class Meta:
         model = User

@@ -12,8 +12,10 @@ from django.utils import timezone
 from django.views.generic import ListView, DetailView, View
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.core.files.base import ContentFile
 # project
-from .models import Product, Category, Order, OrderLine, SzikPoint, CheckoutAddress
+import os
+from .models import Product, Order, OrderLine, SzikPoint, CheckoutAddress
 from .forms import CreateUserForm, CreateProfileForm, UpdateUserForm, UpdateProfileForm, CheckoutForm, PAYMENT
 from . import services
 from .filters import ProductFilter
@@ -118,6 +120,29 @@ class CheckoutView(View):
                     if payment_option == payment_tuple[0]:
                         order.payment_method = payment_tuple[1]
                         order.ordered = True
+
+                        from InvoiceGenerator.api import Invoice, Item, Client, Provider, Creator
+                        os.environ["INVOICE_LANG"] = "pl"
+
+                        client = Client(order.customer.username)
+                        provider = Provider('Auto Parts', bank_account='2600420569', bank_code='2010')
+                        creator = Creator('John Doe')
+                        invoice = Invoice(client, provider, creator)
+                        invoice.currency = 'PLN'
+                        invoice.currency_locale = 'pl_PL.UTF-8'
+                        invoice.add_item(Item(32, 600, description="Item 1"))
+                        invoice.add_item(Item(60, 50, description="Item 2", tax=21))
+                        invoice.add_item(Item(50, 60, description="Item 3", tax=0))
+                        invoice.add_item(Item(5, 600, description="Item 4", tax=15))
+
+                        from InvoiceGenerator.pdf import SimpleInvoice
+
+                        pdf = SimpleInvoice(invoice)
+                        pdf.gen("invoice" + str(order.id) + ".pdf")
+
+                        with open('invoice.pdf', 'rb') as f:
+                            order.invoice_file.save('invoice.pdf', ContentFile(f.read()))
+
                         order.save()
                         return redirect('pages:orders_list')
 
