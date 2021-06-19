@@ -11,7 +11,6 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.views.generic import ListView, DetailView, View
-from django.core.paginator import Paginator
 from django.db.models import Q
 # project
 import os
@@ -33,11 +32,6 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
 UserModel = get_user_model()
-
-
-class SalesView(ListView):
-    model = Product
-    template_name = "pages/sales.html"
 
 
 def sales_view(request):

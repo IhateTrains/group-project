@@ -3,7 +3,7 @@
 
 {% block content %}
     <div class="container dark-grey-text">
-        <div class="my-5 text-center"><h1 class="font-weight-bold"> Kontakt z naszymi placówkami </h1></div>
+        <div class="my-5 text-center"><h1 class="font-weight-bold">Kontakt z naszymi placówkami</h1></div>
 
         <nav class="navbar navbar-expand-lg navbar-dark nav-category mb-5">
 
@@ -25,7 +25,7 @@
         </nav>
 
         {% for point in szik_points %}
-            <hr></hr>
+            <hr>
             <div class="mt-5">
                 <h2 class="d-inline-block">{{ point.city }} {{ point.postal_code }} {{ point.street_address }}</h2>
                 <p class="ml-3 d-inline-block" style="font-size: 20px">telefon: {{ point.telephone }}</p>

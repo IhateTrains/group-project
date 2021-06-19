@@ -108,6 +108,10 @@ class ProductQuantity(models.Model):
     point = models.ForeignKey(SzikPoint, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=0)
 
+    class Meta:
+        verbose_name = "Ilość produktu"
+        verbose_name_plural = "Ilości produktów"
+
 
 class InvoiceFile(models.Model):
     bytes = models.TextField()
@@ -190,6 +194,10 @@ class Profile(models.Model):
     city = models.CharField(max_length=30, null=True)
     street_address = models.CharField(max_length=50, null=True)
     postal_code = models.CharField(max_length=20, null=True)
+
+    class Meta:
+        verbose_name = "Profil użytkownika"
+        verbose_name_plural = "Profile użytkowników"
 
     def __str__(self):
         return str(self.user_id)

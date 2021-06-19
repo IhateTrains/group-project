@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 # third party
 from db_file_storage.form_widgets import DBAdminClearableFileInput
 # project
-from .models import Product, SzikPoint, Order, Profile, UserType, VinNumber
+from .models import Product, SzikPoint, Order, Profile, UserType
 from .username_validators import validate_username
 
 from django_countries.fields import CountryField
@@ -79,10 +79,10 @@ class UpdateUserForm(forms.ModelForm):
                                min_length=8, validators=[validate_username])
     email = forms.EmailField(label='E-mail',
                              required=False)
-    first_name = forms.CharField(label='Imie',
+    first_name = forms.CharField(label='Imię',
                                  required=False)
     last_name = forms.CharField(label='Nazwisko',
-                                 required=False)
+                                required=False)
 
     class Meta:
         model = User
@@ -107,7 +107,6 @@ PAYMENT = (
     ('G', 'Google Pay'),
     ('P', 'PayPal')
 )
-
 
 PAYMENT_WARSZTAT = (
     ('F', 'Faktura'),
