@@ -194,6 +194,9 @@ class Profile(models.Model):
     def __str__(self):
         return str(self.user_id)
 
+    def is_warsztat(self):
+        return self.user_type and self.user_type.name == 'Warsztat'
+
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def update_user_profile(sender, instance, created, **kwargs):

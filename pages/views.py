@@ -89,7 +89,7 @@ def home_view(request):
 class CheckoutView(View):
     def get(self, *args, **kwargs):
         form = CheckoutForm()
-        if self.request.user.profile.user_type.name == 'Warsztat':
+        if self.request.user.profile.is_warsztat():
             form = WarsztatCheckoutForm()
         order = Order.objects.get(customer=self.request.user, ordered=False)
         context = {
@@ -100,7 +100,7 @@ class CheckoutView(View):
 
     def post(self, *args, **kwargs):
         form = CheckoutForm(self.request.POST or None)
-        if self.request.user.profile.user_type.name == 'Warsztat':
+        if self.request.user.profile.is_warsztat():
             form = WarsztatCheckoutForm(self.request.POST or None)
 
         try:
@@ -124,7 +124,7 @@ class CheckoutView(View):
                 order.save()
 
                 PAYMENT_OPTIONS = tuple()
-                if self.request.user.profile.user_type.name == 'Warsztat':
+                if self.request.user.profile.is_warsztat():
                     PAYMENT_OPTIONS = PAYMENT_WARSZTAT
                 else:
                     PAYMENT_OPTIONS = PAYMENT
