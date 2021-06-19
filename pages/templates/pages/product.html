@@ -51,15 +51,12 @@
                                         <p class="lead">
                                             {% if object.discount %}
                                                 <div>
-                          <span class="mr-1">
-                            <del>{{ object.price }} zł</del>
-                            </span>
+                                                    <span class="mr-1"><del>{{ object.price }} zł</del></span>
                                                     <span>{{ object.get_discount_price }} zł</span>
                                                 </div>
                                             {% else %}
                                                 <span>{{ object.price }} zł</span>
                                             {% endif %}
-                                        </p>
                                     </div>
 
                                     <div class="mx-1 d-inline-block">
@@ -123,7 +120,6 @@
                                 </tr>
                             {% endfor %}
                         </table>
-                        </p>
                     </div>
                 </div>
                 <!--Grid column-->
