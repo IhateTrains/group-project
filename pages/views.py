@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.files.base import File
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
@@ -13,8 +14,12 @@ from django.views.generic import ListView, DetailView, View
 from django.core.paginator import Paginator
 from django.db.models import Q
 # project
-from .models import Product, Category, Order, OrderLine, SzikPoint, CheckoutAddress
-from .forms import CreateUserForm, CreateProfileForm, UpdateUserForm, UpdateProfileForm, CheckoutForm, PAYMENT
+import os
+from .models import Product, Order, OrderLine, SzikPoint, CheckoutAddress
+from .forms import CreateUserForm, CreateProfileForm, UpdateUserForm, UpdateProfileForm,\
+    CheckoutForm, WarsztatCheckoutForm, PAYMENT, PAYMENT_WARSZTAT
+from InvoiceGenerator.api import Invoice, Item, Client, Provider, Creator
+from InvoiceGenerator.pdf import SimpleInvoice
 from . import services
 from .filters import ProductFilter
 # for email confirmation
@@ -84,6 +89,8 @@ def home_view(request):
 class CheckoutView(View):
     def get(self, *args, **kwargs):
         form = CheckoutForm()
+        if self.request.user.profile.user_type.name == 'Warsztat':
+            form = WarsztatCheckoutForm()
         order = Order.objects.get(customer=self.request.user, ordered=False)
         context = {
             'form': form,
@@ -93,6 +100,8 @@ class CheckoutView(View):
 
     def post(self, *args, **kwargs):
         form = CheckoutForm(self.request.POST or None)
+        if self.request.user.profile.user_type.name == 'Warsztat':
+            form = WarsztatCheckoutForm(self.request.POST or None)
 
         try:
             order = Order.objects.get(customer=self.request.user, ordered=False)
@@ -114,10 +123,44 @@ class CheckoutView(View):
                 order.checkout_address = checkout_address
                 order.save()
 
-                for payment_tuple in PAYMENT:
+                PAYMENT_OPTIONS = tuple()
+                if self.request.user.profile.user_type.name == 'Warsztat':
+                    PAYMENT_OPTIONS = PAYMENT_WARSZTAT
+                else:
+                    PAYMENT_OPTIONS = PAYMENT
+
+                for payment_tuple in PAYMENT_OPTIONS:
                     if payment_option == payment_tuple[0]:
                         order.payment_method = payment_tuple[1]
                         order.ordered = True
+
+                        if order.payment_method == 'Faktura':
+                            os.environ["INVOICE_LANG"] = "pl"
+
+                            client = Client(order.customer.username + '<>>'
+                                            + str(order.customer.email) + '\n'
+                                            + order.customer.profile.street_address + '\n'
+                                            + order.customer.profile.postal_code + ' '
+                                            + order.customer.profile.city
+                                            )
+                            provider = Provider('Auto Parts', bank_account='2600420569', bank_code='2010')
+                            creator = Creator('Jan Kowalski')
+                            invoice = Invoice(client, provider, creator)
+                            invoice.number = order.id
+                            invoice.currency = 'PLN'
+                            invoice.currency_locale = 'pl_PL.UTF-8'
+                            for order_line in order.order_lines.all():
+                                invoice.add_item(Item(order_line.quantity, order_line.product.get_discount_price(),
+                                                      description=order_line.product.name, tax=23))
+
+                            pdf_name = "invoice" + str(order.id) + ".pdf"
+                            pdf = SimpleInvoice(invoice)
+                            pdf.gen(pdf_name)
+                            with open(pdf_name, 'rb') as f:
+                                order.invoice_file.save(pdf_name, File(f))
+                            if os.path.exists(pdf_name):
+                                os.remove(pdf_name)
+
                         order.save()
                         return redirect('pages:orders_list')
 
@@ -162,10 +205,9 @@ def add_to_cart(request, pk):
         )
 
         if not created:
-            # jesli w zamowieniu jest juz pozycja z danym produktem
+            # jeśli w zamówieniu jest juz pozycja z danym produktem
             order_line.quantity += 1
             order_line.save()
-            messages.info(request, "Zwiększono ilość produktu w koszyku")
             return redirect("pages:order-summary")
         else:
             order.order_lines.add(order_line)
