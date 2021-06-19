@@ -109,6 +109,16 @@ PAYMENT = (
 )
 
 
+PAYMENT_WARSZTAT = (
+    ('F', 'Faktura'),
+    ('B', 'BLIK'),
+    ('V', 'karta VISA'),
+    ('A', 'Apple Pay'),
+    ('G', 'Google Pay'),
+    ('P', 'PayPal')
+)
+
+
 class CheckoutForm(forms.Form):
     street_address = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control',
@@ -124,3 +134,8 @@ class CheckoutForm(forms.Form):
     }))
     payment_option = forms.ChoiceField(
         widget=forms.RadioSelect, choices=PAYMENT)
+
+
+class WarsztatCheckoutForm(CheckoutForm):
+    payment_option = forms.ChoiceField(
+        widget=forms.RadioSelect, choices=PAYMENT_WARSZTAT)

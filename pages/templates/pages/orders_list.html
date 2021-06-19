@@ -32,7 +32,17 @@
             </div>
             <div class="container dark-grey-text mt-1">
                 Łączna kwota: {{ order.get_total_price }} zł
-                <br> Metoda płatności: {{ order.payment_method }}
+                <br />
+                Metoda płatności: {{ order.payment_method }}
+                <br />
+                <!-- Invoice download -->
+                {% if order.invoice_file %}
+                    <a href="{% url "db_file_storage.download_file" %}?name={{ order.invoice_file }}">
+                        <button class="btn yellow-btn download-btn">
+                            Pobierz fakturę <i class="fas fa-file-pdf"></i>
+                        </button>
+                    </a>
+                {% endif %}
             </div>
         {% endfor %}
     </div>
