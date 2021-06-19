@@ -38,10 +38,10 @@ def get_matching_products(searched):
 
 
 def get_products_and_categories(request, on_sale=False):
-    context = { 'section': None }
+    context = {'section': None}
     selected_category_pk = request.GET.get('category')
     if selected_category_pk is not None and len(selected_category_pk) > 0:
-        
+
         selected_category = Category.objects.get(pk=selected_category_pk)
 
         if selected_category.parent_category is not None:
@@ -63,7 +63,7 @@ def get_products_and_categories(request, on_sale=False):
 
     if on_sale:
         product_list = product_list.filter(discount__isnull=False)
-    
+
     context['product_list'] = product_list
     return context
 

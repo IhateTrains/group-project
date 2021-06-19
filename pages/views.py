@@ -35,11 +35,6 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 UserModel = get_user_model()
 
 
-class SalesView(ListView):
-    model = Product
-    template_name = "pages/sales.html"
-
-
 def sales_view(request):
     pc = services.get_products_and_categories(request, on_sale=True)
     context = {

@@ -1,5 +1,4 @@
 import django_filters
-import logging
 
 from .models import Product
 
