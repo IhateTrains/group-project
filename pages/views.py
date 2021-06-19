@@ -131,9 +131,9 @@ class CheckoutView(View):
                         if order.payment_method == 'Faktura':
                             os.environ["INVOICE_LANG"] = "pl"
 
-                            client = Client(order.customer.username + '<>>'
-                                            + str(order.customer.email) + '\n'
-                                            + order.customer.profile.street_address + '\n'
+                            client = Client(order.customer.username + '<br />'
+                                            + str(order.customer.email) + '<br />'
+                                            + order.customer.profile.street_address + '<br />'
                                             + order.customer.profile.postal_code + ' '
                                             + order.customer.profile.city
                                             )
